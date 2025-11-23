@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Breadcrumb from "@/components/Breadcrumb";
 import CTAButton from "@/components/CTAButton";
+import CTAStrip from "@/components/CTAStrip";
 import { getProductBySlug, getCategorySlug } from "@/data/products";
 
 export default function ProductPage() {
@@ -155,6 +156,9 @@ export default function ProductPage() {
           </div>
         </section>
       </div>
+
+      {/* CTA Strip */}
+      <CTAStrip />
 
       {/* Footer */}
       <footer className="bg-text-heading text-bg py-12 mt-20">

@@ -11,12 +11,12 @@ export default function Header() {
           </h1>
         </Link>
         <nav className="space-x-10 text-sm font-medium flex items-center">
-          <a
-            href="/#about"
+          <Link
+            href="/about"
             className="text-white hover:text-secondary-light transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-secondary-light after:transition-all after:duration-300 hover:after:w-full pb-1"
           >
             About Us
-          </a>
+          </Link>
           <div className="relative group">
             <button className="text-white hover:text-secondary-light transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-secondary-light after:transition-all after:duration-300 group-hover:after:w-full pb-1">
               Products
@@ -42,6 +42,18 @@ export default function Header() {
               </Link>
             </div>
           </div>
+          <Link
+            href="/logistics"
+            className="text-white hover:text-secondary-light transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-secondary-light after:transition-all after:duration-300 hover:after:w-full pb-1"
+          >
+            Logistics
+          </Link>
+          <Link
+            href="/certifications"
+            className="text-white hover:text-secondary-light transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-secondary-light after:transition-all after:duration-300 hover:after:w-full pb-1"
+          >
+            Certifications
+          </Link>
           <a
             href="/#contact"
             className="text-white hover:text-secondary-light transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-secondary-light after:transition-all after:duration-300 hover:after:w-full pb-1"
