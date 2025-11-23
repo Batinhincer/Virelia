@@ -48,6 +48,8 @@ export default async function handler(
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
   const smtpFrom = process.env.SMTP_FROM || smtpUser;
+  const inquiryEmail = process.env.INQUIRY_EMAIL || "batinhincer@frezya.nl";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://virelia.com";
 
   // In development, if SMTP is not configured, log the inquiry and return success
   if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
@@ -213,7 +215,7 @@ export default async function handler(
           </div>
           <div class="footer">
             <p>This inquiry was submitted through the Virelia website product inquiry form.</p>
-            <p>Product Page: https://virelia.com/product/${productSlug}</p>
+            <p>Product Page: ${baseUrl}/product/${productSlug}</p>
           </div>
         </body>
       </html>
@@ -236,13 +238,13 @@ ${message}
 
 ---
 This inquiry was submitted through the Virelia website product inquiry form.
-Product Page: https://virelia.com/product/${productSlug}
+Product Page: ${baseUrl}/product/${productSlug}
     `.trim();
 
     // Send email
     await transporter.sendMail({
       from: `"Virelia Inquiry System" <${smtpFrom}>`,
-      to: "batinhincer@frezya.nl",
+      to: inquiryEmail,
       replyTo: email,
       subject: `New Quote Request - ${productName}`,
       text: textContent,
