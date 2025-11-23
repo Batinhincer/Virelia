@@ -5,6 +5,13 @@ export interface Product {
   longDesc: string;
   category: string;
   image: string;
+  // B2B specifications
+  packaging?: string;
+  shelfLife?: string;
+  moq?: string;
+  origin?: string;
+  certifications?: string[];
+  hsCode?: string;
 }
 
 export const products: Product[] = [
@@ -17,6 +24,12 @@ export const products: Product[] = [
       "Our premium extra virgin olive oil is carefully cold-pressed from handpicked Mediterranean olives grown in sun-drenched groves. This artisanal process preserves the oil's rich nutritional profile, vibrant golden-green color, and distinctive fruity aroma with subtle peppery notes. Perfect for dressings, drizzling, and Mediterranean cuisine. Rich in antioxidants and healthy monounsaturated fats. Available in various packaging options to suit professional kitchens and retail markets.",
     category: "Oils & Condiments",
     image: "/products/olive-oil.jpg",
+    packaging: "Glass bottles (250ml, 500ml, 750ml, 1L), Tin cans (3L, 5L), Bulk containers (10L, 20L)",
+    shelfLife: "18 months from production date",
+    moq: "500L (negotiable for first orders)",
+    origin: "Turkey, Mediterranean Region",
+    certifications: ["HACCP", "ISO 22000", "Organic Certification"],
+    hsCode: "1509.10",
   },
   {
     slug: "pomegranate-molasses",
@@ -26,6 +39,12 @@ export const products: Product[] = [
       "Crafted from concentrated juice of premium pomegranates, our molasses delivers an authentic sweet-tart flavor profile essential to Middle Eastern and Mediterranean cooking. Made without added sugars or preservatives, each batch captures the natural complexity of sun-ripened pomegranates. This versatile ingredient enhances salad dressings, glazes for roasted meats, marinades, and traditional dishes like muhammara. Its deep burgundy color and syrupy consistency add both visual appeal and depth of flavor to modern and traditional recipes alike.",
     category: "Oils & Condiments",
     image: "/products/pomegranate-molasses.jpg",
+    packaging: "Glass bottles (250ml, 500ml), PET bottles (1L, 2L)",
+    shelfLife: "24 months from production date",
+    moq: "300L",
+    origin: "Turkey",
+    certifications: ["HACCP", "ISO 22000", "Halal"],
+    hsCode: "2106.90",
   },
 
   // Pepper & Chili Products
@@ -37,6 +56,12 @@ export const products: Product[] = [
       "Our signature pepper paste combines sun-dried Mediterranean red peppers with a carefully balanced blend of spices. Slowly cooked to develop deep, complex flavors, this paste offers a perfect balance of natural sweetness and gentle heat. Ideal as a cooking base for stews, soups, and sauces, or as a flavorful spread. The traditional recipe has been perfected over generations, delivering consistent quality and authentic taste. Free from artificial colors and preservatives, it brings the essence of Mediterranean cuisine to your kitchen.",
     category: "Pepper & Chili Products",
     image: "/products/pepper-paste.jpg",
+    packaging: "Glass jars (200g, 500g, 1kg), Tin cans (5kg, 10kg)",
+    shelfLife: "12 months from production date",
+    moq: "200kg",
+    origin: "Turkey",
+    certifications: ["HACCP", "ISO 22000", "Halal"],
+    hsCode: "2005.99",
   },
   {
     slug: "harissa",
@@ -84,6 +109,12 @@ export const products: Product[] = [
       "Our premium Arabica coffee beans are sourced from high-altitude plantations where cooler temperatures and rich volcanic soil produce beans with exceptional flavor complexity. Each batch is carefully roasted to a medium profile that highlights the beans' natural sweetness, bright acidity, and notes of chocolate and nuts. These whole beans are perfect for coffee enthusiasts and specialty cafes seeking consistent quality and distinctive character. Packaged immediately after roasting to preserve freshness and aromatic oils. Suitable for all brewing methods from espresso to French press.",
     category: "Coffee Products",
     image: "/products/whole-coffee-beans.jpg",
+    packaging: "Valve bags (250g, 500g, 1kg), Bulk bags (5kg, 10kg, 25kg)",
+    shelfLife: "12 months from roasting date",
+    moq: "100kg",
+    origin: "Turkey & Brazil blend",
+    certifications: ["HACCP", "ISO 22000", "Rainforest Alliance"],
+    hsCode: "0901.21",
   },
   {
     slug: "ground-coffee",
@@ -241,4 +272,10 @@ export function getCategoryByName(name: string): CategoryInfo | undefined {
 export function getCategorySlug(categoryName: string): string {
   const categoryData = getCategoryByName(categoryName);
   return categoryData?.slug || categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
+}
+
+export function getRelatedProducts(currentSlug: string, category: string, limit: number = 4): Product[] {
+  return products
+    .filter((p) => p.category === category && p.slug !== currentSlug)
+    .slice(0, limit);
 }
