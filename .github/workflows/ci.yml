@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clean workspace (remove build artifacts and untracked files)
+        run: |
+          git clean -fdx || true
+          
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'site/package-lock.json'
+          
+      - name: Install dependencies
+        working-directory: ./site
+        run: npm ci
+        
+      - name: Build
+        working-directory: ./site
+        run: npm run build

@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+site/node_modules/
+
+# Next.js
+site/.next/
+site/out/
+
+# Production
+build/
+dist/
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env*.local
+.env
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+
+# OS
+.DS_Store
+*.pem
+
+# Temporary files
+*.zip
+virelia-updated.zip
