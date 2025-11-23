@@ -1,39 +1,15 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import Header from "@/components/Header";
 import SectionHeader from "@/components/SectionHeader";
 import ProductGrid from "@/components/ProductGrid";
+import ProductCard from "@/components/ProductCard";
 import CTAButton from "@/components/CTAButton";
 import { products, categories, getProductsByCategory } from "@/data/products";
 
-const slides = [
-  {
-    title: "Inspired by Nature. Crafted with Passion.",
-    subtitle: "Mediterranean food products for global markets.",
-    image: "/hero1.jpg",
-  },
-  {
-    title: "Premium Quality from the Mediterranean",
-    subtitle: "We deliver excellence in every product.",
-    image: "/hero2.jpg",
-  },
-  {
-    title: "Trusted Worldwide",
-    subtitle: "Sustainable, long-term partnerships across Europe and beyond.",
-    image: "/hero3.jpg",
-  },
-];
-
 export default function HomePage() {
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // Select 6-8 featured products
+  const featuredProducts = products.slice(0, 8);
 
   return (
     <div className="min-h-screen bg-bg text-text">
@@ -47,29 +23,312 @@ export default function HomePage() {
 
       <Header />
 
-      {/* Hero Section with Slide */}
-      <section className="relative h-[600px] mt-[80px] overflow-hidden">
-        {slides.map((slide, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: index === current ? 1 : 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 bg-cover bg-center flex items-center justify-center"
-            style={{ backgroundImage: `url('${slide.image}')` }}
-          >
-            <div className="bg-gradient-to-br from-primary/90 to-primary-dark/85 backdrop-blur-sm p-12 lg:p-16 rounded-3xl text-center max-w-4xl mx-6 shadow-soft-lg">
-              <h2 className="text-4xl lg:text-5xl text-white font-bold mb-6 font-heading">
-                {slide.title}
-              </h2>
-              {slide.subtitle && (
-                <p className="text-white text-xl lg:text-2xl font-light leading-relaxed">
-                  {slide.subtitle}
-                </p>
-              )}
+      {/* Modern EU-Style Premium B2B Hero Section */}
+      <section className="relative h-[700px] mt-[80px] overflow-hidden">
+        {/* Background Image with Gradient Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ 
+            backgroundImage: `linear-gradient(135deg, rgba(58, 90, 64, 0.85) 0%, rgba(45, 70, 50, 0.75) 100%), url('/hero1.jpg')`
+          }}
+        />
+        
+        {/* Hero Content */}
+        <div className="relative h-full flex items-center">
+          <div className="container-custom">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl"
+            >
+              <h1 className="text-5xl lg:text-6xl text-white font-bold mb-6 font-heading leading-tight">
+                Premium Mediterranean Foods for Global Markets
+              </h1>
+              <p className="text-white text-xl lg:text-2xl font-light leading-relaxed mb-10 max-w-2xl">
+                Your trusted B2B partner for authentic Mediterranean products. Quality, certification, and reliable export to EU, UK, and USA markets.
+              </p>
+              
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-4">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <a 
+                    href="#contact"
+                    className="inline-flex items-center justify-center px-8 py-4 rounded-2xl font-semibold text-lg text-primary bg-white transition-all duration-200 hover:bg-secondary-light hover:shadow-soft-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary"
+                  >
+                    Request a Quote
+                  </a>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <a 
+                    href="#contact"
+                    className="inline-flex items-center justify-center px-8 py-4 rounded-2xl font-semibold text-lg text-white bg-transparent border-2 border-white transition-all duration-200 hover:bg-white hover:text-primary hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary"
+                  >
+                    Contact Sales
+                  </a>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Virelia? Section */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <SectionHeader
+            title="Why Choose Virelia?"
+            subtitle="Your trusted partner for premium Mediterranean food products"
+            centered
+          />
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Feature Card 1 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="card card-hover p-8"
+            >
+              <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-text-heading mb-3">Premium Quality</h3>
+              <p className="text-text-muted leading-relaxed">
+                Handpicked Mediterranean products meeting the highest international standards for taste and quality.
+              </p>
+            </motion.div>
+
+            {/* Feature Card 2 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="card card-hover p-8"
+            >
+              <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-text-heading mb-3">Full Certifications</h3>
+              <p className="text-text-muted leading-relaxed">
+                EU-compliant with all necessary certifications for safe and legal import to European markets.
+              </p>
+            </motion.div>
+
+            {/* Feature Card 3 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="card card-hover p-8"
+            >
+              <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-text-heading mb-3">Export Experience</h3>
+              <p className="text-text-muted leading-relaxed">
+                Proven track record delivering to EU, UK, and USA with reliable logistics and customs expertise.
+              </p>
+            </motion.div>
+
+            {/* Feature Card 4 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="card card-hover p-8"
+            >
+              <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-text-heading mb-3">Custom Packaging</h3>
+              <p className="text-text-muted leading-relaxed">
+                Flexible packaging solutions tailored to your market needs, from bulk to retail-ready formats.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Categories Showcase */}
+      <section className="section-padding bg-bg-surface">
+        <div className="container-custom">
+          <SectionHeader
+            title="Product Categories"
+            subtitle="Explore our comprehensive range of Mediterranean specialties"
+            centered
+          />
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category, index) => {
+              const categoryProducts = getProductsByCategory(category);
+              const firstProduct = categoryProducts[0];
+              
+              return (
+                <motion.a
+                  key={category}
+                  href="#products"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group relative overflow-hidden rounded-2xl shadow-soft hover:shadow-soft-lg transition-all duration-300 h-64"
+                >
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                    style={{ 
+                      backgroundImage: firstProduct ? `url('${firstProduct.image}')` : 'linear-gradient(135deg, #3a5a40 0%, #588157 100%)'
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary/50 to-transparent" />
+                  <div className="absolute inset-0 flex flex-col justify-end p-6">
+                    <h3 className="text-2xl font-semibold text-white mb-2 transform transition-transform group-hover:translate-y-[-4px]">
+                      {category}
+                    </h3>
+                    <p className="text-white/90 text-sm">
+                      {categoryProducts.length} product{categoryProducts.length !== 1 ? 's' : ''}
+                    </p>
+                  </div>
+                </motion.a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <SectionHeader
+            title="Featured Products"
+            subtitle="Our most popular Mediterranean specialties"
+            centered
+          />
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {featuredProducts.map((product, index) => (
+              <motion.div
+                key={product.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+              >
+                <ProductCard product={product} />
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <CTAButton href="#products">View All Products</CTAButton>
+          </div>
+        </div>
+      </section>
+
+      {/* Export & Logistics Trust Section */}
+      <section className="section-padding bg-primary text-white">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-h2 font-semibold mb-6">Export Ready for Global Markets</h2>
+              <p className="text-xl leading-relaxed mb-12 text-white/90">
+                With extensive experience in international trade, we ensure seamless delivery to your market. 
+                Our products are certified and compliant for export to European Union, United Kingdom, and United States markets.
+              </p>
+            </motion.div>
+            
+            <div className="grid md:grid-cols-3 gap-8 mt-12">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6"
+              >
+                <div className="text-4xl font-bold mb-2">EU</div>
+                <p className="text-white/80">European Union certified and ready</p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6"
+              >
+                <div className="text-4xl font-bold mb-2">UK</div>
+                <p className="text-white/80">Compliant with UK import standards</p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6"
+              >
+                <div className="text-4xl font-bold mb-2">USA</div>
+                <p className="text-white/80">FDA compliant for US markets</p>
+              </motion.div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mid-page CTA Strip */}
+      <section className="bg-secondary py-16">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col md:flex-row items-center justify-between gap-6"
+          >
+            <div className="text-center md:text-left">
+              <h3 className="text-3xl font-bold text-text-heading mb-2">
+                Ready to Start Your Order?
+              </h3>
+              <p className="text-lg text-text-muted">
+                Get in touch with our team for pricing and availability
+              </p>
+            </div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <a 
+                href="#contact"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-2xl font-semibold text-lg text-white bg-primary transition-all duration-200 hover:bg-primary-dark hover:shadow-soft-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 whitespace-nowrap"
+              >
+                Request a Quote
+              </a>
+            </motion.div>
           </motion.div>
-        ))}
+        </div>
       </section>
 
       {/* About Section */}
@@ -114,8 +373,8 @@ export default function HomePage() {
       <section id="products" className="section-padding bg-white">
         <div className="container-custom">
           <SectionHeader
-            title="Our Product Range"
-            subtitle="Explore our comprehensive selection of Mediterranean specialties"
+            title="Complete Product Range"
+            subtitle="Browse our full catalog of Mediterranean specialties organized by category"
             centered
           />
 
@@ -132,7 +391,7 @@ export default function HomePage() {
           })}
 
           <div className="text-center mt-16">
-            <CTAButton href="#contact">Get in Touch</CTAButton>
+            <CTAButton href="#contact">Request Product Information</CTAButton>
           </div>
         </div>
       </section>
