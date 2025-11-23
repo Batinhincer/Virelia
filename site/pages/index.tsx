@@ -36,7 +36,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-gray-800">
+    <div className="min-h-screen bg-bg text-text">
       <Head>
         <title>Virelia – Premium Mediterranean Food Exporter</title>
         <meta
@@ -48,7 +48,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section with Slide */}
-      <section className="relative h-[500px] mt-[72px] overflow-hidden">
+      <section className="relative h-[600px] mt-[80px] overflow-hidden">
         {slides.map((slide, index) => (
           <motion.div
             key={index}
@@ -58,12 +58,14 @@ export default function HomePage() {
             className="absolute inset-0 bg-cover bg-center flex items-center justify-center"
             style={{ backgroundImage: `url('${slide.image}')` }}
           >
-            <div className="bg-black bg-opacity-40 p-10 rounded-xl text-center">
-              <h2 className="text-4xl text-white font-bold mb-4">
+            <div className="bg-gradient-to-br from-primary/90 to-primary-dark/85 backdrop-blur-sm p-12 lg:p-16 rounded-3xl text-center max-w-4xl mx-6 shadow-soft-lg">
+              <h2 className="text-4xl lg:text-5xl text-white font-bold mb-6 font-heading">
                 {slide.title}
               </h2>
               {slide.subtitle && (
-                <p className="text-white text-lg">{slide.subtitle}</p>
+                <p className="text-white text-xl lg:text-2xl font-light leading-relaxed">
+                  {slide.subtitle}
+                </p>
               )}
             </div>
           </motion.div>
@@ -71,14 +73,14 @@ export default function HomePage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-16 bg-cream-50">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="about" className="section-padding bg-bg-surface">
+        <div className="container-custom">
           <SectionHeader
             title="About Virelia"
             subtitle="Your trusted partner for premium Mediterranean food products"
             centered
           />
-          <div className="max-w-3xl mx-auto text-gray-700 leading-relaxed space-y-4">
+          <div className="max-w-4xl mx-auto text-text leading-relaxed space-y-6 text-lg">
             <p>
               Virelia is a leading exporter of authentic Mediterranean food
               products, bringing the finest flavors from Turkey and the
@@ -99,7 +101,7 @@ export default function HomePage() {
               Mediterranean flavor.
             </p>
           </div>
-          <div className="text-center mt-8 space-x-4">
+          <div className="text-center mt-12 space-x-4">
             <CTAButton href="#contact">Request a Quote</CTAButton>
             <CTAButton href="mailto:batinhincer@gmail.com" variant="secondary">
               Contact Sales
@@ -109,8 +111,8 @@ export default function HomePage() {
       </section>
 
       {/* Products Section */}
-      <section id="products" className="py-16">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="products" className="section-padding bg-white">
+        <div className="container-custom">
           <SectionHeader
             title="Our Product Range"
             subtitle="Explore our comprehensive selection of Mediterranean specialties"
@@ -120,8 +122,8 @@ export default function HomePage() {
           {categories.map((category) => {
             const categoryProducts = getProductsByCategory(category);
             return (
-              <div key={category} className="mb-16">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-6 pb-2 border-b-2 border-green-700">
+              <div key={category} className="mb-20 last:mb-0">
+                <h3 className="text-h3 font-semibold text-text-heading mb-8 pb-3 border-b-2 border-primary/20">
                   {category}
                 </h3>
                 <ProductGrid products={categoryProducts} />
@@ -129,21 +131,21 @@ export default function HomePage() {
             );
           })}
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-16">
             <CTAButton href="#contact">Get in Touch</CTAButton>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="bg-green-800 text-white py-16">
-        <div className="max-w-4xl mx-auto px-6">
-          <h3 className="text-3xl font-semibold mb-6">Contact Us</h3>
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            <div>
-              <h4 className="text-xl font-medium mb-4">Get in Touch</h4>
-              <p className="mb-3">Virelia Ticaret Limited Şirketi</p>
-              <p className="mb-3">
+      <section id="contact" className="bg-primary text-white section-padding">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
+          <h3 className="text-h2 font-semibold mb-10 text-center">Contact Us</h3>
+          <div className="grid md:grid-cols-2 gap-10 mb-12">
+            <div className="space-y-6">
+              <h4 className="text-2xl font-medium mb-6 text-secondary-light">Get in Touch</h4>
+              <p className="mb-3 text-lg">Virelia Ticaret Limited Şirketi</p>
+              <p className="mb-3 text-lg leading-relaxed">
                 Balat Mah. Bedesten Sok. No:6
                 <br />
                 Nilüfer, Bursa, Turkey
@@ -151,26 +153,32 @@ export default function HomePage() {
               <p className="mb-3">
                 <a
                   href="tel:+905077075407"
-                  className="hover:text-green-200 transition-colors"
+                  className="hover:text-secondary-light transition-colors text-lg inline-flex items-center"
                 >
-                  Phone: +90 507 707 5407
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  +90 507 707 5407
                 </a>
               </p>
               <p className="mb-3">
                 <a
                   href="mailto:batinhincer@gmail.com"
-                  className="hover:text-green-200 transition-colors"
+                  className="hover:text-secondary-light transition-colors text-lg inline-flex items-center"
                 >
-                  Email: batinhincer@gmail.com
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  batinhincer@gmail.com
                 </a>
               </p>
             </div>
-            <div>
-              <h4 className="text-xl font-medium mb-4">Business Hours</h4>
-              <p className="mb-2">Monday - Friday: 9:00 AM - 6:00 PM (EEST)</p>
-              <p className="mb-4">Saturday - Sunday: Closed</p>
-              <p className="text-sm text-green-200">
-                For urgent inquiries, please call or email us directly.
+            <div className="space-y-6">
+              <h4 className="text-2xl font-medium mb-6 text-secondary-light">Business Hours</h4>
+              <p className="mb-2 text-lg">Monday - Friday: 9:00 AM - 6:00 PM (EEST)</p>
+              <p className="mb-6 text-lg">Saturday - Sunday: Closed</p>
+              <p className="text-sm text-secondary-light leading-relaxed bg-primary-dark/30 p-4 rounded-xl">
+                For urgent inquiries, please call or email us directly. We respond to all business inquiries within 24 hours.
               </p>
             </div>
           </div>
@@ -178,35 +186,37 @@ export default function HomePage() {
           <form
             action="https://formspree.io/f/xvgranqj"
             method="POST"
-            className="mt-8 grid grid-cols-1 gap-6 bg-white text-gray-900 p-6 rounded-xl shadow-md"
+            className="mt-12 grid grid-cols-1 gap-6 bg-white text-text p-8 lg:p-10 rounded-3xl shadow-soft-lg"
           >
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="name">
-                Name *
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="email">
-                Email *
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-semibold mb-2 text-text-heading" htmlFor="name">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  className="w-full border-2 border-bg-surface rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2 text-text-heading" htmlFor="email">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="w-full border-2 border-bg-surface rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                  required
+                />
+              </div>
             </div>
             <div>
               <label
-                className="block text-sm font-medium mb-1"
+                className="block text-sm font-semibold mb-2 text-text-heading"
                 htmlFor="company"
               >
                 Company
@@ -215,12 +225,12 @@ export default function HomePage() {
                 type="text"
                 name="company"
                 id="company"
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full border-2 border-bg-surface rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all"
               />
             </div>
             <div>
               <label
-                className="block text-sm font-medium mb-1"
+                className="block text-sm font-semibold mb-2 text-text-heading"
                 htmlFor="message"
               >
                 Message *
@@ -228,14 +238,14 @@ export default function HomePage() {
               <textarea
                 name="message"
                 id="message"
-                rows={4}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                rows={5}
+                className="w-full border-2 border-bg-surface rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none"
                 required
               ></textarea>
             </div>
             <button
               type="submit"
-              className="bg-green-700 text-white py-3 px-6 rounded-md hover:bg-green-600 transition font-medium"
+              className="btn-primary w-full md:w-auto"
             >
               Send Message
             </button>
@@ -244,13 +254,13 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-8">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="mb-2">
+      <footer className="bg-text-heading text-bg py-12">
+        <div className="container-custom text-center">
+          <p className="mb-3 text-lg">
             &copy; {new Date().getFullYear()} Virelia Ticaret Limited Şirketi.
             All rights reserved.
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-text-muted">
             Premium Mediterranean Food Products | B2B Export Solutions
           </p>
         </div>

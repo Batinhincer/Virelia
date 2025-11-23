@@ -10,12 +10,14 @@ export default function SectionHeader({
   centered = false,
 }: SectionHeaderProps) {
   return (
-    <div className={centered ? "text-center mb-12" : "mb-12"}>
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+    <div className={centered ? "text-center mb-16" : "mb-16"}>
+      <h2 className="text-h2 font-heading text-text-heading mb-6">
         {title}
       </h2>
       {subtitle && (
-        <p className="text-lg text-gray-600 max-w-3xl mx-auto">{subtitle}</p>
+        <p className="text-xl text-text-muted max-w-3xl mx-auto leading-relaxed">
+          {subtitle}
+        </p>
       )}
     </div>
   );

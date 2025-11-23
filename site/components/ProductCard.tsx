@@ -8,27 +8,31 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link href={`/product/${product.slug}`}>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer h-full flex flex-col">
-        <div className="h-48 overflow-hidden">
+      <div className="card card-hover cursor-pointer h-full flex flex-col group overflow-hidden">
+        <div className="h-64 overflow-hidden rounded-t-2xl">
           <img
             src={product.image}
             alt={product.title}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
         </div>
-        <div className="p-6 flex-1 flex flex-col">
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+        <div className="p-6 lg:p-8 flex-1 flex flex-col">
+          <div className="mb-3">
+            <span className="inline-block px-3 py-1 text-caption font-medium text-primary bg-secondary-light rounded-full">
+              {product.category}
+            </span>
+          </div>
+          <h3 className="text-2xl font-semibold text-text-heading mb-3 group-hover:text-primary transition-colors duration-300">
             {product.title}
           </h3>
-          <p className="text-sm text-gray-500 mb-3">{product.category}</p>
-          <p className="text-gray-700 text-sm leading-relaxed flex-1">
+          <p className="text-body text-text-muted leading-relaxed flex-1 mb-4">
             {product.shortDesc}
           </p>
-          <div className="mt-4">
-            <span className="text-green-700 font-medium hover:text-green-600 inline-flex items-center">
+          <div className="mt-auto pt-4 border-t border-bg-surface">
+            <span className="text-primary font-semibold hover:text-primary-dark inline-flex items-center group-hover:translate-x-1 transition-transform duration-300">
               Learn More
               <svg
-                className="w-4 h-4 ml-1"
+                className="w-5 h-5 ml-2"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -37,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M9 5l7 7-7 7"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
               </svg>
             </span>

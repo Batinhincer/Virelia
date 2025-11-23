@@ -1,3 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  body {
+    @apply font-body text-text bg-bg;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading text-text-heading;
+    font-feature-settings: 'kern' 1;
+  }
+  
+  h1 {
+    @apply text-h1;
+  }
+  
+  h2 {
+    @apply text-h2;
+  }
+  
+  h3 {
+    @apply text-h3;
+  }
+  
+  h4 {
+    @apply text-h4;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-container mx-auto px-6 lg:px-8;
+  }
+  
+  .card {
+    @apply bg-bg-card rounded-2xl shadow-soft;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1;
+  }
+  
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-3.5 rounded-2xl font-semibold text-white bg-primary transition-all duration-200 hover:bg-primary-dark hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-8 py-3.5 rounded-2xl font-semibold text-primary bg-white border-2 border-primary transition-all duration-200 hover:bg-primary hover:text-white hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+  
+  .section-padding {
+    @apply py-16 lg:py-24;
+  }
+}
