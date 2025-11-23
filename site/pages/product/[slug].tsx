@@ -2,8 +2,9 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import Header from "@/components/Header";
+import Breadcrumb from "@/components/Breadcrumb";
 import CTAButton from "@/components/CTAButton";
-import { getProductBySlug } from "@/data/products";
+import { getProductBySlug, getCategorySlug } from "@/data/products";
 
 export default function ProductPage() {
   const router = useRouter();
@@ -30,6 +31,8 @@ export default function ProductPage() {
     );
   }
 
+  const categorySlug = getCategorySlug(product.category);
+
   return (
     <div className="min-h-screen bg-bg text-text">
       <Head>
@@ -39,26 +42,14 @@ export default function ProductPage() {
 
       <Header />
 
-      <div className="container-custom py-16 mt-[80px]">
-        <Link
-          href="/#products"
-          className="text-primary hover:text-primary-dark mb-8 inline-flex items-center font-semibold text-lg group transition-colors"
-        >
-          <svg
-            className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          Back to Products
-        </Link>
+      <div className="container-custom py-12 mt-[80px]">
+        <Breadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: product.category, href: `/products/${categorySlug}` },
+            { label: product.title },
+          ]}
+        />
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 mt-10">
           <div>

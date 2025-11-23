@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { products } from "@/data/products";
+import { categoryInfo } from "@/data/products";
 
 export default function Header() {
   return (
@@ -21,17 +21,25 @@ export default function Header() {
             <button className="text-white hover:text-secondary-light transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-secondary-light after:transition-all after:duration-300 group-hover:after:w-full pb-1">
               Products
             </button>
-            <div className="absolute left-0 mt-4 w-64 bg-white text-text rounded-2xl shadow-soft-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
-              {products.map((product) => (
+            <div className="absolute left-0 mt-4 w-72 bg-white text-text rounded-2xl shadow-soft-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
+              {categoryInfo.map((category) => (
                 <Link
-                  key={product.slug}
-                  href={`/product/${product.slug}`}
+                  key={category.slug}
+                  href={`/products/${category.slug}`}
                   className="block px-5 py-3 hover:bg-bg-surface transition-colors duration-200 border-b border-bg-surface last:border-b-0"
                 >
-                  <div className="font-medium text-text-heading">{product.title}</div>
-                  <div className="text-xs text-text-muted mt-0.5">{product.category}</div>
+                  <div className="font-medium text-text-heading">{category.name}</div>
+                  <div className="text-xs text-text-muted mt-0.5 line-clamp-1">
+                    {category.description.split('.')[0]}
+                  </div>
                 </Link>
               ))}
+              <Link
+                href="/#products"
+                className="block px-5 py-3 hover:bg-primary hover:text-white transition-colors duration-200 font-semibold text-center text-primary"
+              >
+                View All Products →
+              </Link>
             </div>
           </div>
           <a

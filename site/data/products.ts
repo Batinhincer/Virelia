@@ -183,10 +183,62 @@ export const categories = [
   "Preserved Vegetables",
 ];
 
+export interface CategoryInfo {
+  name: string;
+  slug: string;
+  description: string;
+}
+
+export const categoryInfo: CategoryInfo[] = [
+  {
+    name: "Oils & Condiments",
+    slug: "oils-condiments",
+    description: "Premium extra virgin olive oils and authentic Mediterranean condiments crafted from the finest ingredients. Essential flavor foundations for discerning kitchens.",
+  },
+  {
+    name: "Pepper & Chili Products",
+    slug: "pepper-chili-products",
+    description: "Traditional pepper pastes and chili sauces from the Mediterranean and Balkans. From mild ajvar to fiery harissa, authentic heat with complex flavor profiles.",
+  },
+  {
+    name: "Coffee Products",
+    slug: "coffee-products",
+    description: "Premium Arabica coffee beans sourced from high-altitude plantations. Available as whole beans or expertly ground for consistent quality in every cup.",
+  },
+  {
+    name: "Ready-to-Use Sauces",
+    slug: "ready-to-use-sauces",
+    description: "Authentic Italian and Mediterranean sauces prepared using time-honored recipes. From classic marinara to signature doner sauces, professional quality made simple.",
+  },
+  {
+    name: "Asian Specialties",
+    slug: "asian-specialties",
+    description: "Bold Southeast Asian condiments featuring complex layers of heat, umami, and aromatic spices. Essential ingredients for authentic Asian fusion cuisine.",
+  },
+  {
+    name: "Preserved Vegetables",
+    slug: "preserved-vegetables",
+    description: "Fire-roasted peppers, char-grilled aubergines, and traditional pickles preserved at peak freshness. Mediterranean seasonal produce available year-round.",
+  },
+];
+
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }
 
 export function getProductsByCategory(category: string): Product[] {
   return products.filter((p) => p.category === category);
+}
+
+export function getCategoryBySlug(slug: string): CategoryInfo | undefined {
+  return categoryInfo.find((c) => c.slug === slug);
+}
+
+export function getCategoryByName(name: string): CategoryInfo | undefined {
+  return categoryInfo.find((c) => c.name === name);
+}
+
+export function getCategorySlug(categoryName: string): string {
+  const categoryData = getCategoryByName(categoryName);
+  return categoryData?.slug || categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
 }
