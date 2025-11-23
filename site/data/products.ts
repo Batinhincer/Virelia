@@ -237,3 +237,8 @@ export function getCategoryBySlug(slug: string): CategoryInfo | undefined {
 export function getCategoryByName(name: string): CategoryInfo | undefined {
   return categoryInfo.find((c) => c.name === name);
 }
+
+export function getCategorySlug(categoryName: string): string {
+  const categoryData = getCategoryByName(categoryName);
+  return categoryData?.slug || categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
+}

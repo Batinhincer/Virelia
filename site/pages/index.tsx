@@ -5,7 +5,7 @@ import SectionHeader from "@/components/SectionHeader";
 import ProductGrid from "@/components/ProductGrid";
 import ProductCard from "@/components/ProductCard";
 import CTAButton from "@/components/CTAButton";
-import { products, categories, getProductsByCategory, getCategoryByName } from "@/data/products";
+import { products, categories, getProductsByCategory, getCategorySlug } from "@/data/products";
 
 export default function HomePage() {
   // Select 6-8 featured products
@@ -181,8 +181,7 @@ export default function HomePage() {
             {categories.map((category, index) => {
               const categoryProducts = getProductsByCategory(category);
               const firstProduct = categoryProducts[0];
-              const categoryData = getCategoryByName(category);
-              const categorySlug = categoryData?.slug || category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
+              const categorySlug = getCategorySlug(category);
               
               return (
                 <motion.a

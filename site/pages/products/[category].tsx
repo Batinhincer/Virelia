@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
@@ -9,15 +8,15 @@ import {
   getCategoryBySlug,
   getProductsByCategory,
   categoryInfo,
+  CategoryInfo,
 } from "@/data/products";
 
-export default function CategoryPage() {
-  const router = useRouter();
-  const { category } = router.query;
+interface CategoryPageProps {
+  categorySlug: string;
+}
 
-  if (!category || typeof category !== "string") return null;
-
-  const categoryData = getCategoryBySlug(category);
+export default function CategoryPage({ categorySlug }: CategoryPageProps) {
+  const categoryData = getCategoryBySlug(categorySlug);
 
   if (!categoryData) {
     return (
@@ -178,7 +177,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: { params: { category: string } }) {
   return {
     props: {
-      category: params.category,
+      categorySlug: params.category,
     },
   };
 }

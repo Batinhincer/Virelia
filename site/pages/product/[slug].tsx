@@ -4,7 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Breadcrumb from "@/components/Breadcrumb";
 import CTAButton from "@/components/CTAButton";
-import { getProductBySlug, getCategoryByName } from "@/data/products";
+import { getProductBySlug, getCategorySlug } from "@/data/products";
 
 export default function ProductPage() {
   const router = useRouter();
@@ -31,8 +31,7 @@ export default function ProductPage() {
     );
   }
 
-  const categoryData = getCategoryByName(product.category);
-  const categorySlug = categoryData?.slug || product.category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
+  const categorySlug = getCategorySlug(product.category);
 
   return (
     <div className="min-h-screen bg-bg text-text">
