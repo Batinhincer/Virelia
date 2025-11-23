@@ -1,54 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
-  :root {
-    /* Color Palette */
-    --color-primary: #3a5a40;
-    --color-primary-dark: #2d4632;
-    --color-primary-light: #588157;
-    
-    --color-secondary: #dda15e;
-    --color-secondary-dark: #bc6c25;
-    --color-secondary-light: #fefae0;
-    
-    --color-bg: #fefae0;
-    --color-bg-surface: #f8f4e8;
-    --color-bg-card: #ffffff;
-    
-    --color-accent: #c1121f;
-    --color-accent-dark: #780000;
-    --color-accent-light: #ff6b6b;
-    
-    --color-text: #2c3e50;
-    --color-text-heading: #1a1a1a;
-    --color-text-muted: #64748b;
-    --color-text-light: #94a3b8;
-    
-    /* Spacing */
-    --spacing-xs: 0.5rem;
-    --spacing-sm: 1rem;
-    --spacing-md: 1.5rem;
-    --spacing-lg: 2rem;
-    --spacing-xl: 3rem;
-    --spacing-2xl: 4rem;
-    --spacing-3xl: 6rem;
-    
-    /* Border Radius */
-    --radius-sm: 0.375rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 0.75rem;
-    --radius-xl: 1rem;
-    --radius-2xl: 1.5rem;
-    
-    /* Shadows */
-    --shadow-soft: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
-    --shadow-soft-lg: 0 10px 40px -10px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.04);
-  }
-  
   body {
     @apply font-body text-text bg-bg;
     font-feature-settings: 'kern' 1, 'liga' 1;

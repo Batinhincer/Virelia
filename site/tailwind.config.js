@@ -63,10 +63,6 @@ module.exports = {
         'soft-lg': '0 10px 40px -10px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.04)',
         'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
       },
-      borderRadius: {
-        '2xl': '1rem',
-        '3xl': '1.5rem',
-      },
       maxWidth: {
         'container': '1280px',
       },
