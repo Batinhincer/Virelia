@@ -5,6 +5,7 @@ import SectionHeader from "@/components/SectionHeader";
 import ProductGrid from "@/components/ProductGrid";
 import ProductCard from "@/components/ProductCard";
 import CTAButton from "@/components/CTAButton";
+import CTAStrip from "@/components/CTAStrip";
 import { products, categories, getProductsByCategory, getCategorySlug } from "@/data/products";
 
 export default function HomePage() {
@@ -474,19 +475,57 @@ export default function HomePage() {
                 />
               </div>
             </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label
+                  className="block text-sm font-semibold mb-2 text-text-heading"
+                  htmlFor="company"
+                >
+                  Company *
+                </label>
+                <input
+                  type="text"
+                  name="company"
+                  id="company"
+                  className="w-full border-2 border-bg-surface rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-sm font-semibold mb-2 text-text-heading"
+                  htmlFor="country"
+                >
+                  Country *
+                </label>
+                <input
+                  type="text"
+                  name="country"
+                  id="country"
+                  className="w-full border-2 border-bg-surface rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                  required
+                />
+              </div>
+            </div>
             <div>
               <label
                 className="block text-sm font-semibold mb-2 text-text-heading"
-                htmlFor="company"
+                htmlFor="subject"
               >
-                Company
+                Subject *
               </label>
-              <input
-                type="text"
-                name="company"
-                id="company"
-                className="w-full border-2 border-bg-surface rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all"
-              />
+              <select
+                name="subject"
+                id="subject"
+                className="w-full border-2 border-bg-surface rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all bg-white"
+                required
+              >
+                <option value="">Please select...</option>
+                <option value="Quote Request">Quote Request</option>
+                <option value="Private Label Inquiry">Private Label Inquiry</option>
+                <option value="Distribution Partnership">Distribution Partnership</option>
+                <option value="General Inquiry">General Inquiry</option>
+              </select>
             </div>
             <div>
               <label
@@ -512,6 +551,9 @@ export default function HomePage() {
           </form>
         </div>
       </section>
+
+      {/* CTA Strip */}
+      <CTAStrip />
 
       {/* Footer */}
       <footer className="bg-text-heading text-bg py-12">

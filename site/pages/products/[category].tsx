@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Breadcrumb from "@/components/Breadcrumb";
 import ProductCard from "@/components/ProductCard";
 import CTAButton from "@/components/CTAButton";
+import CTAStrip from "@/components/CTAStrip";
 import {
   getCategoryBySlug,
   getProductsByCategory,
@@ -144,6 +145,9 @@ export default function CategoryPage({ categorySlug }: CategoryPageProps) {
           </div>
         </motion.div>
       </div>
+
+      {/* CTA Strip */}
+      <CTAStrip />
 
       {/* Footer */}
       <footer className="bg-text-heading text-bg py-12 mt-20">
