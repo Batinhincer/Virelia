@@ -13,14 +13,7 @@ export default function CTAButton({
   variant = "primary",
   external = false,
 }: CTAButtonProps) {
-  const baseClasses =
-    "inline-block px-6 py-3 rounded-md font-medium transition-colors duration-200";
-  const variantClasses =
-    variant === "primary"
-      ? "bg-green-700 text-white hover:bg-green-600"
-      : "bg-white text-green-700 border-2 border-green-700 hover:bg-green-50";
-
-  const className = `${baseClasses} ${variantClasses}`;
+  const className = variant === "primary" ? "btn-primary" : "btn-secondary";
 
   if (external || href.startsWith("mailto:") || href.startsWith("tel:")) {
     return (
