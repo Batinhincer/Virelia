@@ -126,3 +126,71 @@ site/
 ## License
 
 Copyright © 2025 Virelia Ticaret Limited Şirketi. All rights reserved.
+
+## Studio Deployment Instructions
+
+The Sanity Studio is extracted into a separate standalone project under `/studio`. This allows for independent deployment and better separation of concerns.
+
+### Deploying Studio to Vercel
+
+1. Create a new Vercel project and set the root directory to `studio`.
+
+2. Configure the following environment variables in your Vercel project settings:
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `SANITY_STUDIO_PROJECT_ID` | Yes | Your Sanity project ID |
+| `SANITY_STUDIO_DATASET` | No | Sanity dataset (defaults to `production`) |
+
+3. Configure the build settings:
+   - **Build Command**: `npm install && npm run build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm install`
+
+4. Deploy the project.
+
+### Local Development
+
+1. Navigate to the studio directory:
+```bash
+cd studio
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Create a `.env` file with your Sanity credentials:
+```bash
+cp .env.example .env
+# Edit .env with your Sanity project ID
+```
+
+4. Run the development server:
+```bash
+npm run dev
+```
+
+5. Open [http://localhost:3333](http://localhost:3333) in your browser.
+
+### Studio Structure
+
+```
+studio/
+├── sanity.config.ts    # Sanity configuration (basePath = "/")
+├── schemas/            # Content schemas
+│   ├── index.ts
+│   ├── product.ts
+│   ├── category.ts
+│   └── page.ts
+├── package.json        # Studio dependencies
+├── tsconfig.json       # TypeScript configuration
+└── .env.example        # Environment variables template
+```
+
+### Notes
+
+- The Studio is configured with `basePath: "/"` for standalone deployment
+- The main Next.js site (`/site`) continues to use Sanity via `site/lib/sanity.ts` for data fetching
+- The `/site/pages/admin.tsx` page redirects users to the standalone Studio URL
