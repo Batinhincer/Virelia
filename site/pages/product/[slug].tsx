@@ -8,7 +8,10 @@ import CTAButton from "@/components/CTAButton";
 import CTAStrip from "@/components/CTAStrip";
 import ProductCard from "@/components/ProductCard";
 import InquiryForm from "@/components/InquiryForm";
+import { ProductSchema, BreadcrumbSchema } from "@/components/SEO";
 import { getProductBySlug, getCategorySlug, getRelatedProducts } from "@/data/products";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
 
 export default function ProductPage() {
   const router = useRouter();
@@ -37,6 +40,24 @@ export default function ProductPage() {
 
   const categorySlug = getCategorySlug(product.category);
   const relatedProducts = getRelatedProducts(product.slug, product.category, 4);
+  const pageUrl = `${SITE_URL}/product/${product.slug}`;
+  
+  // Compute OG image URL with null safety
+  const getOgImage = (): string => {
+    if (!product.image) {
+      return `${SITE_URL}/hero1.jpg`;
+    }
+    return product.image.startsWith('http') 
+      ? product.image 
+      : `${SITE_URL}${product.image}`;
+  };
+  const ogImage = getOgImage();
+
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: product.category, href: `/products/${categorySlug}` },
+    { label: product.title },
+  ];
 
   const scrollToInquiry = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -51,17 +72,39 @@ export default function ProductPage() {
       <Head>
         <title>{product.title} | Virelia</title>
         <meta name="description" content={product.shortDesc} />
+        <link rel="canonical" href={pageUrl} />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:title" content={`${product.title} | Virelia`} />
+        <meta property="og:description" content={product.shortDesc} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:site_name" content="Virelia" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={pageUrl} />
+        <meta name="twitter:title" content={`${product.title} | Virelia`} />
+        <meta name="twitter:description" content={product.shortDesc} />
+        <meta name="twitter:image" content={ogImage} />
       </Head>
+
+      {/* JSON-LD Structured Data */}
+      <ProductSchema
+        name={product.title}
+        description={product.longDesc}
+        image={product.image}
+        category={product.category}
+        sku={product.slug}
+      />
+      <BreadcrumbSchema items={breadcrumbItems} />
 
       <Header />
 
       <div className="container-custom py-12 mt-[80px]">
         <Breadcrumb
-          items={[
-            { label: "Home", href: "/" },
-            { label: product.category, href: `/products/${categorySlug}` },
-            { label: product.title },
-          ]}
+          items={breadcrumbItems}
         />
 
         {/* Premium B2B Product Layout */}

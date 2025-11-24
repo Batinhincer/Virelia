@@ -5,12 +5,15 @@ import Breadcrumb from "@/components/Breadcrumb";
 import ProductCard from "@/components/ProductCard";
 import CTAButton from "@/components/CTAButton";
 import CTAStrip from "@/components/CTAStrip";
+import { BreadcrumbSchema } from "@/components/SEO";
 import {
   getCategoryBySlug,
   getProductsByCategory,
   categoryInfo,
   CategoryInfo,
 } from "@/data/products";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
 
 interface CategoryPageProps {
   categorySlug: string;
@@ -41,14 +44,31 @@ export default function CategoryPage({ categorySlug }: CategoryPageProps) {
   // SEO metadata
   const pageTitle = `${categoryData.name} | Virelia`;
   const pageDescription = categoryData.description;
-  const pageUrl = `https://virelia.com/products/${categoryData.slug}`;
-  const ogImage = categoryProducts[0]?.image || "/hero1.jpg";
+  const pageUrl = `${SITE_URL}/products/${categoryData.slug}`;
+  
+  // Compute OG image URL with proper fallback
+  const getOgImage = (): string => {
+    const firstProductImage = categoryProducts[0]?.image;
+    if (!firstProductImage) {
+      return `${SITE_URL}/hero1.jpg`;
+    }
+    return firstProductImage.startsWith('http') 
+      ? firstProductImage 
+      : `${SITE_URL}${firstProductImage}`;
+  };
+  const ogImage = getOgImage();
+
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: categoryData.name },
+  ];
 
   return (
     <div className="min-h-screen bg-bg text-text">
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={pageUrl} />
         
         {/* OpenGraph tags */}
         <meta property="og:title" content={pageTitle} />
@@ -56,6 +76,7 @@ export default function CategoryPage({ categorySlug }: CategoryPageProps) {
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={ogImage} />
+        <meta property="og:site_name" content="Virelia" />
         
         {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -64,15 +85,13 @@ export default function CategoryPage({ categorySlug }: CategoryPageProps) {
         <meta name="twitter:image" content={ogImage} />
       </Head>
 
+      {/* JSON-LD Breadcrumb Schema */}
+      <BreadcrumbSchema items={breadcrumbItems} />
+
       <Header />
 
       <div className="container-custom py-12 mt-[80px]">
-        <Breadcrumb
-          items={[
-            { label: "Home", href: "/" },
-            { label: categoryData.name },
-          ]}
-        />
+        <Breadcrumb items={breadcrumbItems} />
 
         {/* Category Header */}
         <motion.div

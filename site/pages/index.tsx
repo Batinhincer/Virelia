@@ -8,6 +8,8 @@ import CTAButton from "@/components/CTAButton";
 import CTAStrip from "@/components/CTAStrip";
 import { products, categories, getProductsByCategory, getCategorySlug } from "@/data/products";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
+
 export default function HomePage() {
   // Select 6-8 featured products
   const featuredProducts = products.slice(0, 8);
@@ -15,11 +17,27 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-bg text-text">
       <Head>
-        <title>Virelia – Premium Mediterranean Food Exporter</title>
+        <title>Virelia – Premium Mediterranean Food Exporter | B2B Food Export</title>
         <meta
           name="description"
-          content="Discover Virelia's premium selection of olive oil, pomegranate molasses, and more. Mediterranean taste, globally delivered."
+          content="Virelia is your trusted B2B partner for premium Mediterranean food products. Olive oil, pepper paste, coffee, and specialty foods. Export to EU, UK, and USA."
         />
+        <link rel="canonical" href={SITE_URL} />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={SITE_URL} />
+        <meta property="og:title" content="Virelia – Premium Mediterranean Food Exporter" />
+        <meta property="og:description" content="Your trusted B2B partner for authentic Mediterranean food products. Quality, certification, and reliable export to EU, UK, and USA markets." />
+        <meta property="og:image" content={`${SITE_URL}/hero1.jpg`} />
+        <meta property="og:site_name" content="Virelia" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={SITE_URL} />
+        <meta name="twitter:title" content="Virelia – Premium Mediterranean Food Exporter" />
+        <meta name="twitter:description" content="Your trusted B2B partner for authentic Mediterranean food products. Quality, certification, and reliable export to EU, UK, and USA markets." />
+        <meta name="twitter:image" content={`${SITE_URL}/hero1.jpg`} />
       </Head>
 
       <Header />

@@ -4,32 +4,36 @@ import Header from "@/components/Header";
 import CTAButton from "@/components/CTAButton";
 import CTAStrip from "@/components/CTAStrip";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
+
 export default function AboutPage() {
   // SEO metadata
   const pageTitle = "About Us | Virelia – Premium Mediterranean Food Exporter";
   const pageDescription =
     "Learn about Virelia, your trusted B2B partner for authentic Mediterranean food products. Quality, certification, and reliable export to EU, UK, and USA markets.";
-  const pageUrl = "https://virelia.com/about";
+  const pageUrl = `${SITE_URL}/about`;
 
   return (
     <div className="min-h-screen bg-bg text-text">
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={pageUrl} />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content="https://virelia.com/hero1.jpg" />
+        <meta property="og:image" content={`${SITE_URL}/hero1.jpg`} />
+        <meta property="og:site_name" content="Virelia" />
         
         {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={pageUrl} />
-        <meta property="twitter:title" content={pageTitle} />
-        <meta property="twitter:description" content={pageDescription} />
-        <meta property="twitter:image" content="https://virelia.com/hero1.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={pageUrl} />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={`${SITE_URL}/hero1.jpg`} />
       </Head>
 
       <Header />
