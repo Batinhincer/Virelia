@@ -41,7 +41,17 @@ export default function ProductPage() {
   const categorySlug = getCategorySlug(product.category);
   const relatedProducts = getRelatedProducts(product.slug, product.category, 4);
   const pageUrl = `${SITE_URL}/product/${product.slug}`;
-  const ogImage = product.image.startsWith('http') ? product.image : `${SITE_URL}${product.image}`;
+  
+  // Compute OG image URL with null safety
+  const getOgImage = (): string => {
+    if (!product.image) {
+      return `${SITE_URL}/hero1.jpg`;
+    }
+    return product.image.startsWith('http') 
+      ? product.image 
+      : `${SITE_URL}${product.image}`;
+  };
+  const ogImage = getOgImage();
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },

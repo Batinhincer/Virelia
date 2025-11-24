@@ -1,4 +1,5 @@
 'use client';
+/* Note: 'use client' is added for next-sanity/studio which uses React Server Component patterns internally */
 
 import { NextStudio } from 'next-sanity/studio';
 import config from '../sanity/sanity.config';

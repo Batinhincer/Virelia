@@ -45,9 +45,18 @@ export default function CategoryPage({ categorySlug }: CategoryPageProps) {
   const pageTitle = `${categoryData.name} | Virelia`;
   const pageDescription = categoryData.description;
   const pageUrl = `${SITE_URL}/products/${categoryData.slug}`;
-  const ogImage = categoryProducts[0]?.image 
-    ? (categoryProducts[0].image.startsWith('http') ? categoryProducts[0].image : `${SITE_URL}${categoryProducts[0].image}`)
-    : `${SITE_URL}/hero1.jpg`;
+  
+  // Compute OG image URL with proper fallback
+  const getOgImage = (): string => {
+    const firstProductImage = categoryProducts[0]?.image;
+    if (!firstProductImage) {
+      return `${SITE_URL}/hero1.jpg`;
+    }
+    return firstProductImage.startsWith('http') 
+      ? firstProductImage 
+      : `${SITE_URL}${firstProductImage}`;
+  };
+  const ogImage = getOgImage();
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },
