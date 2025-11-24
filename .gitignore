@@ -1,10 +1,15 @@
 # Dependencies
 node_modules/
 site/node_modules/
+studio/node_modules/
 
 # Next.js
 site/.next/
 site/out/
+
+# Sanity Studio
+studio/dist/
+studio/.sanity/
 
 # Production
 build/
