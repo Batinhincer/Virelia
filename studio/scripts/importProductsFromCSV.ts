@@ -49,6 +49,20 @@ interface CSVRow {
   imageUrl?: string;
 }
 
+// Portable Text block type for rich text
+interface PortableTextBlock {
+  _type: 'block';
+  _key: string;
+  style: string;
+  markDefs: unknown[];
+  children: Array<{
+    _type: 'span';
+    _key: string;
+    text: string;
+    marks: string[];
+  }>;
+}
+
 // Sanity document types
 interface SanityCategory {
   _id: string;
@@ -64,7 +78,7 @@ interface SanityProduct {
   title: string;
   slug: { _type: 'slug'; current: string };
   shortDescription: string;
-  longDescription: string;
+  longDescription: PortableTextBlock[];
   category: { _type: 'reference'; _ref: string };
   packaging?: string;
   shelfLife?: string;
@@ -82,6 +96,45 @@ function toKebabCase(str: string): string {
     .replace(/&/g, 'and')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
+}
+
+// Helper function to generate a random key for Portable Text
+function generateKey(): string {
+  return Math.random().toString(36).substring(2, 12);
+}
+
+// Convert plain text to Portable Text blocks
+function textToPortableText(text: string): PortableTextBlock[] {
+  if (!text || text.trim() === '') {
+    return [{
+      _type: 'block',
+      _key: generateKey(),
+      style: 'normal',
+      markDefs: [],
+      children: [{
+        _type: 'span',
+        _key: generateKey(),
+        text: '',
+        marks: [],
+      }],
+    }];
+  }
+
+  // Split text by newlines and create a block for each paragraph
+  const paragraphs = text.split(/\n\n+/).filter(p => p.trim() !== '');
+  
+  return paragraphs.map(paragraph => ({
+    _type: 'block' as const,
+    _key: generateKey(),
+    style: 'normal',
+    markDefs: [],
+    children: [{
+      _type: 'span' as const,
+      _key: generateKey(),
+      text: paragraph.trim(),
+      marks: [],
+    }],
+  }));
 }
 
 // Generate deterministic ID for categories based on slug
@@ -335,7 +388,7 @@ async function main(): Promise<void> {
         current: slug,
       },
       shortDescription: row.shortDescription?.trim() || '',
-      longDescription: row.longDescription?.trim() || '',
+      longDescription: textToPortableText(row.longDescription?.trim() || ''),
       category: {
         _type: 'reference',
         _ref: categoryId,

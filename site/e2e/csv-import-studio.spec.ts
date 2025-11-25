@@ -21,6 +21,7 @@ test.describe('CSV Import Script Structure Tests', () => {
     expect(content).toContain('parseCertifications');
     expect(content).toContain('parseFeatured');
     expect(content).toContain('validateRow');
+    expect(content).toContain('textToPortableText');
     expect(content).toContain('async function main');
   });
 
