@@ -17,6 +17,48 @@ This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing 
 
 ## Recent Updates
 
+### Phase 7C – Product Detail UX & SEO
+
+This phase enhances the product detail page with improved UX, better CTAs, and SEO optimizations:
+
+- **Enhanced Breadcrumb Navigation**:
+  - Updated breadcrumb structure: Home > Products > {Category} > {Product Name}
+  - Added "Products" link to breadcrumb path
+  - Improved accessibility with `aria-label` and `aria-current` attributes
+  - Added test IDs for e2e testing
+
+- **Improved CTA Layout**:
+  - Primary CTA: "Request Product Information" linking to inquiry form
+  - Secondary CTA: "View All {Category}" linking to category page
+  - Both CTAs work on desktop and mobile (responsive flex layout)
+
+- **Related Products Section**:
+  - Shows up to 3 related products from the same category
+  - Excludes the current product from related items
+  - Uses existing ProductCard component for consistent styling
+  - Gracefully hidden when no related products exist
+  - Updated grid layout (3-column on desktop)
+
+- **Category Badge**:
+  - Added test ID for e2e testing
+  - Links to category page for easy navigation
+
+- **SEO & Structured Data**:
+  - Proper `<title>` and `<meta name="description">` already in place
+  - Product JSON-LD with required fields: name, description, image, category, brand
+  - BreadcrumbList JSON-LD for search engine understanding
+
+- **Accessibility Improvements**:
+  - Logical heading order (H1 for product name, H2 for sections)
+  - Keyboard accessible interactive elements
+  - Meaningful alt text on images
+  - ARIA attributes on breadcrumb navigation
+
+- **Testing**:
+  - 22 new Playwright e2e tests for product detail page
+  - Tests cover: page rendering, breadcrumbs, CTAs, related products, SEO, accessibility
+  - Tests for both desktop and mobile views
+
 ### Phase 7B – Product Filtering & Category Enhancements
 
 This phase implements comprehensive filtering and sorting capabilities for category pages:
