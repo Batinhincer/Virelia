@@ -37,3 +37,7 @@ yarn-error.log*
 # Temporary files
 *.zip
 virelia-updated.zip
+
+# Playwright
+playwright-report/
+test-results/
