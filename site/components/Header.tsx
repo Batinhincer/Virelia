@@ -2,11 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { categoryInfo } from "@/data/products";
+import SearchModal, { SearchButton, useSearchModal } from "@/components/SearchModal";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProductsExpanded, setIsProductsExpanded] = useState(false);
   const router = useRouter();
+  const { isOpen: isSearchOpen, openSearch, closeSearch } = useSearchModal();
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -134,26 +136,34 @@ export default function Header() {
           <a href="/#contact" className={navLinkClasses("/#contact")}>
             Contact
           </a>
+          {/* Desktop Search Button */}
+          <SearchButton onClick={openSearch} />
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="lg:hidden p-2 rounded-lg hover:bg-primary-dark transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-light focus:ring-offset-2 focus:ring-offset-primary"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMobileMenuOpen}
-          aria-controls="mobile-menu"
-        >
-          {isMobileMenuOpen ? (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
-        </button>
+        {/* Mobile Controls */}
+        <div className="flex items-center gap-2 lg:hidden">
+          {/* Mobile Search Button */}
+          <SearchButton onClick={openSearch} />
+          
+          {/* Mobile Menu Button */}
+          <button
+            className="p-2 rounded-lg hover:bg-primary-dark transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-light focus:ring-offset-2 focus:ring-offset-primary"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+          >
+            {isMobileMenuOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}
@@ -271,6 +281,9 @@ export default function Header() {
           </div>
         </div>
       </nav>
+
+      {/* Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
     </header>
   );
 }
