@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { PLACEHOLDER_IMAGE } from './constants';
 
 // Sanity configuration
 // Server-side variables take precedence over public ones for security
@@ -32,9 +33,13 @@ const builder = projectId
 
 export function urlFor(source: SanityImageSource): string {
   if (!builder || !source) {
-    return '/placeholder.jpg';
+    return PLACEHOLDER_IMAGE;
   }
-  return builder.image(source).url();
+  try {
+    return builder.image(source).url();
+  } catch {
+    return PLACEHOLDER_IMAGE;
+  }
 }
 
 // Types for Sanity data

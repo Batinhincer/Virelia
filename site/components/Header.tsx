@@ -1,8 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import { categoryInfo } from "@/data/products";
-import SearchModal, { SearchButton, useSearchModal } from "@/components/SearchModal";
+import { SearchButton, useSearchModal } from "@/components/SearchModal";
+
+// Dynamic import for SearchModal to reduce initial bundle size
+// The useSearchModal hook handles Ctrl+K shortcut and is loaded synchronously
+const SearchModal = dynamic(() => import("@/components/SearchModal").then(mod => mod.default), {
+  ssr: false,
+  loading: () => null,
+});
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

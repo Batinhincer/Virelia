@@ -11,8 +11,7 @@ import CTAStrip from "@/components/CTAStrip";
 import Footer from "@/components/Footer";
 import { products, categories, categoryInfo, getProductsByCategory } from "@/data/products";
 import { fetchPageByType, fetchCategories, fetchFeaturedProducts, type SanityPage } from "@/lib/sanity";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
+import { SITE_URL } from "@/lib/constants";
 
 // Default fallback content for homepage
 const defaultContent = {

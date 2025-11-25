@@ -7,8 +7,7 @@ import CTAStrip from "@/components/CTAStrip";
 import PageHero from "@/components/PageHero";
 import Footer from "@/components/Footer";
 import { fetchPageByType, type SanityPage } from "@/lib/sanity";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
+import { SITE_URL } from "@/lib/constants";
 
 // Default fallback content
 const defaultContent = {
