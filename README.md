@@ -439,6 +439,69 @@ The script will:
 - Create/update product documents with category references
 - Use deterministic IDs to prevent duplicates on re-runs
 
+### Bulk Product Import from CSV
+
+The studio supports bulk importing products from CSV files. This is useful for importing large datasets or migrating from other systems.
+
+#### CSV Format
+
+The CSV file should have the following columns:
+
+| Column | Required | Description |
+|--------|----------|-------------|
+| `title` | Yes | Product name |
+| `slug` | No | URL-friendly identifier (auto-generated from title if empty) |
+| `category` | Yes | Category name (auto-created if doesn't exist) |
+| `shortDescription` | No | Brief product summary (max 200 characters) |
+| `longDescription` | No | Detailed product description |
+| `packaging` | No | Packaging options (e.g., "Glass bottles 250ml, 500ml, 1L") |
+| `moq` | No | Minimum Order Quantity (e.g., "500L" or "100 units") |
+| `origin` | No | Country or region of origin |
+| `shelfLife` | No | Shelf life information (e.g., "18 months") |
+| `hsCode` | No | HS code for customs |
+| `certifications` | No | Comma-separated list (e.g., "HACCP, ISO 22000, Halal") |
+| `featured` | No | Boolean: true/false (marks product as featured) |
+| `imageUrl` | No | URL or path to product image (validated but not uploaded) |
+
+#### Example CSV
+
+```csv
+title,slug,category,shortDescription,longDescription,packaging,moq,origin,shelfLife,hsCode,certifications,featured,imageUrl
+Premium Olive Oil,,Oils & Condiments,Extra virgin cold-pressed olive oil,Our premium olive oil is carefully crafted...,Glass bottles 250ml-1L,500L,Turkey,18 months,1509.10,"HACCP, ISO 22000",true,/products/olive-oil.jpg
+Organic Honey,organic-honey,Honey Products,Pure organic wildflower honey,Sourced from mountain apiaries...,Jars 250g-1kg,200kg,Greece,24 months,0409.00,"HACCP, Organic",false,https://example.com/honey.jpg
+```
+
+#### Running the Import
+
+1. Ensure your `.env` file has the Sanity credentials (same as seeding):
+```bash
+SANITY_STUDIO_PROJECT_ID=your-project-id
+SANITY_STUDIO_DATASET=production
+SANITY_WRITE_TOKEN=your-write-token
+```
+
+2. Run the import script with your CSV file:
+```bash
+cd studio
+npm run import:csv -- /path/to/products.csv
+```
+
+#### Validations
+
+The import script performs the following validations:
+- **Required fields**: `title` and `category` must be present
+- **Slug generation**: Auto-generates slug from title if not provided
+- **Category handling**: Auto-creates categories that don't exist
+- **Image URL**: Validates URL format (relative paths like `/products/` or absolute URLs)
+- **Deterministic IDs**: Uses `product-{slug}` format to prevent duplicates on re-runs
+
+#### Notes
+
+- Products are upserted (created or updated) based on their slug
+- If a category doesn't exist, it will be automatically created with a generated slug
+- Image URLs are validated but images are not automatically uploaded to Sanity
+- The script provides a summary of imported and failed products
+
 ### Studio Structure
 
 ```
@@ -448,9 +511,11 @@ studio/
 │   ├── index.ts
 │   ├── product.ts
 │   ├── category.ts
-│   └── page.ts
+│   ├── page.ts
+│   └── bulkImportGuide.ts
 ├── scripts/            # Utility scripts
-│   └── seedFromLocal.ts  # Data seeding script
+│   ├── seedFromLocal.ts      # Data seeding from local site data
+│   └── importProductsFromCSV.ts  # CSV bulk import script
 ├── package.json        # Studio dependencies
 ├── tsconfig.json       # TypeScript configuration
 └── .env.example        # Environment variables template
