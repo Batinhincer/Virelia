@@ -60,10 +60,15 @@ export interface EnvStatus {
 
 /**
  * Gets the current environment configuration status
+ * 
+ * Note: Sanity write configuration only requires projectId + writeToken because:
+ * - dataset defaults to 'production' if not set
+ * - readToken is only required for private datasets
  */
 export function getEnvStatus(): EnvStatus {
   return {
     sanityConfigured: hasEnvValue(envRequirements.sanity.projectId),
+    // Write requires projectId + writeToken (dataset has default, readToken is optional)
     sanityWriteConfigured: 
       hasEnvValue(envRequirements.sanity.projectId) && 
       hasEnvValue(envRequirements.sanity.writeToken),
