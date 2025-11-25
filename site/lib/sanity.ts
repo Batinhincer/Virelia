@@ -157,7 +157,10 @@ export const queries = {
     shortDescription,
     "category": category->title,
     "categorySlug": category->slug.current,
-    "image": mainImage.asset->url
+    "image": mainImage.asset->url,
+    packaging,
+    moq,
+    origin
   }`,
 
   // Get page by slug

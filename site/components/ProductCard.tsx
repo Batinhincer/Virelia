@@ -1,18 +1,26 @@
 import Link from "next/link";
-import Image from "next/image";
-import { Product } from "@/data/products";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
+
+// Minimal interface for what ProductCard actually needs
+interface ProductCardProduct {
+  slug: string;
+  title: string;
+  shortDesc: string;
+  category: string;
+  image: string;
+}
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductCardProduct;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link href={`/product/${product.slug}`}>
       <div className="card card-hover cursor-pointer h-full flex flex-col group overflow-hidden">
-        <div className="h-64 overflow-hidden rounded-t-2xl relative">
+        <div className="h-64 overflow-hidden rounded-t-2xl relative bg-bg-surface">
           <img
-            src={product.image}
+            src={product.image || PLACEHOLDER_IMAGE}
             alt={product.title}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"

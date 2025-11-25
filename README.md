@@ -13,6 +13,36 @@ This is a Next.js-based website for Virelia Ticaret Limited Şirketi, showcasing
 - **Inquiry System**: Request quotes directly from product pages via email
 - **Responsive Design**: Optimized for desktop and mobile devices
 - **Premium UI**: Designed with B2B catalog style using consistent design tokens
+- **Sanity CMS Integration**: Product and category data can be managed via Sanity Studio with automatic fallback to local data
+
+## Recent Updates
+
+### Phase 6A – Product & Category UX Upgrade
+
+This phase introduced significant UX improvements to product and category pages:
+
+- **Category Pages** (`/products/[category]`):
+  - Clean B2B catalog layout with responsive grid (2-4 columns)
+  - Category title and description from Sanity (with local fallback)
+  - Product cards showing name, description, key specs summary (packaging, origin, MOQ)
+  - "View Details" buttons with hover animations
+  - Improved empty state and "not found" handling
+
+- **Product Detail Pages** (`/product/[slug]`):
+  - Professional B2B spec page layout
+  - Hero section with product name, category badge, and short description
+  - Quick stats bar showing MOQ, origin, and shelf life
+  - Comprehensive specifications table with packaging, shelf life, MOQ, origin, and HS code
+  - Certification badges displayed prominently
+  - Long description section
+  - Prominent "Request a Quote" CTA
+  - Related products section
+  - B2B services info box
+
+- **Data Integration**:
+  - Product/category pages now fetch data from Sanity CMS when configured
+  - Graceful fallback to local data (`site/data/products.ts`) when Sanity is not available
+  - GROQ queries updated to fetch all required B2B specification fields
 
 ## Getting Started
 
