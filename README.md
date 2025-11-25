@@ -1,10 +1,10 @@
-# Virelia
+# Frezya
 
-Virelia - Premium Mediterranean Food Products B2B Website
+Frezya - Premium Mediterranean Food Products B2B Website
 
 ## Overview
 
-This is a Next.js-based website for Virelia Ticaret Limited Şirketi, showcasing premium Mediterranean food products for B2B export.
+This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing premium Mediterranean food products for B2B export.
 
 ## Features
 
@@ -17,6 +17,55 @@ This is a Next.js-based website for Virelia Ticaret Limited Şirketi, showcasing
 
 ## Recent Updates
 
+### Phase 6C – Navigation, Footer & Global UI Polishing
+
+This phase focuses on navigation, footer consistency, and overall UI polish:
+
+- **Header / Navigation Improvements** (`site/components/Header.tsx`):
+  - Added responsive mobile navigation with hamburger menu
+  - Mobile menu includes full-screen slide-out panel with all navigation links
+  - Products dropdown with category links (expanded/collapsible on mobile)
+  - Active link highlighting using `useRouter` to detect current page
+  - Keyboard accessibility: ESC key closes mobile menu
+  - Proper ARIA attributes: `aria-label`, `aria-expanded`, `aria-controls`, `aria-haspopup`
+  - Body scroll lock when mobile menu is open
+  - Navigation structure: Home, Products (dropdown), About, Logistics, Certifications, Contact
+  - "Request a Quote" CTA button in mobile menu footer
+
+- **Footer Improvements** (`site/components/Footer.tsx`):
+  - New responsive multi-column layout (4 columns on desktop, stacked on mobile)
+  - Company information section with:
+    - Company name: Frezya Dış Ticaret Ltd. Şti.
+    - Full address: Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36, 16160 Osmangazi/Bursa, Türkiye
+  - Quick links section: Home, Products, About Us, Logistics, Certifications
+  - Contact section with:
+    - Email: batinhincer@frezya.nl
+    - Phone: +90 507 707 54 07
+    - "Request a Quote" link
+  - Dynamic copyright year
+  - Semantic footer with `role="contentinfo"` and navigation `aria-label`
+
+- **Footer Consistency**:
+  - Footer component now used consistently across all pages:
+    - Homepage (`/`)
+    - About (`/about`)
+    - Logistics (`/logistics`)
+    - Certifications (`/certifications`)
+    - Product detail pages (`/product/[slug]`)
+    - Category pages (`/products/[category]`)
+    - 404 page
+
+- **Branding Update**:
+  - Updated all references from "Virelia" to "Frezya" across the site
+  - Updated company contact information throughout
+  - Updated SEO metadata and structured data (Organization, Product, WebSite schemas)
+
+- **Accessibility Improvements**:
+  - Header mobile menu with full ARIA support
+  - Footer navigation with proper labels
+  - Focus states maintained for keyboard navigation
+  - External links pattern ready (target="_blank" with rel="noopener noreferrer")
+
 ### Phase 6B – Homepage & Static Pages Polish
 
 This phase polishes the homepage and adds Sanity CMS integration to static pages (About, Logistics, Certifications) with safe local fallback:
@@ -26,7 +75,7 @@ This phase polishes the homepage and adds Sanity CMS integration to static pages
   - Hero section with dynamic content from Sanity (heroTitle, heroSubtitle)
   - "Product Categories" section with category descriptions and "View Category" links
   - "Featured Products" grid (6 products in 3-column layout)
-  - "Why Choose Virelia?" value proposition cards
+  - "Why Choose Frezya?" value proposition cards
   - "Export Ready for Global Markets" section with EU/UK/USA compliance badges
   - New "Quality & Certifications" teaser section with certification badges
   - Link to Logistics page from export section
@@ -196,7 +245,7 @@ site/
 
 ## License
 
-Copyright © 2025 Virelia Ticaret Limited Şirketi. All rights reserved.
+Copyright © 2025 Frezya Dış Ticaret Ltd. Şti. All rights reserved.
 
 ## Studio Deployment Instructions
 

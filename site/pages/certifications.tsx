@@ -14,8 +14,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
 const defaultContent = {
   heroTitle: "Certifications & Compliance",
   heroSubtitle: "Committed to the highest food safety and quality standards",
-  seoTitle: "Certifications & Compliance | Virelia – Food Safety Standards",
-  seoDescription: "Virelia maintains the highest food safety and quality standards. Our products are certified with BRC, IFS, ISO 22000, HACCP, Halal, Kosher, and more for global export.",
+  seoTitle: "Certifications & Compliance | Frezya – Food Safety Standards",
+  seoDescription: "Frezya maintains the highest food safety and quality standards. Our products are certified with BRC, IFS, ISO 22000, HACCP, Halal, Kosher, and more for global export.",
 };
 
 interface CertificationsPageProps {
@@ -105,7 +105,7 @@ export default function CertificationsPage({ page }: InferGetStaticPropsType<typ
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content={`${SITE_URL}/hero1.jpg`} />
-        <meta property="og:site_name" content="Virelia" />
+        <meta property="og:site_name" content="Frezya" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -135,7 +135,7 @@ export default function CertificationsPage({ page }: InferGetStaticPropsType<typ
               </h2>
               <div className="space-y-6 text-lg text-text leading-relaxed">
                 <p>
-                  At Virelia, food safety is not just a requirement—it's a
+                  At Frezya, food safety is not just a requirement—it's a
                   fundamental commitment to our customers and consumers. We
                   maintain rigorous quality control systems throughout our
                   entire supply chain, from source selection to final delivery.
@@ -581,7 +581,7 @@ export default function CertificationsPage({ page }: InferGetStaticPropsType<typ
             <div className="flex flex-wrap justify-center gap-4">
               <CTAButton href="/#contact">Contact Our Team</CTAButton>
               <CTAButton href="/about" variant="secondary">
-                About Virelia
+                About Frezya
               </CTAButton>
             </div>
           </motion.div>

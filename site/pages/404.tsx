@@ -2,20 +2,21 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import CTAButton from '@/components/CTAButton';
 
 export default function Custom404() {
   return (
-    <div className="min-h-screen bg-bg text-text">
+    <div className="min-h-screen bg-bg text-text flex flex-col">
       <Head>
-        <title>404 - Page Not Found | Virelia</title>
+        <title>404 - Page Not Found | Frezya</title>
         <meta name="description" content="The page you're looking for doesn't exist." />
         <meta name="robots" content="noindex, nofollow" />
       </Head>
 
       <Header />
 
-      <div className="min-h-[calc(100vh-80px)] flex items-center justify-center mt-[80px]">
+      <div className="flex-1 flex items-center justify-center mt-[80px] py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -98,17 +99,7 @@ export default function Custom404() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-text-heading text-bg py-12">
-        <div className="container-custom text-center">
-          <p className="mb-3 text-lg">
-            &copy; {new Date().getFullYear()} Virelia Ticaret Limited Şirketi.
-            All rights reserved.
-          </p>
-          <p className="text-sm text-text-muted">
-            Premium Mediterranean Food Products | B2B Export Solutions
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -14,8 +14,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
 const defaultContent = {
   heroTitle: "Export & Logistics",
   heroSubtitle: "Reliable supply chain solutions for global markets",
-  seoTitle: "Export & Logistics | Virelia – Mediterranean Food Exporter",
-  seoDescription: "Discover Virelia's comprehensive export and logistics solutions. We support EXW, FOB, CIF delivery with full container and pallet options for EU, UK, and USA markets.",
+  seoTitle: "Export & Logistics | Frezya – Mediterranean Food Exporter",
+  seoDescription: "Discover Frezya's comprehensive export and logistics solutions. We support EXW, FOB, CIF delivery with full container and pallet options for EU, UK, and USA markets.",
 };
 
 interface LogisticsPageProps {
@@ -54,7 +54,7 @@ export default function LogisticsPage({ page }: InferGetStaticPropsType<typeof g
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content={`${SITE_URL}/hero1.jpg`} />
-        <meta property="og:site_name" content="Virelia" />
+        <meta property="og:site_name" content="Frezya" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -84,7 +84,7 @@ export default function LogisticsPage({ page }: InferGetStaticPropsType<typeof g
               </h2>
               <div className="space-y-6 text-lg text-text leading-relaxed">
                 <p>
-                  Virelia operates a comprehensive export-ready supply chain
+                  Frezya operates a comprehensive export-ready supply chain
                   designed specifically for international B2B food trade. From
                   sourcing to final delivery, every step is optimized for
                   efficiency, compliance, and product integrity.
