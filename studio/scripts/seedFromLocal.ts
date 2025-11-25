@@ -22,6 +22,9 @@ import * as path from 'path';
 // Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
+// Constants
+const SEPARATOR_WIDTH = 50;
+
 // Import local data - using dynamic import for ES module compatibility
 interface Product {
   slug: string;
@@ -271,11 +274,11 @@ async function main(): Promise<void> {
     }
   }
 
-  console.log(`\n${'='.repeat(50)}`);
+  console.log(`\n${'='.repeat(SEPARATOR_WIDTH)}`);
   console.log('📊 Seed Summary:');
   console.log(`   Categories: ${categoryInfo.length} upserted`);
   console.log(`   Products: ${successCount} upserted, ${errorCount} failed`);
-  console.log('='.repeat(50));
+  console.log('='.repeat(SEPARATOR_WIDTH));
 
   if (errorCount > 0) {
     console.log('\n⚠️  Some items failed to sync. Check the errors above.');
