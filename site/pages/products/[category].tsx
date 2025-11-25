@@ -16,8 +16,7 @@ import {
   fetchCategoryBySlug,
   fetchProductsByCategory,
 } from "@/lib/sanity";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
+import { PLACEHOLDER_IMAGE, SITE_URL } from "@/lib/constants";
 
 // Unified product type for the page (works with both Sanity and local data)
 interface CategoryProduct {
@@ -185,7 +184,7 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
                       {/* Product Image */}
                       <div className="h-48 lg:h-56 overflow-hidden rounded-t-2xl relative bg-bg-surface">
                         <img
-                          src={product.image || '/placeholder.jpg'}
+                          src={product.image || PLACEHOLDER_IMAGE}
                           alt={product.title}
                           loading="lazy"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
@@ -327,7 +326,7 @@ function transformSanityProduct(sanityProduct: {
     title: sanityProduct.title,
     shortDescription: sanityProduct.shortDescription || '',
     category: sanityProduct.category || '',
-    image: sanityProduct.image || '/placeholder.jpg',
+    image: sanityProduct.image || PLACEHOLDER_IMAGE,
     packaging: sanityProduct.packaging ?? null,
     moq: sanityProduct.moq ?? null,
     origin: sanityProduct.origin ?? null,

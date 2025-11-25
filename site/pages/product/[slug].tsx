@@ -11,8 +11,7 @@ import InquiryForm from "@/components/InquiryForm";
 import { ProductSchema, BreadcrumbSchema } from "@/components/SEO";
 import { products, getProductBySlug, getCategorySlug, getRelatedProducts, Product } from "@/data/products";
 import { fetchProductBySlug, fetchProductsByCategory } from "@/lib/sanity";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
+import { PLACEHOLDER_IMAGE, SITE_URL } from "@/lib/constants";
 
 // Unified product type for this page
 interface ProductData {
@@ -171,7 +170,7 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
               <div className="sticky top-24">
                 <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-soft-lg bg-bg-surface">
                   <Image
-                    src={product.image || '/placeholder.jpg'}
+                    src={product.image || PLACEHOLDER_IMAGE}
                     alt={product.title}
                     fill
                     className="object-cover"
@@ -405,7 +404,7 @@ function transformSanityProduct(sanityProduct: {
     longDescription: sanityProduct.longDescription || '',
     category: sanityProduct.category || '',
     categorySlug: sanityProduct.categorySlug || '',
-    image: sanityProduct.image || '/placeholder.jpg',
+    image: sanityProduct.image || PLACEHOLDER_IMAGE,
     packaging: sanityProduct.packaging ?? null,
     shelfLife: sanityProduct.shelfLife ?? null,
     moq: sanityProduct.moq ?? null,
@@ -475,7 +474,7 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async ({ params 
         title: p.title,
         shortDesc: p.shortDescription || '',
         category: p.category || '',
-        image: p.image || '/placeholder.jpg',
+        image: p.image || PLACEHOLDER_IMAGE,
       }));
     
     return {
