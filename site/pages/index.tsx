@@ -18,8 +18,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
 const defaultContent = {
   heroTitle: "Premium Mediterranean Foods for Global Markets",
   heroSubtitle: "Your trusted B2B partner for authentic Mediterranean products. Quality, certification, and reliable export to EU, UK, and USA markets.",
-  seoTitle: "Virelia – Premium Mediterranean Food Exporter | B2B Food Export",
-  seoDescription: "Virelia is your trusted B2B partner for premium Mediterranean food products. Olive oil, pepper paste, coffee, and specialty foods. Export to EU, UK, and USA.",
+  seoTitle: "Frezya – Premium Mediterranean Food Exporter | B2B Food Export",
+  seoDescription: "Frezya is your trusted B2B partner for premium Mediterranean food products. Olive oil, pepper paste, coffee, and specialty foods. Export to EU, UK, and USA.",
 };
 
 interface HomePageProps {
@@ -89,7 +89,7 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content={`${SITE_URL}/hero1.jpg`} />
-        <meta property="og:site_name" content="Virelia" />
+        <meta property="og:site_name" content="Frezya" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -157,11 +157,11 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
         </div>
       </section>
 
-      {/* Why Virelia? Section */}
+      {/* Why Frezya? Section */}
       <section className="section-padding bg-white">
         <div className="container-custom">
           <SectionHeader
-            title="Why Choose Virelia?"
+            title="Why Choose Frezya?"
             subtitle="Your trusted partner for premium Mediterranean food products"
             centered
           />
@@ -499,13 +499,13 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
       <section id="about" className="section-padding bg-white">
         <div className="container-custom">
           <SectionHeader
-            title="About Virelia"
+            title="About Frezya"
             subtitle="Your trusted partner for premium Mediterranean food products"
             centered
           />
           <div className="max-w-4xl mx-auto text-text leading-relaxed space-y-6 text-lg">
             <p>
-              Virelia is a leading exporter of authentic Mediterranean food
+              Frezya is a leading exporter of authentic Mediterranean food
               products, bringing the finest flavors from Turkey and the
               Mediterranean region to markets across Europe and beyond.
             </p>
@@ -520,7 +520,7 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
               We understand the needs of B2B partners – from consistent quality
               and reliable supply chains to competitive pricing and flexible
               packaging options. Whether you&apos;re a distributor, restaurant chain,
-              or specialty food retailer, Virelia is your gateway to authentic
+              or specialty food retailer, Frezya is your gateway to authentic
               Mediterranean flavor.
             </p>
           </div>
@@ -567,11 +567,11 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
           <div className="grid md:grid-cols-2 gap-10 mb-12">
             <div className="space-y-6">
               <h4 className="text-2xl font-medium mb-6 text-secondary-light">Get in Touch</h4>
-              <p className="mb-3 text-lg">Virelia Ticaret Limited Şirketi</p>
+              <p className="mb-3 text-lg">Frezya Dış Ticaret Ltd. Şti.</p>
               <p className="mb-3 text-lg leading-relaxed">
-                Balat Mah. Bedesten Sok. No:6
+                Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36,
                 <br />
-                Nilüfer, Bursa, Turkey
+                16160 Osmangazi/Bursa, Türkiye
               </p>
               <p className="mb-3">
                 <a
@@ -581,18 +581,18 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  +90 507 707 5407
+                  +90 507 707 54 07
                 </a>
               </p>
               <p className="mb-3">
                 <a
-                  href="mailto:batinhincer@gmail.com"
+                  href="mailto:batinhincer@frezya.nl"
                   className="hover:text-secondary-light transition-colors text-lg inline-flex items-center"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  batinhincer@gmail.com
+                  batinhincer@frezya.nl
                 </a>
               </p>
             </div>

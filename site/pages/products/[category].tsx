@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import CTAButton from "@/components/CTAButton";
 import CTAStrip from "@/components/CTAStrip";
@@ -85,7 +86,7 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
   }
 
   // SEO metadata
-  const pageTitle = `${categoryData.name} | Virelia`;
+  const pageTitle = `${categoryData.name} | Frezya`;
   const pageDescription = categoryData.description;
   const pageUrl = `${SITE_URL}/products/${categoryData.slug}`;
   
@@ -119,7 +120,7 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={ogImage} />
-        <meta property="og:site_name" content="Virelia" />
+        <meta property="og:site_name" content="Frezya" />
         
         {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -268,7 +269,7 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <a
-                  href="mailto:batinhincer@gmail.com"
+                  href="mailto:batinhincer@frezya.nl"
                   className="inline-flex items-center justify-center px-8 py-4 rounded-2xl font-semibold text-lg text-white bg-transparent border-2 border-white transition-all duration-200 hover:bg-white hover:text-primary hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary"
                 >
                   Contact Sales
@@ -283,17 +284,7 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
       <CTAStrip />
 
       {/* Footer */}
-      <footer className="bg-text-heading text-bg py-12 mt-20">
-        <div className="container-custom text-center">
-          <p className="mb-3 text-lg">
-            &copy; {new Date().getFullYear()} Virelia Ticaret Limited Şirketi.
-            All rights reserved.
-          </p>
-          <p className="text-sm text-text-muted">
-            Premium Mediterranean Food Products | B2B Export Solutions
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

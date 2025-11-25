@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import CTAButton from "@/components/CTAButton";
 import CTAStrip from "@/components/CTAStrip";
@@ -127,22 +128,22 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
   return (
     <div className="min-h-screen bg-bg text-text">
       <Head>
-        <title>{product.title} | Virelia</title>
+        <title>{product.title} | Frezya</title>
         <meta name="description" content={product.shortDescription} />
         <link rel="canonical" href={pageUrl} />
         
         {/* Open Graph */}
         <meta property="og:type" content="product" />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:title" content={`${product.title} | Virelia`} />
+        <meta property="og:title" content={`${product.title} | Frezya`} />
         <meta property="og:description" content={product.shortDescription} />
         <meta property="og:image" content={ogImage} />
-        <meta property="og:site_name" content="Virelia" />
+        <meta property="og:site_name" content="Frezya" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={pageUrl} />
-        <meta name="twitter:title" content={`${product.title} | Virelia`} />
+        <meta name="twitter:title" content={`${product.title} | Frezya`} />
         <meta name="twitter:description" content={product.shortDescription} />
         <meta name="twitter:image" content={ogImage} />
       </Head>
@@ -366,17 +367,7 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
       <CTAStrip />
 
       {/* Footer */}
-      <footer className="bg-text-heading text-bg py-12 mt-20">
-        <div className="container-custom text-center">
-          <p className="mb-3 text-lg">
-            &copy; {new Date().getFullYear()} Virelia Ticaret Limited Şirketi.
-            All rights reserved.
-          </p>
-          <p className="text-sm text-text-muted">
-            Premium Mediterranean Food Products | B2B Export Solutions
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

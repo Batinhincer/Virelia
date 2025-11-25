@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
-const SITE_NAME = 'Virelia';
+const SITE_NAME = 'Frezya';
 
 interface SEOProps {
   title: string;
@@ -56,23 +56,24 @@ export function OrganizationSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Virelia Ticaret Limited Şirketi',
-    alternateName: 'Virelia',
+    name: 'Frezya Dış Ticaret Ltd. Şti.',
+    alternateName: 'Frezya',
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     description: 'Premium Mediterranean Food Exporter - B2B supplier of olive oil, pepper paste, coffee, and specialty food products.',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Balat Mah. Bedesten Sok. No:6',
-      addressLocality: 'Nilüfer',
+      streetAddress: 'Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36',
+      addressLocality: 'Osmangazi',
+      postalCode: '16160',
       addressRegion: 'Bursa',
-      addressCountry: 'Turkey',
+      addressCountry: 'TR',
     },
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+90-507-707-5407',
       contactType: 'sales',
-      email: 'batinhincer@gmail.com',
+      email: 'batinhincer@frezya.nl',
       availableLanguage: ['English', 'Turkish'],
     },
     sameAs: [],
@@ -106,11 +107,11 @@ export function ProductSchema({ name, description, image, category, sku }: Produ
     sku: sku || name.toLowerCase().replace(/\s+/g, '-'),
     brand: {
       '@type': 'Brand',
-      name: 'Virelia',
+      name: 'Frezya',
     },
     manufacturer: {
       '@type': 'Organization',
-      name: 'Virelia Ticaret Limited Şirketi',
+      name: 'Frezya Dış Ticaret Ltd. Şti.',
     },
     offers: {
       '@type': 'Offer',
@@ -170,7 +171,7 @@ export function WebSiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_NAME,
-    alternateName: 'Virelia Food Export',
+    alternateName: 'Frezya Food Export',
     url: SITE_URL,
     potentialAction: {
       '@type': 'SearchAction',
