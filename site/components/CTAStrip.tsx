@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function CTAStrip() {
   return (
@@ -23,12 +24,12 @@ export default function CTAStrip() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <a
-              href="/#contact"
+            <Link
+              href="/contact"
               className="inline-flex items-center justify-center px-8 py-4 rounded-2xl font-semibold text-lg text-white bg-primary transition-all duration-200 hover:bg-primary-dark hover:shadow-soft-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 whitespace-nowrap"
             >
               Request a Quote
-            </a>
+            </Link>
           </motion.div>
         </motion.div>
       </div>
