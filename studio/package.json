@@ -6,7 +6,8 @@
     "dev": "sanity dev",
     "build": "sanity build",
     "start": "sanity start",
-    "deploy": "sanity deploy"
+    "deploy": "sanity deploy",
+    "import:seed": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/seedFromLocal.ts"
   },
   "dependencies": {
     "@sanity/vision": "^3.72.1",
@@ -17,7 +18,10 @@
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
+    "@sanity/client": "^7.13.0",
     "@types/react": "^18.0.27",
+    "dotenv": "^17.2.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }

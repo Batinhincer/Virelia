@@ -174,6 +174,31 @@ npm run dev
 
 5. Open [http://localhost:3333](http://localhost:3333) in your browser.
 
+### Seeding Data from Local Files
+
+The studio includes a seeding script to automatically import categories and products from the local Next.js site data.
+
+1. Ensure your `.env` file has the following variables set:
+```bash
+SANITY_STUDIO_PROJECT_ID=your-project-id
+SANITY_STUDIO_DATASET=production
+SANITY_WRITE_TOKEN=your-write-token
+```
+
+2. Generate a write token from [Sanity Manage](https://sanity.io/manage) → Your Project → API → Tokens (select "Editor" or "Read + Write" permissions).
+
+3. Run the seed script:
+```bash
+cd studio
+npm run import:seed
+```
+
+The script will:
+- Import product data from `site/data/products.ts`
+- Create/update category documents in Sanity
+- Create/update product documents with category references
+- Use deterministic IDs to prevent duplicates on re-runs
+
 ### Studio Structure
 
 ```
@@ -184,6 +209,8 @@ studio/
 │   ├── product.ts
 │   ├── category.ts
 │   └── page.ts
+├── scripts/            # Utility scripts
+│   └── seedFromLocal.ts  # Data seeding script
 ├── package.json        # Studio dependencies
 ├── tsconfig.json       # TypeScript configuration
 └── .env.example        # Environment variables template
