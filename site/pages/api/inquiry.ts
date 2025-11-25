@@ -15,6 +15,12 @@ interface InquiryData {
   urlPath?: string;
 }
 
+// Consistent API response shape
+interface ApiResponse {
+  success: boolean;
+  message: string;
+}
+
 /**
  * Determines the inquiry source based on the provided data
  */
@@ -34,10 +40,10 @@ function determineSource(urlPath: string | undefined, productSlug: string | unde
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<ApiResponse>
 ) {
   if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
+    return res.status(405).json({ success: false, message: "Method not allowed" });
   }
 
   const {
@@ -51,7 +57,7 @@ export default async function handler(
     productSlug,
     productCategory,
     urlPath: bodyUrlPath,
-  }: InquiryData = req.body;
+  }: InquiryData = req.body || {};
 
   // Determine URL path from body or referer header
   // Note: referer can be spoofed, but we only use it for analytics/tracking, not security decisions
@@ -72,13 +78,13 @@ export default async function handler(
 
   // Validate required fields - productName is no longer strictly required for general contact forms
   if (!fullName || !companyName || !email || !country || !message) {
-    return res.status(400).json({ message: "Missing required fields" });
+    return res.status(400).json({ success: false, message: "Missing required fields" });
   }
 
   // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    return res.status(400).json({ message: "Invalid email format" });
+    return res.status(400).json({ success: false, message: "Invalid email format" });
   }
 
   // Check if SMTP environment variables are configured
@@ -124,19 +130,35 @@ export default async function handler(
       console.log("Sanity Write Configured:", isSanityWriteConfigured);
       console.log("===============================================");
       
-      // Still attempt to save to Sanity in development
+      // Still attempt to save to Sanity in development (graceful fallback)
       if (isSanityWriteConfigured) {
-        const inquiryId = await createInquiry(sanityInquiry);
-        if (inquiryId) {
-          console.log("Saved to Sanity with ID:", inquiryId);
+        try {
+          const inquiryId = await createInquiry(sanityInquiry);
+          if (inquiryId) {
+            console.log("Saved to Sanity with ID:", inquiryId);
+          }
+        } catch (sanityError) {
+          // Log but don't fail - Sanity is optional
+          console.warn("Failed to save to Sanity in dev mode:", sanityError instanceof Error ? sanityError.message : "Unknown error");
         }
       }
       
       return res.status(200).json({
+        success: true,
         message: "Inquiry received (development mode - email not sent)",
       });
     } else {
+      // In production without SMTP, still try to save to Sanity
+      if (isSanityWriteConfigured) {
+        try {
+          await createInquiry(sanityInquiry);
+          console.log("Inquiry saved to Sanity (SMTP not configured)");
+        } catch (sanityError) {
+          console.warn("Failed to save inquiry to Sanity:", sanityError instanceof Error ? sanityError.message : "Unknown error");
+        }
+      }
       return res.status(500).json({
+        success: false,
         message: "Email service is not configured. Please contact us directly.",
       });
     }
@@ -335,11 +357,25 @@ Source: ${productPageUrl}
     }
 
     return res.status(200).json({
+      success: true,
       message: "Inquiry submitted successfully",
     });
   } catch (error) {
-    console.error("Error sending email:", error);
+    // Log error without exposing sensitive details
+    console.error("Error sending email:", error instanceof Error ? error.message : "Unknown error");
+    
+    // Still try to save to Sanity even if email fails
+    if (isSanityWriteConfigured) {
+      try {
+        await createInquiry(sanityInquiry);
+        console.log("Inquiry saved to Sanity despite email failure");
+      } catch (sanityError) {
+        console.warn("Failed to save inquiry to Sanity after email failure:", sanityError instanceof Error ? sanityError.message : "Unknown error");
+      }
+    }
+    
     return res.status(500).json({
+      success: false,
       message: "Failed to send inquiry. Please try again later.",
     });
   }

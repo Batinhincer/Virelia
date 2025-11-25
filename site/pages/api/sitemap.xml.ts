@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { products, categoryInfo } from '@/data/products';
 import { fetchAllSlugs, isSanityConfigured } from '@/lib/sanity';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
+import { SITE_URL } from '@/lib/constants';
 
 // Static pages with their priorities and change frequencies
 const staticPages = [

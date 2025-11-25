@@ -1,6 +1,6 @@
 import Head from 'next/head';
+import { SITE_URL } from '@/lib/constants';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
 const SITE_NAME = 'Frezya';
 
 interface SEOProps {
