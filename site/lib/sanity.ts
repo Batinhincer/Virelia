@@ -180,7 +180,9 @@ export const queries = {
     "image": mainImage.asset->url,
     packaging,
     moq,
-    origin
+    origin,
+    certifications,
+    featured
   }`,
 
   // Get page by slug

@@ -17,6 +17,49 @@ This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing 
 
 ## Recent Updates
 
+### Phase 7B – Product Filtering & Category Enhancements
+
+This phase implements comprehensive filtering and sorting capabilities for category pages:
+
+- **Filter UI Component** (`site/components/CategoryFilters.tsx`):
+  - Multi-select filters for: Packaging, Origin, MOQ buckets, and Certifications
+  - Desktop: Sidebar filter panel with collapsible sections
+  - Mobile: Slide-out filter panel with "Filters" button
+  - Active filter chips with individual remove buttons
+  - "Clear All" button to reset all filters
+  - Empty state when no products match filters
+  - Real-time filter count display
+
+- **Sorting Options**:
+  - Default / Relevance (featured products first, then alphabetical)
+  - Name A–Z (ascending alphabetical)
+  - Name Z–A (descending alphabetical)
+  - MOQ Low → High (minimum order quantity ascending)
+
+- **URL Query Parameter Sync**:
+  - Filters and sort options sync to URL query params
+  - Example: `/products/pepper-paste?origin=Turkey,Greece&packaging=IBC&sort=name-asc`
+  - Filters are restored on page load from URL
+  - Invalid params are handled gracefully
+  - Supports browser back/forward navigation
+
+- **Category Stats**:
+  - Dynamic product count display (e.g., "15 products")
+  - Active filter indicator (e.g., "8 products • 3 filters active")
+  - Updates in real-time as filters change
+
+- **Accessibility & UX**:
+  - Keyboard accessible: Tab navigation, Space/Enter to toggle
+  - ARIA attributes on all interactive elements
+  - Responsive design: clear desktop sidebar, collapsible mobile panel
+  - Focus management in mobile filter panel
+  - Body scroll lock when mobile panel is open
+
+- **Testing**:
+  - 22 Playwright e2e tests covering all filter functionality
+  - Tests for filter application, URL sync, sorting, and empty states
+  - Tests for both desktop and mobile views
+
 ### Phase 7A – Global Search System
 
 This phase implements a comprehensive global search system for the Frezya B2B site:

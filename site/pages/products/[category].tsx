@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -7,6 +8,15 @@ import Breadcrumb from "@/components/Breadcrumb";
 import CTAButton from "@/components/CTAButton";
 import CTAStrip from "@/components/CTAStrip";
 import { BreadcrumbSchema } from "@/components/SEO";
+import {
+  useCategoryFilters,
+  DesktopFilterPanel,
+  MobileFilterPanel,
+  MobileFilterButton,
+  ActiveFiltersBar,
+  EmptyFilterResults,
+  CategoryProduct as FilterCategoryProduct,
+} from "@/components/CategoryFilters";
 import {
   getCategoryBySlug,
   getProductsByCategory,
@@ -29,6 +39,8 @@ interface CategoryProduct {
   packaging: string | null;
   moq: string | null;
   origin: string | null;
+  certifications?: string[];
+  featured?: boolean;
 }
 
 interface CategoryData {
@@ -60,6 +72,22 @@ function buildSpecsSummary(product: CategoryProduct): string {
 }
 
 export default function CategoryPage({ categoryData, products }: CategoryPageProps) {
+  // Mobile filter panel state
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+  // Use the filters hook
+  const {
+    filters,
+    sort,
+    filterOptions,
+    filteredProducts,
+    activeFilterCount,
+    toggleFilter,
+    updateSort,
+    clearFilters,
+    isInitialized,
+  } = useCategoryFilters(products as FilterCategoryProduct[]);
+
   if (!categoryData) {
     return (
       <div className="min-h-screen bg-bg">
@@ -107,6 +135,19 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
     { label: categoryData.name },
   ];
 
+  // Filter props for components
+  const filterProps = {
+    filters,
+    sort,
+    filterOptions,
+    totalProducts: products.length,
+    filteredCount: filteredProducts.length,
+    activeFilterCount,
+    toggleFilter,
+    updateSort,
+    clearFilters,
+  };
+
   return (
     <div className="min-h-screen bg-bg text-text">
       <Head>
@@ -151,95 +192,136 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
             {categoryData.description}
           </p>
           <div className="mt-6 flex items-center gap-4">
-            <span className="inline-flex items-center px-4 py-2 bg-secondary-light text-primary rounded-full text-sm font-medium">
+            <span className="inline-flex items-center px-4 py-2 bg-secondary-light text-primary rounded-full text-sm font-medium" data-testid="category-product-count">
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
-              {products.length} product{products.length !== 1 ? "s" : ""} available
+              {filteredProducts.length} product{filteredProducts.length !== 1 ? "s" : ""}
+              {activeFilterCount > 0 && ` • ${activeFilterCount} filter${activeFilterCount !== 1 ? "s" : ""} active`}
             </span>
+            {/* Mobile Filter Button */}
+            <MobileFilterButton
+              onClick={() => setIsMobileFilterOpen(true)}
+              activeFilterCount={activeFilterCount}
+            />
           </div>
         </motion.div>
 
-        {/* Products Grid - B2B Catalog Layout */}
-        {products.length === 0 ? (
-          <div className="text-center py-16">
-            <svg className="w-16 h-16 mx-auto text-text-muted opacity-50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-            </svg>
-            <h3 className="text-xl font-semibold text-text-heading mb-2">No products yet</h3>
-            <p className="text-text-muted">Products in this category will appear here soon.</p>
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-            {products.map((product, index) => {
-              const specsSummary = buildSpecsSummary(product);
-              return (
-                <motion.div
-                  key={product.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                >
-                  <Link href={`/product/${product.slug}`}>
-                    <div className="card card-hover cursor-pointer h-full flex flex-col group overflow-hidden">
-                      {/* Product Image */}
-                      <div className="h-48 lg:h-56 overflow-hidden rounded-t-2xl relative bg-bg-surface">
-                        <img
-                          src={product.image || PLACEHOLDER_IMAGE}
-                          alt={product.title}
-                          loading="lazy"
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                      </div>
-                      
-                      {/* Product Info */}
-                      <div className="p-5 lg:p-6 flex-1 flex flex-col">
-                        <h3 className="text-lg lg:text-xl font-semibold text-text-heading mb-2 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                          {product.title}
-                        </h3>
-                        
-                        {product.shortDescription && (
-                          <p className="text-sm text-text-muted leading-relaxed mb-3 line-clamp-2 flex-1">
-                            {product.shortDescription}
-                          </p>
-                        )}
-                        
-                        {/* Key Specs Summary */}
-                        {specsSummary && (
-                          <div className="mb-4">
-                            <p className="text-xs text-text-light line-clamp-1">
-                              {specsSummary}
-                            </p>
+        {/* Mobile Filter Panel */}
+        <MobileFilterPanel
+          isOpen={isMobileFilterOpen}
+          onClose={() => setIsMobileFilterOpen(false)}
+          {...filterProps}
+        />
+
+        {/* Main Content Area with Filters */}
+        <div className="flex gap-8">
+          {/* Desktop Filter Sidebar */}
+          <DesktopFilterPanel {...filterProps} />
+
+          {/* Products Content */}
+          <div className="flex-1 min-w-0">
+            {/* Active Filters Chips */}
+            <ActiveFiltersBar
+              filters={filters}
+              toggleFilter={toggleFilter}
+              clearFilters={clearFilters}
+              activeFilterCount={activeFilterCount}
+            />
+
+            {/* Products Grid - B2B Catalog Layout */}
+            {products.length === 0 ? (
+              <div className="text-center py-16">
+                <svg className="w-16 h-16 mx-auto text-text-muted opacity-50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+                <h3 className="text-xl font-semibold text-text-heading mb-2">No products yet</h3>
+                <p className="text-text-muted">Products in this category will appear here soon.</p>
+              </div>
+            ) : filteredProducts.length === 0 ? (
+              <EmptyFilterResults onClearFilters={clearFilters} />
+            ) : (
+              <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8" data-testid="products-grid">
+                {filteredProducts.map((product, index) => {
+                  const specsSummary = buildSpecsSummary(product);
+                  return (
+                    <motion.div
+                      key={product.slug}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.05 }}
+                      data-testid={`product-card-${product.slug}`}
+                    >
+                      <Link href={`/product/${product.slug}`}>
+                        <div className="card card-hover cursor-pointer h-full flex flex-col group overflow-hidden">
+                          {/* Featured Badge */}
+                          {product.featured && (
+                            <div className="absolute top-3 right-3 z-10">
+                              <span className="inline-flex items-center px-2 py-1 bg-secondary text-white text-xs font-semibold rounded-full">
+                                Featured
+                              </span>
+                            </div>
+                          )}
+                          {/* Product Image */}
+                          <div className="h-48 lg:h-56 overflow-hidden rounded-t-2xl relative bg-bg-surface">
+                            <img
+                              src={product.image || PLACEHOLDER_IMAGE}
+                              alt={product.title}
+                              loading="lazy"
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
                           </div>
-                        )}
-                        
-                        {/* View Details Button */}
-                        <div className="mt-auto pt-4 border-t border-bg-surface">
-                          <span className="inline-flex items-center justify-center w-full px-4 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold transition-all duration-300 group-hover:bg-primary-dark group-hover:shadow-soft">
-                            View Details
-                            <svg
-                              className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                              />
-                            </svg>
-                          </span>
+                          
+                          {/* Product Info */}
+                          <div className="p-5 lg:p-6 flex-1 flex flex-col">
+                            <h3 className="text-lg lg:text-xl font-semibold text-text-heading mb-2 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                              {product.title}
+                            </h3>
+                            
+                            {product.shortDescription && (
+                              <p className="text-sm text-text-muted leading-relaxed mb-3 line-clamp-2 flex-1">
+                                {product.shortDescription}
+                              </p>
+                            )}
+                            
+                            {/* Key Specs Summary */}
+                            {specsSummary && (
+                              <div className="mb-4">
+                                <p className="text-xs text-text-light line-clamp-1">
+                                  {specsSummary}
+                                </p>
+                              </div>
+                            )}
+                            
+                            {/* View Details Button */}
+                            <div className="mt-auto pt-4 border-t border-bg-surface">
+                              <span className="inline-flex items-center justify-center w-full px-4 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold transition-all duration-300 group-hover:bg-primary-dark group-hover:shadow-soft">
+                                View Details
+                                <svg
+                                  className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        )}
+        </div>
 
         {/* CTA Section */}
         <motion.div
@@ -311,6 +393,8 @@ function transformSanityProduct(sanityProduct: {
   packaging?: string;
   moq?: string;
   origin?: string;
+  certifications?: string[];
+  featured?: boolean;
 }): CategoryProduct {
   return {
     slug: sanityProduct.slug,
@@ -321,6 +405,8 @@ function transformSanityProduct(sanityProduct: {
     packaging: sanityProduct.packaging ?? null,
     moq: sanityProduct.moq ?? null,
     origin: sanityProduct.origin ?? null,
+    certifications: sanityProduct.certifications ?? [],
+    featured: sanityProduct.featured ?? false,
   };
 }
 
@@ -335,6 +421,8 @@ function transformLocalProduct(localProduct: Product): CategoryProduct {
     packaging: localProduct.packaging ?? null,
     moq: localProduct.moq ?? null,
     origin: localProduct.origin ?? null,
+    certifications: localProduct.certifications ?? [],
+    featured: false, // Local products don't have featured flag by default
   };
 }
 
