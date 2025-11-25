@@ -17,6 +17,47 @@ This is a Next.js-based website for Virelia Ticaret Limited Şirketi, showcasing
 
 ## Recent Updates
 
+### Phase 6B – Homepage & Static Pages Polish
+
+This phase polishes the homepage and adds Sanity CMS integration to static pages (About, Logistics, Certifications) with safe local fallback:
+
+- **Homepage Redesign** (`/`):
+  - Premium B2B export landing page design
+  - Hero section with dynamic content from Sanity (heroTitle, heroSubtitle)
+  - "Product Categories" section with category descriptions and "View Category" links
+  - "Featured Products" grid (6 products in 3-column layout)
+  - "Why Choose Virelia?" value proposition cards
+  - "Export Ready for Global Markets" section with EU/UK/USA compliance badges
+  - New "Quality & Certifications" teaser section with certification badges
+  - Link to Logistics page from export section
+  - All sections use Sanity data when available with local fallback
+
+- **Static Pages with Sanity Integration**:
+  - About (`/about`), Logistics (`/logistics`), and Certifications (`/certifications`) pages now use SSG with `getStaticProps`
+  - Content fetched from Sanity `page` documents by `pageType` (about/logistics/certifications)
+  - Hero title and subtitle customizable via Sanity
+  - SEO metadata (title, description) from Sanity when available
+  - Graceful fallback to hardcoded content when Sanity is not configured
+
+- **New Reusable Components**:
+  - `PageHero` – consistent hero section across static pages
+  - `Footer` – shared footer component
+  - `PortableTextRenderer` – basic Portable Text renderer for Sanity content
+
+- **Sanity Schema Updates** (`/studio/schemas/page.ts`):
+  - Added `home` pageType for homepage content
+  - Added `heroTitle` and `heroSubtitle` fields for hero customization
+
+**Managing Page Content in Sanity:**
+
+To edit homepage/static page content via Sanity Studio:
+
+1. Create a new "Page" document in Sanity Studio
+2. Set the `pageType` to one of: `home`, `about`, `logistics`, `certifications`
+3. Fill in the `heroTitle` and `heroSubtitle` for custom hero text
+4. Optionally set `seoTitle` and `seoDescription` for SEO metadata
+5. The site will automatically use this content when available
+
 ### Phase 6A – Product & Category UX Upgrade
 
 This phase introduced significant UX improvements to product and category pages:

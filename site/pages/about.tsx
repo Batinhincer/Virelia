@@ -1,16 +1,44 @@
 import { motion } from "framer-motion";
 import Head from "next/head";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Header from "@/components/Header";
 import CTAButton from "@/components/CTAButton";
 import CTAStrip from "@/components/CTAStrip";
+import PageHero from "@/components/PageHero";
+import Footer from "@/components/Footer";
+import { fetchPageByType, type SanityPage } from "@/lib/sanity";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
 
-export default function AboutPage() {
-  // SEO metadata
-  const pageTitle = "About Us | Virelia – Premium Mediterranean Food Exporter";
-  const pageDescription =
-    "Learn about Virelia, your trusted B2B partner for authentic Mediterranean food products. Quality, certification, and reliable export to EU, UK, and USA markets.";
+// Default fallback content
+const defaultContent = {
+  heroTitle: "About Virelia",
+  heroSubtitle: "Your trusted partner for premium Mediterranean food products",
+  seoTitle: "About Us | Virelia – Premium Mediterranean Food Exporter",
+  seoDescription: "Learn about Virelia, your trusted B2B partner for authentic Mediterranean food products. Quality, certification, and reliable export to EU, UK, and USA markets.",
+};
+
+interface AboutPageProps {
+  page: SanityPage | null;
+}
+
+export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
+  const page = await fetchPageByType('about');
+  
+  return {
+    props: {
+      page,
+    },
+    revalidate: 60, // Revalidate every 60 seconds
+  };
+};
+
+export default function AboutPage({ page }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // Use Sanity content if available, otherwise fall back to defaults
+  const heroTitle = page?.heroTitle || defaultContent.heroTitle;
+  const heroSubtitle = page?.heroSubtitle || defaultContent.heroSubtitle;
+  const pageTitle = page?.seoTitle || defaultContent.seoTitle;
+  const pageDescription = page?.seoDescription || defaultContent.seoDescription;
   const pageUrl = `${SITE_URL}/about`;
 
   return (
@@ -39,31 +67,7 @@ export default function AboutPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative h-[500px] mt-[80px] overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `linear-gradient(135deg, rgba(58, 90, 64, 0.85) 0%, rgba(45, 70, 50, 0.75) 100%), url('/hero1.jpg')`,
-          }}
-        />
-        <div className="relative h-full flex items-center">
-          <div className="container-custom">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-3xl"
-            >
-              <h1 className="text-5xl lg:text-6xl text-white font-bold mb-6 font-heading leading-tight">
-                About Virelia
-              </h1>
-              <p className="text-white text-xl lg:text-2xl font-light leading-relaxed">
-                Your trusted partner for premium Mediterranean food products
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <PageHero title={heroTitle} subtitle={heroSubtitle} />
 
       {/* Who We Are */}
       <section className="section-padding bg-white">
@@ -401,17 +405,7 @@ export default function AboutPage() {
       <CTAStrip />
 
       {/* Footer */}
-      <footer className="bg-text-heading text-bg py-12">
-        <div className="container-custom text-center">
-          <p className="mb-3 text-lg">
-            &copy; {new Date().getFullYear()} Virelia Ticaret Limited Şirketi.
-            All rights reserved.
-          </p>
-          <p className="text-sm text-text-muted">
-            Premium Mediterranean Food Products | B2B Export Solutions
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

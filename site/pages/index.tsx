@@ -1,42 +1,101 @@
 import { motion } from "framer-motion";
 import Head from "next/head";
+import Link from "next/link";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Header from "@/components/Header";
 import SectionHeader from "@/components/SectionHeader";
-import ProductGrid from "@/components/ProductGrid";
 import ProductCard from "@/components/ProductCard";
+import ProductGrid from "@/components/ProductGrid";
 import CTAButton from "@/components/CTAButton";
 import CTAStrip from "@/components/CTAStrip";
-import { products, categories, getProductsByCategory, getCategorySlug } from "@/data/products";
+import Footer from "@/components/Footer";
+import { products, categories, categoryInfo, getProductsByCategory } from "@/data/products";
+import { fetchPageByType, fetchCategories, fetchFeaturedProducts, type SanityPage } from "@/lib/sanity";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
 
-export default function HomePage() {
-  // Select 6-8 featured products
-  const featuredProducts = products.slice(0, 8);
+// Default fallback content for homepage
+const defaultContent = {
+  heroTitle: "Premium Mediterranean Foods for Global Markets",
+  heroSubtitle: "Your trusted B2B partner for authentic Mediterranean products. Quality, certification, and reliable export to EU, UK, and USA markets.",
+  seoTitle: "Virelia – Premium Mediterranean Food Exporter | B2B Food Export",
+  seoDescription: "Virelia is your trusted B2B partner for premium Mediterranean food products. Olive oil, pepper paste, coffee, and specialty foods. Export to EU, UK, and USA.",
+};
+
+interface HomePageProps {
+  page: SanityPage | null;
+  sanityCategories: Array<{ _id: string; title: string; slug: string; description: string }> | null;
+  sanityFeaturedProducts: Array<{ _id: string; title: string; slug: string; shortDescription: string; category: string; categorySlug: string; image: string }> | null;
+}
+
+export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+  const [page, sanityCategories, sanityFeaturedProducts] = await Promise.all([
+    fetchPageByType('home'),
+    fetchCategories(),
+    fetchFeaturedProducts(),
+  ]);
+  
+  return {
+    props: {
+      page,
+      sanityCategories,
+      sanityFeaturedProducts,
+    },
+    revalidate: 60, // Revalidate every 60 seconds
+  };
+};
+
+export default function HomePage({ page, sanityCategories, sanityFeaturedProducts }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // Use Sanity content if available, otherwise fall back to defaults
+  const heroTitle = page?.heroTitle || defaultContent.heroTitle;
+  const heroSubtitle = page?.heroSubtitle || defaultContent.heroSubtitle;
+  const pageTitle = page?.seoTitle || defaultContent.seoTitle;
+  const pageDescription = page?.seoDescription || defaultContent.seoDescription;
+
+  // Use featured products from Sanity if available, otherwise use first 6 local products
+  const featuredProducts = sanityFeaturedProducts && sanityFeaturedProducts.length > 0
+    ? sanityFeaturedProducts.slice(0, 6).map(p => ({
+        slug: p.slug,
+        title: p.title,
+        shortDesc: p.shortDescription,
+        longDesc: '',
+        category: p.category,
+        image: p.image || '/placeholder.jpg',
+      }))
+    : products.slice(0, 6);
+
+  // Use categories from Sanity if available, otherwise use local categories
+  const displayCategories = sanityCategories && sanityCategories.length > 0
+    ? sanityCategories.map(c => ({
+        name: c.title,
+        slug: c.slug,
+        description: c.description,
+      }))
+    : categoryInfo;
 
   return (
     <div className="min-h-screen bg-bg text-text">
       <Head>
-        <title>Virelia – Premium Mediterranean Food Exporter | B2B Food Export</title>
+        <title>{pageTitle}</title>
         <meta
           name="description"
-          content="Virelia is your trusted B2B partner for premium Mediterranean food products. Olive oil, pepper paste, coffee, and specialty foods. Export to EU, UK, and USA."
+          content={pageDescription}
         />
         <link rel="canonical" href={SITE_URL} />
         
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={SITE_URL} />
-        <meta property="og:title" content="Virelia – Premium Mediterranean Food Exporter" />
-        <meta property="og:description" content="Your trusted B2B partner for authentic Mediterranean food products. Quality, certification, and reliable export to EU, UK, and USA markets." />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content={`${SITE_URL}/hero1.jpg`} />
         <meta property="og:site_name" content="Virelia" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={SITE_URL} />
-        <meta name="twitter:title" content="Virelia – Premium Mediterranean Food Exporter" />
-        <meta name="twitter:description" content="Your trusted B2B partner for authentic Mediterranean food products. Quality, certification, and reliable export to EU, UK, and USA markets." />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
         <meta name="twitter:image" content={`${SITE_URL}/hero1.jpg`} />
       </Head>
 
@@ -62,10 +121,10 @@ export default function HomePage() {
               className="max-w-4xl"
             >
               <h1 className="text-5xl lg:text-6xl text-white font-bold mb-6 font-heading leading-tight">
-                Premium Mediterranean Foods for Global Markets
+                {heroTitle}
               </h1>
               <p className="text-white text-xl lg:text-2xl font-light leading-relaxed mb-10 max-w-2xl">
-                Your trusted B2B partner for authentic Mediterranean products. Quality, certification, and reliable export to EU, UK, and USA markets.
+                {heroSubtitle}
               </p>
               
               {/* CTAs */}
@@ -197,37 +256,50 @@ export default function HomePage() {
           />
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map((category, index) => {
-              const categoryProducts = getProductsByCategory(category);
+            {displayCategories.map((cat, index) => {
+              const categoryProducts = getProductsByCategory(cat.name);
               const firstProduct = categoryProducts[0];
-              const categorySlug = getCategorySlug(category);
               
               return (
-                <motion.a
-                  key={category}
-                  href={`/products/${categorySlug}`}
+                <motion.div
+                  key={cat.slug}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-2xl shadow-soft hover:shadow-soft-lg transition-all duration-300 h-64"
+                  className="card card-hover overflow-hidden"
                 >
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
-                    style={{ 
-                      backgroundImage: firstProduct ? `url('${firstProduct.image}')` : 'linear-gradient(135deg, #3a5a40 0%, #588157 100%)'
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary/50 to-transparent" />
-                  <div className="absolute inset-0 flex flex-col justify-end p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-2 transform transition-transform group-hover:translate-y-[-4px]">
-                      {category}
-                    </h3>
-                    <p className="text-white/90 text-sm">
-                      {categoryProducts.length} product{categoryProducts.length !== 1 ? 's' : ''}
-                    </p>
-                  </div>
-                </motion.a>
+                  <Link
+                    href={`/products/${cat.slug}`}
+                    className="group block"
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      <div 
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                        style={{ 
+                          backgroundImage: firstProduct ? `url('${firstProduct.image}')` : 'linear-gradient(135deg, #3a5a40 0%, #588157 100%)'
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 via-primary/30 to-transparent" />
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <h3 className="text-xl font-semibold text-white">
+                          {cat.name}
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-text-muted text-sm leading-relaxed mb-4 line-clamp-2">
+                        {cat.description}
+                      </p>
+                      <span className="inline-flex items-center text-primary font-medium text-sm group-hover:text-primary-dark transition-colors">
+                        View Category
+                        <svg className="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </Link>
+                </motion.div>
               );
             })}
           </div>
@@ -243,7 +315,7 @@ export default function HomePage() {
             centered
           />
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProducts.map((product, index) => (
               <motion.div
                 key={product.slug}
@@ -314,6 +386,78 @@ export default function HomePage() {
                 <p className="text-white/80">FDA compliant for US markets</p>
               </motion.div>
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="mt-12"
+            >
+              <Link 
+                href="/logistics" 
+                className="inline-flex items-center text-white font-medium hover:text-secondary-light transition-colors"
+              >
+                Learn about our logistics solutions
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Certifications Teaser */}
+      <section className="section-padding bg-bg-surface">
+        <div className="container-custom">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-h2 font-semibold text-text-heading mb-6">Quality & Certifications</h2>
+                <p className="text-lg text-text leading-relaxed mb-6">
+                  Our commitment to quality is backed by internationally recognized certifications. 
+                  We work exclusively with certified producers and maintain full traceability across our supply chain.
+                </p>
+                <div className="flex flex-wrap gap-3 mb-8">
+                  {['BRC', 'IFS', 'ISO 22000', 'HACCP', 'Halal'].map((cert) => (
+                    <span key={cert} className="px-4 py-2 bg-primary/10 text-primary font-medium rounded-xl text-sm">
+                      {cert}
+                    </span>
+                  ))}
+                </div>
+                <CTAButton href="/certifications" variant="secondary">View All Certifications</CTAButton>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="grid grid-cols-2 gap-6"
+              >
+                <div className="card p-6 text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">100%</div>
+                  <p className="text-text-muted text-sm">Quality Guaranteed</p>
+                </div>
+                <div className="card p-6 text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">Full</div>
+                  <p className="text-text-muted text-sm">Traceability</p>
+                </div>
+                <div className="card p-6 text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">ISO</div>
+                  <p className="text-text-muted text-sm">Certified Partners</p>
+                </div>
+                <div className="card p-6 text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">24h</div>
+                  <p className="text-text-muted text-sm">Response Time</p>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -352,7 +496,7 @@ export default function HomePage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="section-padding bg-bg-surface">
+      <section id="about" className="section-padding bg-white">
         <div className="container-custom">
           <SectionHeader
             title="About Virelia"
@@ -375,15 +519,15 @@ export default function HomePage() {
             <p>
               We understand the needs of B2B partners – from consistent quality
               and reliable supply chains to competitive pricing and flexible
-              packaging options. Whether you're a distributor, restaurant chain,
+              packaging options. Whether you&apos;re a distributor, restaurant chain,
               or specialty food retailer, Virelia is your gateway to authentic
               Mediterranean flavor.
             </p>
           </div>
-          <div className="text-center mt-12 space-x-4">
+          <div className="text-center mt-12 flex flex-wrap justify-center gap-4">
             <CTAButton href="#contact">Request a Quote</CTAButton>
-            <CTAButton href="mailto:batinhincer@gmail.com" variant="secondary">
-              Contact Sales
+            <CTAButton href="/about" variant="secondary">
+              Learn More About Us
             </CTAButton>
           </div>
         </div>
@@ -574,17 +718,7 @@ export default function HomePage() {
       <CTAStrip />
 
       {/* Footer */}
-      <footer className="bg-text-heading text-bg py-12">
-        <div className="container-custom text-center">
-          <p className="mb-3 text-lg">
-            &copy; {new Date().getFullYear()} Virelia Ticaret Limited Şirketi.
-            All rights reserved.
-          </p>
-          <p className="text-sm text-text-muted">
-            Premium Mediterranean Food Products | B2B Export Solutions
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
