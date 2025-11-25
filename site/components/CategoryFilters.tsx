@@ -131,13 +131,19 @@ export function buildQueryString(filters: FilterState, sort: SortOption): string
 // Apply filters to products
 export function applyFilters(products: CategoryProduct[], filters: FilterState): CategoryProduct[] {
   return products.filter((product) => {
-    // Packaging filter
+    // Packaging filter - match if any selected filter is found as a substring in any packaging option
+    // This is intentional since packaging can contain multiple items like "Glass bottles (250ml, 500ml)"
+    // and we want to match partial packaging types
     if (filters.packaging.length > 0) {
       if (!product.packaging) return false;
-      const productPackaging = product.packaging.split(",").map((p) => p.trim());
-      const hasMatch = filters.packaging.some((filter) =>
-        productPackaging.some((pkg) => pkg.toLowerCase().includes(filter.toLowerCase()))
-      );
+      const productPackaging = product.packaging.split(",").map((p) => p.trim().toLowerCase());
+      const hasMatch = filters.packaging.some((filter) => {
+        const filterLower = filter.toLowerCase();
+        // Check if any product packaging option starts with or equals the filter
+        return productPackaging.some((pkg) => 
+          pkg === filterLower || pkg.startsWith(filterLower) || filterLower.startsWith(pkg)
+        );
+      });
       if (!hasMatch) return false;
     }
 
@@ -197,30 +203,29 @@ export function useCategoryFilters(products: CategoryProduct[]) {
   const router = useRouter();
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Parse initial state from URL
-  const initialFilters = useMemo(
-    () => parseFiltersFromQuery(router.query),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isInitialized]
-  );
-  const initialSort = useMemo(
-    () => parseSortFromQuery(router.query),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isInitialized]
-  );
-
-  const [filters, setFilters] = useState<FilterState>(initialFilters);
-  const [sort, setSort] = useState<SortOption>(initialSort);
+  const [filters, setFilters] = useState<FilterState>({
+    packaging: [],
+    origin: [],
+    moqBucket: [],
+    certifications: [],
+  });
+  const [sort, setSort] = useState<SortOption>("default");
 
   // Extract available filter options from products
   const filterOptions = useMemo(() => extractFilterOptions(products), [products]);
 
-  // Initialize from URL when router is ready
+  // Initialize from URL when router is ready, and handle external URL changes (back/forward)
   useEffect(() => {
-    if (router.isReady && !isInitialized) {
-      setFilters(parseFiltersFromQuery(router.query));
-      setSort(parseSortFromQuery(router.query));
-      setIsInitialized(true);
+    if (router.isReady) {
+      const urlFilters = parseFiltersFromQuery(router.query);
+      const urlSort = parseSortFromQuery(router.query);
+      
+      setFilters(urlFilters);
+      setSort(urlSort);
+      
+      if (!isInitialized) {
+        setIsInitialized(true);
+      }
     }
   }, [router.isReady, router.query, isInitialized]);
 
