@@ -282,4 +282,41 @@ test.describe('Category Page Filters & Sorting', () => {
       await expect(productCount).toContainText('filter');
     });
   });
+
+  test.describe('Product Images', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 720 });
+    });
+
+    test('product cards display images with correct src', async ({ page }) => {
+      // Get all product card images in the grid
+      const productsGrid = page.getByTestId('products-grid');
+      const productImages = productsGrid.locator('img');
+
+      // Should have at least one product image
+      const imageCount = await productImages.count();
+      expect(imageCount).toBeGreaterThan(0);
+
+      // Check first image has a valid src (not empty, not placeholder)
+      const firstImage = productImages.first();
+      const src = await firstImage.getAttribute('src');
+      expect(src).toBeTruthy();
+      expect(src).not.toBe('');
+    });
+
+    test('product images have alt text matching product title', async ({ page }) => {
+      // Get product cards
+      const productsGrid = page.getByTestId('products-grid');
+      const productCards = productsGrid.locator('a');
+
+      // Get first product card
+      const firstCard = productCards.first();
+      const productTitle = await firstCard.locator('h3').textContent();
+      const productImage = firstCard.locator('img');
+      const altText = await productImage.getAttribute('alt');
+
+      // Alt text should match product title
+      expect(altText).toBe(productTitle);
+    });
+  });
 });
