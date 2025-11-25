@@ -17,6 +17,41 @@ This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing 
 
 ## Recent Updates
 
+### Phase 7A – Global Search System
+
+This phase implements a comprehensive global search system for the Frezya B2B site:
+
+- **Search Modal Component** (`site/components/SearchModal.tsx`):
+  - Command Palette style interface (similar to Spotlight/VS Code)
+  - Real-time debounced filtering (200ms delay)
+  - Product results display with image, title, description, and category badge
+  - Keyboard navigation: ↑↓ arrows to navigate, Enter to select, ESC to close
+  - Focus trap for accessibility
+  - Smooth animations and hover states
+
+- **Header Integration** (`site/components/Header.tsx`):
+  - Search icon added to desktop navigation (visible on large screens)
+  - Search icon added to mobile header (next to hamburger menu)
+  - Both trigger the same SearchModal component
+
+- **Keyboard Shortcuts**:
+  - `Ctrl+K` / `Cmd+K` to open search from anywhere on the site
+  - `ESC` to close the search modal
+  - Arrow keys for result navigation
+  - Enter to select highlighted result
+
+- **Features**:
+  - Searches across product titles, descriptions, and categories
+  - Shows "Popular categories" when search is empty
+  - "No results" state with helpful message
+  - Click backdrop to close
+  - Uses Next.js router for client-side navigation
+
+- **Testing**:
+  - 15 Playwright e2e tests covering all functionality
+  - Tests for desktop and mobile views
+  - Tests for keyboard shortcuts and navigation
+
 ### Phase 6C – Navigation, Footer & Global UI Polishing
 
 This phase focuses on navigation, footer consistency, and overall UI polish:

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { products, categoryInfo } from "@/data/products";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
@@ -17,6 +18,7 @@ interface SearchModalProps {
 }
 
 export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -101,12 +103,13 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         case "Enter":
           e.preventDefault();
           if (results[selectedIndex]) {
-            window.location.href = `/product/${results[selectedIndex].slug}`;
+            onClose();
+            router.push(`/product/${results[selectedIndex].slug}`);
           }
           break;
       }
     },
-    [isOpen, onClose, results, selectedIndex]
+    [isOpen, onClose, results, selectedIndex, router]
   );
 
   useEffect(() => {
