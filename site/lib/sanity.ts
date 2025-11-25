@@ -68,12 +68,32 @@ export interface SanityCategory {
   heroImage?: SanityImageSource;
 }
 
+// Portable Text block type
+export interface PortableTextBlock {
+  _type: 'block';
+  _key: string;
+  style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+  children: {
+    _type: 'span';
+    _key: string;
+    text: string;
+    marks?: string[];
+  }[];
+  markDefs?: {
+    _type: string;
+    _key: string;
+    href?: string;
+  }[];
+}
+
 export interface SanityPage {
   _id: string;
   title: string;
-  slug: { current: string };
-  pageType: 'about' | 'logistics' | 'certifications';
-  content: unknown[]; // Portable Text blocks
+  slug: string;
+  pageType: 'home' | 'about' | 'logistics' | 'certifications';
+  heroTitle?: string;
+  heroSubtitle?: string;
+  content?: PortableTextBlock[];
   seoTitle?: string;
   seoDescription?: string;
 }
@@ -169,6 +189,21 @@ export const queries = {
     title,
     "slug": slug.current,
     pageType,
+    heroTitle,
+    heroSubtitle,
+    content,
+    seoTitle,
+    seoDescription
+  }`,
+
+  // Get page by pageType
+  pageByType: `*[_type == "page" && pageType == $pageType][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    pageType,
+    heroTitle,
+    heroSubtitle,
     content,
     seoTitle,
     seoDescription
@@ -242,12 +277,22 @@ export async function fetchProductsByCategory(categorySlug: string) {
   }
 }
 
-export async function fetchPageBySlug(slug: string) {
+export async function fetchPageBySlug(slug: string): Promise<SanityPage | null> {
   if (!sanityClient) return null;
   try {
     return await sanityClient.fetch(queries.pageBySlug, { slug });
   } catch (error) {
     console.error('Error fetching page from Sanity:', error);
+    return null;
+  }
+}
+
+export async function fetchPageByType(pageType: SanityPage['pageType']): Promise<SanityPage | null> {
+  if (!sanityClient) return null;
+  try {
+    return await sanityClient.fetch(queries.pageByType, { pageType });
+  } catch (error) {
+    console.error('Error fetching page by type from Sanity:', error);
     return null;
   }
 }

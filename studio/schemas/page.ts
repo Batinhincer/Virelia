@@ -27,12 +27,26 @@ export default defineType({
       type: 'string',
       options: {
         list: [
+          { title: 'Home', value: 'home' },
           { title: 'About', value: 'about' },
           { title: 'Logistics', value: 'logistics' },
           { title: 'Certifications', value: 'certifications' },
         ],
       },
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'heroTitle',
+      title: 'Hero Title',
+      type: 'string',
+      description: 'Main headline displayed in the hero section',
+    }),
+    defineField({
+      name: 'heroSubtitle',
+      title: 'Hero Subtitle',
+      type: 'text',
+      rows: 2,
+      description: 'Subheadline displayed below the hero title',
     }),
     defineField({
       name: 'content',
