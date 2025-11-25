@@ -51,8 +51,8 @@ test.describe('Inquiry API', () => {
     });
 
     test('returns 200 with optional phone field omitted', async ({ request }) => {
-      const inquiryWithoutPhone = { ...validInquiryFromProductPage };
-      delete (inquiryWithoutPhone as Record<string, unknown>).phone;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { phone, ...inquiryWithoutPhone } = validInquiryFromProductPage;
 
       const response = await request.post('/api/inquiry', {
         data: inquiryWithoutPhone,
@@ -81,8 +81,8 @@ test.describe('Inquiry API', () => {
 
   test.describe('Validation Errors', () => {
     test('returns 400 when fullName is missing', async ({ request }) => {
-      const invalidInquiry = { ...validInquiryFromProductPage };
-      delete (invalidInquiry as Record<string, unknown>).fullName;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { fullName, ...invalidInquiry } = validInquiryFromProductPage;
 
       const response = await request.post('/api/inquiry', {
         data: invalidInquiry,
@@ -94,8 +94,8 @@ test.describe('Inquiry API', () => {
     });
 
     test('returns 400 when companyName is missing', async ({ request }) => {
-      const invalidInquiry = { ...validInquiryFromProductPage };
-      delete (invalidInquiry as Record<string, unknown>).companyName;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { companyName, ...invalidInquiry } = validInquiryFromProductPage;
 
       const response = await request.post('/api/inquiry', {
         data: invalidInquiry,
@@ -107,8 +107,8 @@ test.describe('Inquiry API', () => {
     });
 
     test('returns 400 when email is missing', async ({ request }) => {
-      const invalidInquiry = { ...validInquiryFromProductPage };
-      delete (invalidInquiry as Record<string, unknown>).email;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { email, ...invalidInquiry } = validInquiryFromProductPage;
 
       const response = await request.post('/api/inquiry', {
         data: invalidInquiry,
@@ -132,8 +132,8 @@ test.describe('Inquiry API', () => {
     });
 
     test('returns 400 when country is missing', async ({ request }) => {
-      const invalidInquiry = { ...validInquiryFromProductPage };
-      delete (invalidInquiry as Record<string, unknown>).country;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { country, ...invalidInquiry } = validInquiryFromProductPage;
 
       const response = await request.post('/api/inquiry', {
         data: invalidInquiry,
@@ -145,8 +145,8 @@ test.describe('Inquiry API', () => {
     });
 
     test('returns 400 when message is missing', async ({ request }) => {
-      const invalidInquiry = { ...validInquiryFromProductPage };
-      delete (invalidInquiry as Record<string, unknown>).message;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { message, ...invalidInquiry } = validInquiryFromProductPage;
 
       const response = await request.post('/api/inquiry', {
         data: invalidInquiry,

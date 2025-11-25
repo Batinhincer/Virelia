@@ -54,7 +54,21 @@ export default async function handler(
   }: InquiryData = req.body;
 
   // Determine URL path from body or referer header
-  const urlPath = bodyUrlPath || req.headers.referer || '';
+  // Note: referer can be spoofed, but we only use it for analytics/tracking, not security decisions
+  const rawUrlPath = bodyUrlPath || req.headers.referer || '';
+  // Sanitize the URL path to only include the path portion
+  const urlPath = (() => {
+    try {
+      // If it looks like a full URL, extract just the path
+      if (rawUrlPath.startsWith('http://') || rawUrlPath.startsWith('https://')) {
+        const url = new URL(rawUrlPath);
+        return url.pathname + url.search;
+      }
+      return rawUrlPath;
+    } catch {
+      return rawUrlPath;
+    }
+  })();
 
   // Validate required fields - productName is no longer strictly required for general contact forms
   if (!fullName || !companyName || !email || !country || !message) {
@@ -314,8 +328,9 @@ Source: ${productPageUrl}
     // This runs in the background and won't block the response
     if (isSanityWriteConfigured) {
       // Fire and forget - don't await to avoid slowing down response
-      createInquiry(sanityInquiry).catch(() => {
-        // Error is already logged in createInquiry
+      createInquiry(sanityInquiry).catch((err) => {
+        // Error is already logged in createInquiry, but add context
+        console.warn('Sanity write failed after email success, inquiry may not be tracked:', err instanceof Error ? err.message : 'Unknown error');
       });
     }
 
