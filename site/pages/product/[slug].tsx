@@ -110,6 +110,7 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },
+    { label: "Products", href: "/#products" },
     { label: product.category, href: `/products/${product.categorySlug}` },
     { label: product.title },
   ];
@@ -186,7 +187,7 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
             <div>
               {/* Category Badge */}
               <div className="mb-4">
-                <Link href={`/products/${product.categorySlug}`}>
+                <Link href={`/products/${product.categorySlug}`} data-testid="category-badge">
                   <span className="inline-flex items-center bg-secondary-light text-primary text-sm font-semibold px-4 py-2 rounded-full hover:bg-secondary transition-colors cursor-pointer">
                     <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -206,17 +207,28 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
                 {product.shortDescription}
               </p>
 
-              {/* Primary CTA: Request a Quote */}
-              <div className="mb-8">
+              {/* Primary CTA: Request Product Information */}
+              <div className="mb-8 flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={scrollToInquiry}
-                  className="w-full sm:w-auto btn-primary text-lg px-10 py-4 shadow-soft-lg hover:shadow-soft inline-flex items-center justify-center"
+                  className="w-full sm:w-auto btn-primary text-lg px-8 py-4 shadow-soft-lg hover:shadow-soft inline-flex items-center justify-center"
+                  data-testid="request-info-cta"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  Request a Quote
+                  Request Product Information
                 </button>
+                <Link
+                  href={`/products/${product.categorySlug}`}
+                  className="w-full sm:w-auto btn-secondary text-lg px-8 py-4 inline-flex items-center justify-center"
+                  data-testid="view-category-cta"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                  View All {product.category}
+                </Link>
               </div>
 
               {/* Quick Stats Bar */}
@@ -342,15 +354,15 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
 
         {/* Related Products Section */}
         {relatedProducts.length > 0 && (
-          <section className="mt-20">
+          <section className="mt-20" data-testid="related-products-section">
             <div className="text-center mb-12">
               <h2 className="text-h2 font-bold text-text-heading mb-4">Related Products</h2>
               <p className="text-lg text-text-muted">
                 Explore more products from our {product.category} collection
               </p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-              {relatedProducts.map((relatedProduct) => (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" data-testid="related-products-grid">
+              {relatedProducts.slice(0, 3).map((relatedProduct) => (
                 <ProductCard key={relatedProduct.slug} product={relatedProduct} />
               ))}
             </div>
@@ -459,7 +471,7 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async ({ params 
     
     const relatedProducts: RelatedProduct[] = (sanityRelatedProducts || [])
       .filter((p: { slug: string }) => p.slug !== slug)
-      .slice(0, 4)
+      .slice(0, 3)
       .map((p: { slug: string; title: string; shortDescription?: string; category?: string; image?: string }) => ({
         slug: p.slug,
         title: p.title,
@@ -489,7 +501,7 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async ({ params 
   }
   
   const categorySlug = getCategorySlug(localProduct.category);
-  const localRelatedProducts = getRelatedProducts(localProduct.slug, localProduct.category, 4);
+  const localRelatedProducts = getRelatedProducts(localProduct.slug, localProduct.category, 3);
   
   return {
     props: {
