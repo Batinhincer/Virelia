@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
+import { createInquiry, isSanityWriteConfigured, SanityInquiryDocument } from "@/lib/sanityServer";
 
 interface InquiryData {
   fullName: string;
@@ -8,8 +9,27 @@ interface InquiryData {
   country: string;
   phone?: string;
   message: string;
-  productName: string;
-  productSlug: string;
+  productName?: string;
+  productSlug?: string;
+  productCategory?: string;
+  urlPath?: string;
+}
+
+/**
+ * Determines the inquiry source based on the provided data
+ */
+function determineSource(urlPath: string | undefined, productSlug: string | undefined, productName: string | undefined): 'product-page' | 'contact-page' | 'other' {
+  // If there's a product slug or product name and the URL looks like a product page
+  if ((productSlug || productName) && urlPath?.includes('/product/')) {
+    return 'product-page';
+  }
+  
+  // If the URL path indicates the contact page
+  if (urlPath?.includes('/contact')) {
+    return 'contact-page';
+  }
+  
+  return 'other';
 }
 
 export default async function handler(
@@ -29,10 +49,15 @@ export default async function handler(
     message,
     productName,
     productSlug,
+    productCategory,
+    urlPath: bodyUrlPath,
   }: InquiryData = req.body;
 
-  // Validate required fields
-  if (!fullName || !companyName || !email || !country || !message || !productName) {
+  // Determine URL path from body or referer header
+  const urlPath = bodyUrlPath || req.headers.referer || '';
+
+  // Validate required fields - productName is no longer strictly required for general contact forms
+  if (!fullName || !companyName || !email || !country || !message) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
@@ -51,17 +76,47 @@ export default async function handler(
   const inquiryEmail = process.env.INQUIRY_EMAIL || "batinhincer@frezya.nl";
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://virelia.com";
 
+  // Prepare Sanity inquiry document
+  const source = determineSource(urlPath, productSlug, productName);
+  const sanityInquiry: SanityInquiryDocument = {
+    _type: 'inquiry',
+    name: fullName,
+    email,
+    company: companyName,
+    country,
+    phone: phone || undefined,
+    message,
+    productName: productName || undefined,
+    productSlug: productSlug || undefined,
+    productCategory: productCategory || undefined,
+    source,
+    urlPath,
+    createdAt: new Date().toISOString(),
+    status: 'new',
+  };
+
   // In development, if SMTP is not configured, log the inquiry and return success
   if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
     if (process.env.NODE_ENV === "development") {
       console.log("=== INQUIRY SUBMISSION (SMTP NOT CONFIGURED) ===");
-      console.log("Product:", productName);
+      console.log("Product:", productName || "N/A");
       console.log("From:", fullName, `(${email})`);
       console.log("Company:", companyName);
       console.log("Country:", country);
       console.log("Phone:", phone || "Not provided");
       console.log("Message:", message);
+      console.log("Source:", source);
+      console.log("URL Path:", urlPath);
+      console.log("Sanity Write Configured:", isSanityWriteConfigured);
       console.log("===============================================");
+      
+      // Still attempt to save to Sanity in development
+      if (isSanityWriteConfigured) {
+        const inquiryId = await createInquiry(sanityInquiry);
+        if (inquiryId) {
+          console.log("Saved to Sanity with ID:", inquiryId);
+        }
+      }
       
       return res.status(200).json({
         message: "Inquiry received (development mode - email not sent)",
@@ -91,6 +146,10 @@ export default async function handler(
       dateStyle: "full",
       timeStyle: "long",
     });
+
+    // Use a display name for emails when productName is not available
+    const displayProductName = productName || "General Inquiry";
+    const productPageUrl = productSlug ? `${baseUrl}/product/${productSlug}` : `${baseUrl}/contact`;
 
     const htmlContent = `
       <!DOCTYPE html>
@@ -178,7 +237,7 @@ export default async function handler(
           <div class="content">
             <div class="field">
               <div class="label">Product</div>
-              <div class="value"><span class="product-badge">${productName}</span></div>
+              <div class="value"><span class="product-badge">${displayProductName}</span></div>
             </div>
             
             <div class="field">
@@ -215,18 +274,18 @@ export default async function handler(
           </div>
           <div class="footer">
             <p>This inquiry was submitted through the Virelia website product inquiry form.</p>
-            <p>Product Page: ${baseUrl}/product/${productSlug}</p>
+            <p>Source: ${productPageUrl}</p>
           </div>
         </body>
       </html>
     `;
 
     const textContent = `
-New Quote Request - ${productName}
+New Quote Request - ${displayProductName}
 
 Submitted: ${timestamp}
 
-Product: ${productName}
+Product: ${displayProductName}
 Contact Person: ${fullName}
 Company: ${companyName}
 Email: ${email}
@@ -238,7 +297,7 @@ ${message}
 
 ---
 This inquiry was submitted through the Virelia website product inquiry form.
-Product Page: ${baseUrl}/product/${productSlug}
+Source: ${productPageUrl}
     `.trim();
 
     // Send email
@@ -246,10 +305,19 @@ Product Page: ${baseUrl}/product/${productSlug}
       from: `"Virelia Inquiry System" <${smtpFrom}>`,
       to: inquiryEmail,
       replyTo: email,
-      subject: `New Quote Request - ${productName}`,
+      subject: `New Quote Request - ${displayProductName}`,
       text: textContent,
       html: htmlContent,
     });
+
+    // After successful email send, attempt to save to Sanity
+    // This runs in the background and won't block the response
+    if (isSanityWriteConfigured) {
+      // Fire and forget - don't await to avoid slowing down response
+      createInquiry(sanityInquiry).catch(() => {
+        // Error is already logged in createInquiry
+      });
+    }
 
     return res.status(200).json({
       message: "Inquiry submitted successfully",
