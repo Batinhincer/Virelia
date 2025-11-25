@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react";
+import { useRouter } from "next/router";
 
 interface InquiryFormProps {
   /** Product name (optional - for product inquiry pages) */
@@ -25,6 +26,8 @@ export default function InquiryForm({
   subtitle,
   isGeneralContact = false,
 }: InquiryFormProps) {
+  const router = useRouter();
+  
   const [formData, setFormData] = useState({
     fullName: "",
     companyName: "",
@@ -90,25 +93,56 @@ export default function InquiryForm({
     setSubmitStatus("idle");
     setStatusMessage("");
 
-    // Simulate async submit (no real backend call as per requirements)
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      // Build the request body with all metadata
+      const requestBody = {
+        fullName: formData.fullName,
+        companyName: formData.companyName,
+        email: formData.email,
+        country: formData.country,
+        phone: formData.phone || undefined,
+        message: formData.message,
+        productName: productName || undefined,
+        productSlug: productSlug || undefined,
+        productCategory: productCategory || undefined,
+        urlPath: router.asPath,
+      };
 
-    // Simulate success
-    setSubmitStatus("success");
-    setStatusMessage(
-      hasProductContext
-        ? `Thank you for your inquiry about ${productName}! We received your message and will get back to you soon.`
-        : "Thank you for contacting us! We received your message and will get back to you soon."
-    );
-    setFormData({
-      fullName: "",
-      companyName: "",
-      email: "",
-      country: "",
-      phone: "",
-      message: "",
-    });
-    setIsSubmitting(false);
+      const response = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setStatusMessage(
+          hasProductContext
+            ? `Thank you for your inquiry about ${productName}! Your inquiry has been logged in our system. Our export team will contact you shortly.`
+            : "Thank you for contacting us! Your inquiry has been logged in our system. Our export team will contact you shortly."
+        );
+        setFormData({
+          fullName: "",
+          companyName: "",
+          email: "",
+          country: "",
+          phone: "",
+          message: "",
+        });
+      } else {
+        setSubmitStatus("error");
+        setStatusMessage(data.message || "Failed to submit inquiry. Please try again later.");
+      }
+    } catch {
+      setSubmitStatus("error");
+      setStatusMessage("An unexpected error occurred. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -146,10 +180,6 @@ export default function InquiryForm({
               You are inquiring about: <strong className="ml-1">{productName}</strong>
               {productCategory && <span className="ml-1 text-text-muted">– {productCategory}</span>}
             </p>
-            {/* Hidden inputs for product context - included for future backend integration */}
-            <input type="hidden" name="productName" value={productName || ""} />
-            <input type="hidden" name="productSlug" value={productSlug || ""} />
-            <input type="hidden" name="productCategory" value={productCategory || ""} />
           </div>
         )}
 

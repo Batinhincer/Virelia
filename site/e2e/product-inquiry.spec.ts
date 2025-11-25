@@ -126,6 +126,17 @@ test.describe('Product Inquiry Form', () => {
 
   test.describe('Form Submission', () => {
     test('valid form submission shows success message', async ({ page }) => {
+      // Mock the API to add a delay so we can test the loading state
+      await page.route('/api/inquiry', async (route) => {
+        // Small delay to allow testing the loading state
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({ message: 'Inquiry submitted successfully' }),
+        });
+      });
+
       await page.goto('/product/olive-oil');
 
       // Fill out the form
@@ -156,6 +167,17 @@ test.describe('Product Inquiry Form', () => {
     });
 
     test('submit button is disabled while form is submitting', async ({ page }) => {
+      // Mock the API to add a delay so we can test the disabled state
+      await page.route('/api/inquiry', async (route) => {
+        // Small delay to allow testing the loading state
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({ message: 'Inquiry submitted successfully' }),
+        });
+      });
+
       await page.goto('/product/olive-oil');
 
       // Fill out the form
