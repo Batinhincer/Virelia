@@ -349,7 +349,11 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
 
         {/* Inquiry Form Section */}
         <section className="mb-16">
-          <InquiryForm productName={product.title} productSlug={product.slug} />
+          <InquiryForm
+            productName={product.title}
+            productSlug={product.slug}
+            productCategory={product.category}
+          />
         </section>
 
         {/* Related Products Section */}

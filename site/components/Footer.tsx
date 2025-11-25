@@ -107,15 +107,15 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a
-                  href="/#contact"
+                <Link
+                  href="/contact"
                   className="inline-flex items-center text-secondary-light hover:text-secondary transition-colors duration-200 text-sm font-medium mt-2"
                 >
                   Request a Quote
                   <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
