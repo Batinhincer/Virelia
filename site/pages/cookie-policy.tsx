@@ -24,7 +24,7 @@ export default function CookiePolicyPage() {
         <div className="container-custom">
           <article className="max-w-4xl mx-auto prose prose-lg">
             <p className="text-text-muted text-sm mb-8">
-              Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              Last updated: November 27, 2025
             </p>
 
             <section className="mb-10">

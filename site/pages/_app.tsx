@@ -79,7 +79,7 @@ export default function App({ Component, pageProps }: AppProps) {
       
       {/* Cookie Consent Banner */}
       <CookieConsentBanner 
-        isOpen={cookieBannerOpen ? true : undefined} 
+        isOpen={cookieBannerOpen || undefined} 
         onClose={closeCookieBanner} 
       />
     </>
