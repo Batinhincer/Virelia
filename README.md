@@ -17,6 +17,49 @@ This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing 
 
 ## Recent Updates
 
+### Phase 11 – Analytics & Monitoring
+
+This phase adds optional analytics support and health/version endpoints for monitoring:
+
+- **Analytics Support (GA4)**:
+  - Provider-agnostic analytics implementation using Google Analytics 4
+  - Controlled via `NEXT_PUBLIC_ANALYTICS_ID` environment variable
+  - Analytics scripts are only loaded in production when the env var is set
+  - No hard-coded tracking IDs - fully configurable per environment
+  - To enable: Set `NEXT_PUBLIC_ANALYTICS_ID` to your GA4 Measurement ID (e.g., `G-XXXXXXXXXX`)
+  - To disable: Leave `NEXT_PUBLIC_ANALYTICS_ID` unset or empty
+
+- **Health Endpoint** (`/api/health`):
+  - Returns JSON: `{ "status": "ok", "environment": "production", "timestamp": "2025-01-01T12:00:00.000Z" }`
+  - Use for uptime monitoring, load balancer health checks, and deployment verification
+  - Always returns HTTP 200 when the service is running
+
+- **Version Endpoint** (`/api/version`):
+  - Returns JSON: `{ "version": "1.0.0", "commit": "abc1234", "buildTime": "2025-01-01T12:00:00.000Z" }`
+  - `version`: From package.json
+  - `commit`: Short Git commit hash (from `VERCEL_GIT_COMMIT_SHA` or `GIT_COMMIT` env var)
+  - `buildTime`: Build timestamp (from `BUILD_TIME` env var, if set)
+  - Use for deployment verification and debugging
+
+- **New Environment Variables**:
+  - `NEXT_PUBLIC_ANALYTICS_ID`: Google Analytics 4 Measurement ID (optional, public)
+  - `GIT_COMMIT` or `VERCEL_GIT_COMMIT_SHA`: Git commit hash for version endpoint (automatically set by Vercel)
+  - `BUILD_TIME`: Build timestamp for version endpoint (optional)
+
+- **Testing**:
+  - 13 new Playwright e2e tests for health, version, and analytics
+  - Tests verify endpoint responses, JSON shapes, and analytics behavior
+
+**Vercel Configuration:**
+
+To configure analytics in Vercel:
+1. Go to your project settings → Environment Variables
+2. Add `NEXT_PUBLIC_ANALYTICS_ID` with your GA4 Measurement ID
+3. Scope it to Production only (analytics should not run in Preview/Development)
+4. Redeploy your application
+
+The `VERCEL_GIT_COMMIT_SHA` is automatically provided by Vercel during builds.
+
 ### Phase 7C – Product Detail UX & SEO
 
 This phase enhances the product detail page with improved UX, better CTAs, and SEO optimizations:
