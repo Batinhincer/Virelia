@@ -2,6 +2,19 @@ import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { PLACEHOLDER_IMAGE } from './constants';
+// Import local data for fallback (used only in this module and seeding scripts)
+import {
+  products as localProducts,
+  categoryInfo as localCategoryInfo,
+  getProductBySlug as getLocalProductBySlug,
+  getProductsByCategory as getLocalProductsByCategory,
+  getCategoryBySlug as getLocalCategoryBySlug,
+  getCategoryByName as getLocalCategoryByName,
+  getCategorySlug as getLocalCategorySlug,
+  getRelatedProducts as getLocalRelatedProducts,
+  type Product as LocalProduct,
+  type CategoryInfo as LocalCategoryInfo,
+} from '@/data/products';
 
 // Sanity configuration
 // Server-side variables take precedence over public ones for security
@@ -354,3 +367,77 @@ export async function fetchAllSlugs() {
     return { products: [], categories: [] };
   }
 }
+
+// ========================================================================
+// Centralized helper functions for getStaticPaths with local fallback
+// ========================================================================
+
+/**
+ * Get all product slugs for getStaticPaths.
+ * Tries Sanity first, falls back to local data.
+ */
+export async function getAllProductSlugs(): Promise<string[]> {
+  // Try Sanity first
+  if (sanityClient) {
+    try {
+      // Use the existing query from queries object for consistency
+      const result = await sanityClient.fetch<{ slug: string }[]>(queries.allProductSlugs);
+      if (result && result.length > 0) {
+        // Extract slugs from the result objects, filter nulls and duplicates
+        const slugs = result
+          .map(item => item.slug)
+          .filter((slug): slug is string => typeof slug === 'string' && slug.length > 0);
+        return [...new Set(slugs)];
+      }
+    } catch (error) {
+      console.error('Error fetching product slugs from Sanity, falling back to local data:', error);
+    }
+  }
+  
+  // Fallback to local data
+  const slugs = localProducts.map(p => p.slug).filter(Boolean);
+  return [...new Set(slugs)];
+}
+
+/**
+ * Get all category slugs for getStaticPaths.
+ * Tries Sanity first, falls back to local data.
+ */
+export async function getAllCategorySlugs(): Promise<string[]> {
+  // Try Sanity first
+  if (sanityClient) {
+    try {
+      // Use the existing query from queries object for consistency
+      const result = await sanityClient.fetch<{ slug: string }[]>(queries.allCategorySlugs);
+      if (result && result.length > 0) {
+        // Extract slugs from the result objects, filter nulls and duplicates
+        const slugs = result
+          .map(item => item.slug)
+          .filter((slug): slug is string => typeof slug === 'string' && slug.length > 0);
+        return [...new Set(slugs)];
+      }
+    } catch (error) {
+      console.error('Error fetching category slugs from Sanity, falling back to local data:', error);
+    }
+  }
+  
+  // Fallback to local data - derive unique category slugs from categoryInfo
+  const slugs = localCategoryInfo.map(c => c.slug).filter(Boolean);
+  return [...new Set(slugs)];
+}
+
+// ========================================================================
+// Re-export local product helpers for backward compatibility and fallback
+// ========================================================================
+
+export {
+  localProducts,
+  localCategoryInfo,
+  getLocalProductBySlug,
+  getLocalProductsByCategory,
+  getLocalCategoryBySlug,
+  getLocalCategoryByName,
+  getLocalCategorySlug,
+  getLocalRelatedProducts,
+};
+export type { LocalProduct, LocalCategoryInfo };

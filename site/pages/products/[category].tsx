@@ -18,15 +18,13 @@ import {
   CategoryProduct as FilterCategoryProduct,
 } from "@/components/CategoryFilters";
 import {
-  getCategoryBySlug,
-  getProductsByCategory,
-  categoryInfo,
-  Product,
-} from "@/data/products";
-import {
   fetchCategoryBySlug,
   fetchProductsByCategory,
   PortableTextBlock,
+  getAllCategorySlugs,
+  getLocalCategoryBySlug,
+  getLocalProductsByCategory,
+  type LocalProduct,
 } from "@/lib/sanity";
 import PortableTextRenderer from "@/components/PortableTextRenderer";
 import { PLACEHOLDER_IMAGE, SITE_URL } from "@/lib/constants";
@@ -383,8 +381,10 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
 
 // This function tells Next.js which category slugs to pre-render at build time
 export async function getStaticPaths() {
-  const paths = categoryInfo.map((cat) => ({
-    params: { category: cat.slug },
+  // Use centralized helper to get slugs from Sanity (with local fallback)
+  const slugs = await getAllCategorySlugs();
+  const paths = slugs.map((category) => ({
+    params: { category },
   }));
 
   return {
@@ -421,7 +421,7 @@ function transformSanityProduct(sanityProduct: {
 }
 
 // Transform local product to unified format
-function transformLocalProduct(localProduct: Product): CategoryProduct {
+function transformLocalProduct(localProduct: LocalProduct): CategoryProduct {
   return {
     slug: localProduct.slug,
     title: localProduct.title,
@@ -466,18 +466,16 @@ export async function getStaticProps({ params }: { params: { category: string } 
   }
   
   // Fallback to local data
-  const localCategory = getCategoryBySlug(categorySlug);
+  const localCategory = getLocalCategoryBySlug(categorySlug);
   
+  // If no category found in either Sanity or local data, return 404
   if (!localCategory) {
     return {
-      props: {
-        categoryData: null,
-        products: [],
-      },
+      notFound: true,
     };
   }
   
-  const localProducts = getProductsByCategory(localCategory.name);
+  const localProducts = getLocalProductsByCategory(localCategory.name);
   const products: CategoryProduct[] = localProducts.map(transformLocalProduct);
   
   return {
