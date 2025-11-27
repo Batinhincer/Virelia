@@ -165,22 +165,22 @@ test.describe('Analytics with Environment Variable', () => {
   test('page renders correctly on all main pages without analytics errors', async ({ page }) => {
     const pages = ['/', '/about', '/logistics', '/certifications', '/contact'];
 
+    // Set up console error listener before navigating
+    const errors: string[] = [];
+    page.on('console', (msg) => {
+      if (msg.type() === 'error' && msg.text().toLowerCase().includes('analytics')) {
+        errors.push(msg.text());
+      }
+    });
+
     for (const pagePath of pages) {
       await page.goto(pagePath);
 
-      // No console errors related to analytics
-      const errors: string[] = [];
-      page.on('console', (msg) => {
-        if (msg.type() === 'error' && msg.text().toLowerCase().includes('analytics')) {
-          errors.push(msg.text());
-        }
-      });
-
       // Page should load without issues
       await expect(page.locator('body')).toBeVisible();
-
-      // No analytics-related errors
-      expect(errors).toHaveLength(0);
     }
+
+    // No analytics-related errors across all pages
+    expect(errors).toHaveLength(0);
   });
 });
