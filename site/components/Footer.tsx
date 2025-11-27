@@ -3,6 +3,13 @@ import Link from "next/link";
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const handleCookieSettings = () => {
+    // Call the global function exposed by _app.tsx
+    if (typeof window !== 'undefined' && (window as unknown as { openCookieSettings?: () => void }).openCookieSettings) {
+      (window as unknown as { openCookieSettings?: () => void }).openCookieSettings?.();
+    }
+  };
+
   return (
     <footer className="bg-text-heading text-white py-12 lg:py-16" role="contentinfo">
       <div className="container-custom">
@@ -127,9 +134,38 @@ export default function Footer() {
             <p className="text-sm text-gray-400">
               © {currentYear} Frezya. All rights reserved.
             </p>
-            <p className="text-xs text-gray-500">
-              Premium Mediterranean Food Products | B2B Export Solutions
-            </p>
+            
+            {/* Legal Links */}
+            <nav aria-label="Legal navigation" className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/privacy-policy"
+                className="text-xs text-gray-500 hover:text-secondary-light transition-colors duration-200"
+                data-testid="footer-privacy-policy"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/cookie-policy"
+                className="text-xs text-gray-500 hover:text-secondary-light transition-colors duration-200"
+                data-testid="footer-cookie-policy"
+              >
+                Cookie Policy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-xs text-gray-500 hover:text-secondary-light transition-colors duration-200"
+                data-testid="footer-terms"
+              >
+                Terms & Conditions
+              </Link>
+              <button
+                onClick={handleCookieSettings}
+                className="text-xs text-gray-500 hover:text-secondary-light transition-colors duration-200 underline"
+                data-testid="footer-cookie-settings"
+              >
+                Cookie settings
+              </button>
+            </nav>
           </div>
         </div>
       </div>

@@ -2,7 +2,9 @@
  * Analytics configuration and helpers
  *
  * This module provides provider-agnostic analytics support.
- * Analytics are only loaded in production when NEXT_PUBLIC_ANALYTICS_ID is set.
+ * Analytics are only loaded in production when:
+ * 1. NEXT_PUBLIC_ANALYTICS_ID is set and valid
+ * 2. User has accepted cookie consent
  */
 
 /**
@@ -26,11 +28,30 @@ export function isValidAnalyticsId(id: string): boolean {
 }
 
 /**
- * Check if analytics should be enabled.
- * Analytics are enabled only in production when ANALYTICS_ID is set and valid.
+ * Check if analytics configuration is valid (env var and production mode).
+ * This does NOT check consent - use isAnalyticsAllowed() for that.
  */
 export function isAnalyticsEnabled(): boolean {
   return process.env.NODE_ENV === 'production' && !!ANALYTICS_ID && isValidAnalyticsId(ANALYTICS_ID);
+}
+
+/**
+ * Check if user has accepted cookie consent (SSR-safe).
+ * Returns true only if consent is explicitly "accepted".
+ */
+export function hasAnalyticsConsent(): boolean {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+  return localStorage.getItem('frezya-cookie-consent') === 'accepted';
+}
+
+/**
+ * Check if analytics should be allowed (config valid AND consent given).
+ * This is the main check to use before loading analytics scripts.
+ */
+export function isAnalyticsAllowed(): boolean {
+  return isAnalyticsEnabled() && hasAnalyticsConsent();
 }
 
 /**
