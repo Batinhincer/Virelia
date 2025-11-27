@@ -380,13 +380,13 @@ export async function getAllProductSlugs(): Promise<string[]> {
   // Try Sanity first
   if (sanityClient) {
     try {
-      // The GROQ query `.slug.current` returns an array of strings directly
-      const result = await sanityClient.fetch<string[]>(
-        `*[_type == "product" && defined(slug.current)].slug.current`
-      );
+      // Use the existing query from queries object for consistency
+      const result = await sanityClient.fetch<{ slug: string }[]>(queries.allProductSlugs);
       if (result && result.length > 0) {
-        // Filter nulls and duplicates
-        const slugs = result.filter((slug): slug is string => typeof slug === 'string' && slug.length > 0);
+        // Extract slugs from the result objects, filter nulls and duplicates
+        const slugs = result
+          .map(item => item.slug)
+          .filter((slug): slug is string => typeof slug === 'string' && slug.length > 0);
         return [...new Set(slugs)];
       }
     } catch (error) {
@@ -407,13 +407,13 @@ export async function getAllCategorySlugs(): Promise<string[]> {
   // Try Sanity first
   if (sanityClient) {
     try {
-      // The GROQ query `.slug.current` returns an array of strings directly
-      const result = await sanityClient.fetch<string[]>(
-        `*[_type == "category" && defined(slug.current)].slug.current`
-      );
+      // Use the existing query from queries object for consistency
+      const result = await sanityClient.fetch<{ slug: string }[]>(queries.allCategorySlugs);
       if (result && result.length > 0) {
-        // Filter nulls and duplicates
-        const slugs = result.filter((slug): slug is string => typeof slug === 'string' && slug.length > 0);
+        // Extract slugs from the result objects, filter nulls and duplicates
+        const slugs = result
+          .map(item => item.slug)
+          .filter((slug): slug is string => typeof slug === 'string' && slug.length > 0);
         return [...new Set(slugs)];
       }
     } catch (error) {
