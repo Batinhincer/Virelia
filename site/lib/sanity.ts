@@ -297,7 +297,7 @@ export interface SanityCategoryData {
   title: string;
   slug: string;
   description: string;
-  richDescription?: PortableTextBlock[];
+  richDescription: PortableTextBlock[] | null;
   heroImage?: SanityImageSource;
 }
 

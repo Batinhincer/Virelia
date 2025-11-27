@@ -49,7 +49,7 @@ interface CategoryData {
   name: string;
   slug: string;
   description: string;
-  richDescription?: PortableTextBlock[];
+  richDescription: PortableTextBlock[] | null;
 }
 
 interface CategoryPageProps {
@@ -452,7 +452,7 @@ export async function getStaticProps({ params }: { params: { category: string } 
       name: sanityCategory.title,
       slug: sanityCategory.slug,
       description: sanityCategory.description || '',
-      richDescription: sanityCategory.richDescription || undefined,
+      richDescription: sanityCategory.richDescription ?? null,
     };
     
     const products: CategoryProduct[] = sanityProducts.map(transformSanityProduct);
@@ -486,6 +486,7 @@ export async function getStaticProps({ params }: { params: { category: string } 
         name: localCategory.name,
         slug: localCategory.slug,
         description: localCategory.description,
+        richDescription: null,
       },
       products,
     },
