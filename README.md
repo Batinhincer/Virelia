@@ -17,6 +17,49 @@ This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing 
 
 ## Recent Updates
 
+### Phase 13 – Sanity-first Data & Local Fallback Cleanup
+
+This phase centralizes data fetching in `site/lib/sanity.ts` and ensures all product and category pages use Sanity as the primary data source while maintaining a robust local fallback for CI/tests:
+
+- **Centralized Data Helpers in `sanity.ts`**:
+  - `getAllProductSlugs()`: Fetches all product slugs from Sanity for `getStaticPaths`, falls back to local data if Sanity is unavailable
+  - `getAllCategorySlugs()`: Fetches all category slugs from Sanity for `getStaticPaths`, falls back to local data if Sanity is unavailable
+  - Re-exports local product helpers (`getLocalProductBySlug`, `getLocalCategoryBySlug`, etc.) for internal fallback use
+  - All local data imports (`@/data/products`) are now centralized in `sanity.ts`
+
+- **Product Detail Pages** (`/product/[slug]`):
+  - `getStaticPaths` now uses `getAllProductSlugs()` from `sanity.ts`
+  - `getStaticProps` returns `{ notFound: true }` when a product is not found in either Sanity or local data
+  - Removed direct imports of `@/data/products`
+
+- **Category Listing Pages** (`/products/[category]`):
+  - `getStaticPaths` now uses `getAllCategorySlugs()` from `sanity.ts`
+  - `getStaticProps` returns `{ notFound: true }` when a category is not found in either Sanity or local data
+  - Removed direct imports of `@/data/products`
+
+- **404 Behavior**:
+  - Visiting a non-existing product slug (e.g., `/product/non-existing`) returns the Next.js 404 page
+  - Visiting a non-existing category (e.g., `/products/non-existing-category`) also returns 404
+  - Breadcrumbs and canonical URLs remain correct for existing products/categories
+
+- **Local Fallback Data**:
+  - `site/data/products.ts` is now only used inside `sanity.ts` and seeding scripts (`studio/scripts/seedFromLocal.ts`)
+  - The file remains the source of truth for CI/test environments without Sanity configuration
+  - Client-side components (Search, Header) still use local data for static navigation/search
+
+- **Seeding from Local Data**:
+  - Run `cd studio && npm run import:seed` to import local products into Sanity
+  - The seed script uses `site/data/products.ts` as the source
+
+**How Fallback Works:**
+
+When Sanity environment variables are not set or Sanity queries fail:
+1. `getAllProductSlugs()` and `getAllCategorySlugs()` return slugs from local data
+2. `fetchProductBySlug()` and `fetchCategoryBySlug()` return `null`, triggering local data lookup
+3. The site renders correctly using `site/data/products.ts` data
+
+This ensures the site builds and tests pass in CI environments without Sanity credentials.
+
 ### Phase 12 – Sanity-powered Content & CMS Handover
 
 This phase implements full Sanity CMS integration for product, category, and homepage content with graceful fallbacks:

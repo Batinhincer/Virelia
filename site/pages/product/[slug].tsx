@@ -10,8 +10,18 @@ import CTAStrip from "@/components/CTAStrip";
 import ProductCard from "@/components/ProductCard";
 import InquiryForm from "@/components/InquiryForm";
 import { ProductSchema, BreadcrumbSchema } from "@/components/SEO";
-import { products, getProductBySlug, getCategorySlug, getRelatedProducts, Product } from "@/data/products";
-import { fetchProductBySlug, fetchProductsByCategory, PortableTextBlock, isPortableTextArray, extractPlainTextFromPortableText } from "@/lib/sanity";
+import {
+  fetchProductBySlug,
+  fetchProductsByCategory,
+  PortableTextBlock,
+  isPortableTextArray,
+  extractPlainTextFromPortableText,
+  getAllProductSlugs,
+  getLocalProductBySlug,
+  getLocalCategorySlug,
+  getLocalRelatedProducts,
+  type LocalProduct,
+} from "@/lib/sanity";
 import PortableTextRenderer from "@/components/PortableTextRenderer";
 import { PLACEHOLDER_IMAGE, SITE_URL } from "@/lib/constants";
 
@@ -446,7 +456,7 @@ function transformSanityProduct(sanityProduct: {
 }
 
 // Transform local product to unified format
-function transformLocalProduct(localProduct: Product, categorySlug: string): ProductData {
+function transformLocalProduct(localProduct: LocalProduct, categorySlug: string): ProductData {
   return {
     slug: localProduct.slug,
     title: localProduct.title,
@@ -466,7 +476,7 @@ function transformLocalProduct(localProduct: Product, categorySlug: string): Pro
 }
 
 // Transform to related product format
-function transformToRelatedProduct(p: Product): RelatedProduct {
+function transformToRelatedProduct(p: LocalProduct): RelatedProduct {
   return {
     slug: p.slug,
     title: p.title,
@@ -477,9 +487,10 @@ function transformToRelatedProduct(p: Product): RelatedProduct {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Generate paths from local data (always available)
-  const paths = products.map((product) => ({
-    params: { slug: product.slug },
+  // Use centralized helper to get slugs from Sanity (with local fallback)
+  const slugs = await getAllProductSlugs();
+  const paths = slugs.map((slug) => ({
+    params: { slug },
   }));
 
   return {
@@ -524,19 +535,17 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async ({ params 
   }
   
   // Fallback to local data
-  const localProduct = getProductBySlug(slug);
+  const localProduct = getLocalProductBySlug(slug);
   
+  // If no product found in either Sanity or local data, return 404
   if (!localProduct) {
     return {
-      props: {
-        product: null,
-        relatedProducts: [],
-      },
+      notFound: true,
     };
   }
   
-  const categorySlug = getCategorySlug(localProduct.category);
-  const localRelatedProducts = getRelatedProducts(localProduct.slug, localProduct.category, 3);
+  const categorySlug = getLocalCategorySlug(localProduct.category);
+  const localRelatedProducts = getLocalRelatedProducts(localProduct.slug, localProduct.category, 3);
   const product = transformLocalProduct(localProduct, categorySlug);
   
   return {
