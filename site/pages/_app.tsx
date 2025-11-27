@@ -2,11 +2,52 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Script from 'next/script';
+import { useState, useEffect, useCallback } from 'react';
 import { OrganizationSchema, WebSiteSchema } from '@/components/SEO';
-import { ANALYTICS_ID, isAnalyticsEnabled, getGA4ScriptUrl, getGA4InitScript } from '@/lib/analytics';
+import CookieConsentBanner, { getStoredConsent } from '@/components/CookieConsentBanner';
+import { ANALYTICS_ID, isAnalyticsEnabled, getGA4ScriptUrl, getGA4InitScript, hasAnalyticsConsent } from '@/lib/analytics';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const analyticsEnabled = isAnalyticsEnabled();
+  const [analyticsAllowed, setAnalyticsAllowed] = useState(false);
+  const [cookieBannerOpen, setCookieBannerOpen] = useState(false);
+
+  // Check analytics consent on mount and when consent changes
+  useEffect(() => {
+    const checkConsent = () => {
+      const enabled = isAnalyticsEnabled() && hasAnalyticsConsent();
+      setAnalyticsAllowed(enabled);
+    };
+
+    checkConsent();
+
+    // Listen for consent changes
+    const handleConsentChange = () => {
+      checkConsent();
+    };
+
+    window.addEventListener('cookieConsentChanged', handleConsentChange);
+    return () => {
+      window.removeEventListener('cookieConsentChanged', handleConsentChange);
+    };
+  }, []);
+
+  // Expose function to open cookie settings (for footer link)
+  const openCookieSettings = useCallback(() => {
+    setCookieBannerOpen(true);
+  }, []);
+
+  // Close cookie banner handler
+  const closeCookieBanner = useCallback(() => {
+    setCookieBannerOpen(false);
+  }, []);
+
+  // Make openCookieSettings available globally for footer link
+  useEffect(() => {
+    (window as unknown as { openCookieSettings?: () => void }).openCookieSettings = openCookieSettings;
+    return () => {
+      delete (window as unknown as { openCookieSettings?: () => void }).openCookieSettings;
+    };
+  }, [openCookieSettings]);
 
   return (
     <>
@@ -15,8 +56,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Google Analytics (GA4) - only loaded in production with NEXT_PUBLIC_ANALYTICS_ID set */}
-      {analyticsEnabled && (
+      {/* Google Analytics (GA4) - only loaded in production with NEXT_PUBLIC_ANALYTICS_ID set AND consent given */}
+      {analyticsAllowed && (
         <>
           <Script
             id="ga4-script"
@@ -35,6 +76,12 @@ export default function App({ Component, pageProps }: AppProps) {
       <OrganizationSchema />
       <WebSiteSchema />
       <Component {...pageProps} />
+      
+      {/* Cookie Consent Banner */}
+      <CookieConsentBanner 
+        isOpen={cookieBannerOpen ? true : undefined} 
+        onClose={closeCookieBanner} 
+      />
     </>
   );
 }

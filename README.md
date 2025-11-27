@@ -14,8 +14,76 @@ This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing 
 - **Responsive Design**: Optimized for desktop and mobile devices
 - **Premium UI**: Designed with B2B catalog style using consistent design tokens
 - **Sanity CMS Integration**: Product and category data can be managed via Sanity Studio with automatic fallback to local data
+- **Cookie Consent**: GDPR-compliant cookie consent banner with accept/decline options
+- **Legal Pages**: Privacy Policy, Cookie Policy, and Terms & Conditions pages
 
 ## Recent Updates
+
+### Phase 14 – Cookie Consent & Legal Pages
+
+This phase implements GDPR-compliant cookie consent and legal pages for the Frezya B2B site:
+
+- **Cookie Consent Banner** (`site/components/CookieConsentBanner.tsx`):
+  - Displayed at the bottom of the screen on first visit
+  - "Accept all" and "Decline" buttons for user choice
+  - Stores consent in localStorage (`frezya-cookie-consent` = "accepted" | "declined")
+  - Links to Privacy Policy and Cookie Policy within the banner
+  - Keyboard accessible with focus management and proper ARIA attributes (`role="dialog"`, `aria-modal="true"`)
+  - Responsive design for mobile and desktop
+  - Does not reappear after a choice is made (persisted across sessions)
+
+- **Analytics Integration with Consent**:
+  - Updated `site/lib/analytics.ts` with new consent-aware functions:
+    - `hasAnalyticsConsent()`: Checks if user accepted cookies (SSR-safe)
+    - `isAnalyticsAllowed()`: Combines config check AND consent check
+  - Analytics scripts (GA4) only load when:
+    1. `NEXT_PUBLIC_ANALYTICS_ID` is set and valid
+    2. User has accepted cookies
+  - Consent changes dispatch a custom `cookieConsentChanged` event
+  - Analytics state updates reactively when consent changes
+
+- **Legal Pages**:
+  - `/privacy-policy` – Privacy Policy with proper SEO, heading structure, and placeholder sections
+  - `/cookie-policy` – Cookie Policy explaining cookie types and management
+  - `/terms` – Terms & Conditions for website usage
+  - All pages use the SEO component with proper title, description, and canonical URL
+  - Placeholder text blocks marked with `[PLACEHOLDER: ...]` for easy replacement
+
+- **Footer Updates** (`site/components/Footer.tsx`):
+  - Added "Legal navigation" section with links to:
+    - Privacy Policy
+    - Cookie Policy
+    - Terms & Conditions
+    - "Cookie settings" button (reopens the consent banner)
+  - Test IDs added for e2e testing (`data-testid` attributes)
+
+- **Testing**:
+  - 24 new Playwright e2e tests in `site/e2e/cookie-consent.spec.ts`
+  - Tests cover: banner appearance, accept/decline behavior, persistence, footer links, Cookie settings functionality, legal page rendering, and accessibility
+
+**Managing Cookie Consent:**
+
+- **Accepting cookies**: Click "Accept all" in the banner – enables analytics tracking
+- **Declining cookies**: Click "Decline" in the banner – keeps analytics disabled
+- **Changing preference**: Click "Cookie settings" in the footer to reopen the banner
+- **Resetting consent**: Clear localStorage (`frezya-cookie-consent` key) or use browser dev tools
+
+**For Developers:**
+
+To check consent status in code:
+```typescript
+import { hasAnalyticsConsent, isAnalyticsAllowed } from '@/lib/analytics';
+
+// Check if user accepted cookies
+if (hasAnalyticsConsent()) {
+  // User accepted analytics
+}
+
+// Check if analytics should be enabled (config + consent)
+if (isAnalyticsAllowed()) {
+  // Safe to use analytics
+}
+```
 
 ### Phase 13 – Sanity-first Data & Local Fallback Cleanup
 
