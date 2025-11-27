@@ -21,7 +21,7 @@ interface ProductData {
   title: string;
   shortDescription: string;
   longDescription: string;
-  longDescriptionRich?: PortableTextBlock[]; // Portable Text from Sanity
+  longDescriptionRich: PortableTextBlock[] | null; // Portable Text from Sanity, null for local products
   category: string;
   categorySlug: string;
   image: string;
@@ -415,7 +415,7 @@ function transformSanityProduct(sanityProduct: {
 }): ProductData {
   // Handle longDescription - it may be Portable Text (array) or plain string
   let longDescription = '';
-  let longDescriptionRich: PortableTextBlock[] | undefined;
+  let longDescriptionRich: PortableTextBlock[] | null = null;
   
   if (isPortableTextArray(sanityProduct.longDescription)) {
     // It's Portable Text blocks from Sanity
@@ -424,6 +424,7 @@ function transformSanityProduct(sanityProduct: {
     longDescription = extractPlainTextFromPortableText(sanityProduct.longDescription);
   } else if (typeof sanityProduct.longDescription === 'string') {
     longDescription = sanityProduct.longDescription;
+    longDescriptionRich = null;
   }
   
   return {
@@ -451,6 +452,7 @@ function transformLocalProduct(localProduct: Product, categorySlug: string): Pro
     title: localProduct.title,
     shortDescription: localProduct.shortDesc,
     longDescription: localProduct.longDesc,
+    longDescriptionRich: null, // Local products don't have Portable Text
     category: localProduct.category,
     categorySlug: categorySlug,
     image: localProduct.image,
@@ -507,9 +509,15 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async ({ params 
         image: p.image || PLACEHOLDER_IMAGE,
       }));
     
+    const product = transformSanityProduct(sanityProduct);
+    
     return {
       props: {
-        product: transformSanityProduct(sanityProduct),
+        product: {
+          ...product,
+          // Normalize: ensure longDescriptionRich is never undefined for JSON serialization
+          longDescriptionRich: product.longDescriptionRich ?? null,
+        },
         relatedProducts,
       },
     };
@@ -529,10 +537,15 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async ({ params 
   
   const categorySlug = getCategorySlug(localProduct.category);
   const localRelatedProducts = getRelatedProducts(localProduct.slug, localProduct.category, 3);
+  const product = transformLocalProduct(localProduct, categorySlug);
   
   return {
     props: {
-      product: transformLocalProduct(localProduct, categorySlug),
+      product: {
+        ...product,
+        // Normalize: ensure longDescriptionRich is never undefined for JSON serialization
+        longDescriptionRich: product.longDescriptionRich ?? null,
+      },
       relatedProducts: localRelatedProducts.map(transformToRelatedProduct),
     },
   };
