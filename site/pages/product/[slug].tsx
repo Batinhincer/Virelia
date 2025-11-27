@@ -11,7 +11,8 @@ import ProductCard from "@/components/ProductCard";
 import InquiryForm from "@/components/InquiryForm";
 import { ProductSchema, BreadcrumbSchema } from "@/components/SEO";
 import { products, getProductBySlug, getCategorySlug, getRelatedProducts, Product } from "@/data/products";
-import { fetchProductBySlug, fetchProductsByCategory } from "@/lib/sanity";
+import { fetchProductBySlug, fetchProductsByCategory, PortableTextBlock, isPortableTextArray, extractPlainTextFromPortableText } from "@/lib/sanity";
+import PortableTextRenderer from "@/components/PortableTextRenderer";
 import { PLACEHOLDER_IMAGE, SITE_URL } from "@/lib/constants";
 
 // Unified product type for this page
@@ -20,6 +21,7 @@ interface ProductData {
   title: string;
   shortDescription: string;
   longDescription: string;
+  longDescriptionRich?: PortableTextBlock[]; // Portable Text from Sanity
   category: string;
   categorySlug: string;
   image: string;
@@ -336,14 +338,21 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
         )}
 
         {/* Long Description Section */}
-        <section className="mb-16">
+        <section className="mb-16" data-testid="product-long-description">
           <div className="max-w-4xl">
             <h2 className="text-2xl font-bold text-text-heading mb-6">About This Product</h2>
-            <div className="prose prose-lg max-w-none">
-              <p className="text-text leading-relaxed whitespace-pre-line">
-                {product.longDescription}
-              </p>
-            </div>
+            {/* Render rich text from Sanity or plain text fallback */}
+            {product.longDescriptionRich && product.longDescriptionRich.length > 0 ? (
+              <div data-testid="product-rich-description">
+                <PortableTextRenderer content={product.longDescriptionRich} />
+              </div>
+            ) : (
+              <div className="prose prose-lg max-w-none">
+                <p className="text-text leading-relaxed whitespace-pre-line">
+                  {product.longDescription}
+                </p>
+              </div>
+            )}
           </div>
         </section>
 
@@ -393,7 +402,7 @@ function transformSanityProduct(sanityProduct: {
   slug: string;
   title: string;
   shortDescription?: string;
-  longDescription?: string;
+  longDescription?: string | PortableTextBlock[]; // Can be string (plain text) or Portable Text blocks
   category?: string;
   categorySlug?: string;
   image?: string;
@@ -404,11 +413,25 @@ function transformSanityProduct(sanityProduct: {
   certifications?: string[];
   hsCode?: string;
 }): ProductData {
+  // Handle longDescription - it may be Portable Text (array) or plain string
+  let longDescription = '';
+  let longDescriptionRich: PortableTextBlock[] | undefined;
+  
+  if (isPortableTextArray(sanityProduct.longDescription)) {
+    // It's Portable Text blocks from Sanity
+    longDescriptionRich = sanityProduct.longDescription;
+    // Create plain text fallback from Portable Text using utility function
+    longDescription = extractPlainTextFromPortableText(sanityProduct.longDescription);
+  } else if (typeof sanityProduct.longDescription === 'string') {
+    longDescription = sanityProduct.longDescription;
+  }
+  
   return {
     slug: sanityProduct.slug,
     title: sanityProduct.title,
     shortDescription: sanityProduct.shortDescription || '',
-    longDescription: sanityProduct.longDescription || '',
+    longDescription,
+    longDescriptionRich,
     category: sanityProduct.category || '',
     categorySlug: sanityProduct.categorySlug || '',
     image: sanityProduct.image || PLACEHOLDER_IMAGE,
