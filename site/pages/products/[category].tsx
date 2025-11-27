@@ -26,7 +26,9 @@ import {
 import {
   fetchCategoryBySlug,
   fetchProductsByCategory,
+  PortableTextBlock,
 } from "@/lib/sanity";
+import PortableTextRenderer from "@/components/PortableTextRenderer";
 import { PLACEHOLDER_IMAGE, SITE_URL } from "@/lib/constants";
 
 // Unified product type for the page (works with both Sanity and local data)
@@ -47,6 +49,7 @@ interface CategoryData {
   name: string;
   slug: string;
   description: string;
+  richDescription: PortableTextBlock[] | null;
 }
 
 interface CategoryPageProps {
@@ -188,9 +191,16 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
           <h1 className="text-h1 font-bold text-text-heading mb-4">
             {categoryData.name}
           </h1>
-          <p className="text-xl text-text-muted leading-relaxed max-w-3xl">
-            {categoryData.description}
-          </p>
+          {/* Rich description from Sanity or plain text fallback */}
+          {categoryData.richDescription && categoryData.richDescription.length > 0 ? (
+            <div className="max-w-3xl" data-testid="category-rich-description">
+              <PortableTextRenderer content={categoryData.richDescription} />
+            </div>
+          ) : (
+            <p className="text-xl text-text-muted leading-relaxed max-w-3xl" data-testid="category-description">
+              {categoryData.description}
+            </p>
+          )}
           <div className="mt-6 flex items-center gap-4">
             <span className="inline-flex items-center px-4 py-2 bg-secondary-light text-primary rounded-full text-sm font-medium" data-testid="category-product-count">
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -442,6 +452,7 @@ export async function getStaticProps({ params }: { params: { category: string } 
       name: sanityCategory.title,
       slug: sanityCategory.slug,
       description: sanityCategory.description || '',
+      richDescription: sanityCategory.richDescription ?? null,
     };
     
     const products: CategoryProduct[] = sanityProducts.map(transformSanityProduct);
@@ -475,6 +486,7 @@ export async function getStaticProps({ params }: { params: { category: string } 
         name: localCategory.name,
         slug: localCategory.slug,
         description: localCategory.description,
+        richDescription: null,
       },
       products,
     },

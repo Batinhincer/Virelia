@@ -53,7 +53,7 @@ export interface SanityProduct {
     slug?: { current: string };
   };
   shortDescription: string;
-  longDescription: string;
+  longDescription: string | PortableTextBlock[]; // Can be string or Portable Text
   images?: SanityImageSource[];
   mainImage?: SanityImageSource;
   packaging?: string;
@@ -70,6 +70,7 @@ export interface SanityCategory {
   title: string;
   slug: { current: string };
   description: string;
+  richDescription?: PortableTextBlock[];
   heroImage?: SanityImageSource;
 }
 
@@ -101,6 +102,31 @@ export interface SanityPage {
   content?: PortableTextBlock[];
   seoTitle?: string;
   seoDescription?: string;
+}
+
+// Type guard to check if a value is a PortableTextBlock array
+export function isPortableTextArray(value: unknown): value is PortableTextBlock[] {
+  return (
+    Array.isArray(value) &&
+    value.length > 0 &&
+    typeof value[0] === 'object' &&
+    value[0] !== null &&
+    '_type' in value[0] &&
+    value[0]._type === 'block'
+  );
+}
+
+// Utility to extract plain text from Portable Text blocks
+export function extractPlainTextFromPortableText(blocks: PortableTextBlock[]): string {
+  return blocks
+    .map(block => {
+      if (block._type === 'block' && block.children) {
+        return block.children.map(child => child.text).join('');
+      }
+      return '';
+    })
+    .filter(Boolean)
+    .join('\n\n');
 }
 
 // GROQ Queries
@@ -171,6 +197,7 @@ export const queries = {
     title,
     "slug": slug.current,
     description,
+    richDescription,
     heroImage
   }`,
 
@@ -264,7 +291,17 @@ export async function fetchCategories() {
   }
 }
 
-export async function fetchCategoryBySlug(slug: string) {
+// Type for category data returned from Sanity queries
+export interface SanityCategoryData {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  richDescription: PortableTextBlock[] | null;
+  heroImage?: SanityImageSource;
+}
+
+export async function fetchCategoryBySlug(slug: string): Promise<SanityCategoryData | null> {
   if (!sanityClient) return null;
   try {
     return await sanityClient.fetch(queries.categoryBySlug, { slug });

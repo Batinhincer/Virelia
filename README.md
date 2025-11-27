@@ -17,6 +17,62 @@ This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing 
 
 ## Recent Updates
 
+### Phase 12 – Sanity-powered Content & CMS Handover
+
+This phase implements full Sanity CMS integration for product, category, and homepage content with graceful fallbacks:
+
+- **Sanity-first Data Fetching**:
+  - Products and categories are now primarily sourced from Sanity CMS
+  - If Sanity is unavailable or returns null, the site gracefully falls back to local data (`site/data/products.ts`)
+  - This ensures the site always works, even without a Sanity connection configured
+
+- **Portable Text (Rich Text) Support**:
+  - Product `longDescription` can now use Portable Text blocks from Sanity for rich formatting
+  - Category `richDescription` field supports Portable Text for detailed category introductions
+  - Uses the existing `PortableTextRenderer` component for consistent rendering
+  - Falls back to plain text when Portable Text is not available
+
+- **Category Pages** (`/products/[category]`):
+  - Fetches category data and products from Sanity
+  - Renders rich description using Portable Text when available
+  - Falls back to plain text description from local data
+  - All existing filters, sorting, and UX remain unchanged
+
+- **Product Detail Pages** (`/product/[slug]`):
+  - Fetches product data from Sanity by slug
+  - Renders `longDescription` as Portable Text when available
+  - Falls back to plain text for local products
+  - Specifications, certifications, and related products work with both data sources
+
+- **Homepage** (`/`):
+  - Already integrated with Sanity for hero title, subtitle, and SEO metadata
+  - Featured products and categories can be managed from Sanity
+  - Falls back to hardcoded content when Sanity is not configured
+
+- **Testing**:
+  - 20 new Playwright e2e tests in `site/e2e/sanity-content.spec.ts`
+  - Tests verify content rendering for categories, products, and homepage
+  - Tests confirm fallback behavior works correctly
+  - Tests validate SEO metadata and navigation
+
+**For Content Editors:**
+
+To manage content via Sanity Studio:
+
+1. **Products**: Edit the `product` document type
+   - `longDescription`: Use the rich text editor for formatted content
+   - Products appear on product detail pages and category listings
+
+2. **Categories**: Edit the `category` document type
+   - `description`: Plain text summary (used as fallback)
+   - `richDescription`: Rich text field for detailed category introductions
+
+3. **Homepage**: Edit the `page` document with `pageType: home`
+   - `heroTitle` and `heroSubtitle`: Customize the hero section
+   - `seoTitle` and `seoDescription`: Override SEO metadata
+
+The site automatically picks up changes from Sanity with ISR (Incremental Static Regeneration).
+
 ### Phase 11 – Analytics & Monitoring
 
 This phase adds optional analytics support and health/version endpoints for monitoring:
