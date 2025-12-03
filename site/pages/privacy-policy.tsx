@@ -9,7 +9,7 @@ export default function PrivacyPolicyPage() {
     <div className="min-h-screen bg-bg text-text">
       <SEO
         title="Privacy Policy"
-        description="Read Frezya's Privacy Policy to understand how we collect, use, and protect your personal information when you use our B2B Mediterranean food products website."
+        description="Read Virelia's Privacy Policy to understand how we collect, use, and protect your personal information when you use our B2B gourmet food products website."
         canonical={getCanonicalUrl('/privacy-policy')}
       />
 
@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
               <h2 className="text-h3 font-semibold text-text-heading mb-4">1. Introduction</h2>
               <p className="text-text leading-relaxed mb-4">
                 [PLACEHOLDER: Insert company introduction and privacy commitment statement here. 
-                This section should explain who Frezya is and our commitment to protecting user privacy.]
+                This section should explain who Virelia is and our commitment to protecting user privacy.]
               </p>
             </section>
 
@@ -137,13 +137,13 @@ export default function PrivacyPolicyPage() {
                 If you have any questions about this Privacy Policy or our data practices, please contact us:
               </p>
               <div className="bg-bg-surface p-6 rounded-lg">
-                <p className="text-text mb-2"><strong>Frezya Dış Ticaret Ltd. Şti.</strong></p>
+                <p className="text-text mb-2"><strong>Virelia</strong></p>
                 <p className="text-text-muted mb-2">
                   Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36,<br />
                   16160 Osmangazi/Bursa, Türkiye
                 </p>
                 <p className="text-text-muted">
-                  Email: <a href="mailto:batinhincer@frezya.nl" className="text-primary hover:underline">batinhincer@frezya.nl</a>
+                  Email: <a href="mailto:info@virelias.com" className="text-primary hover:underline">info@virelias.com</a>
                 </p>
               </div>
             </section>

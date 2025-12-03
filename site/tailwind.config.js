@@ -7,6 +7,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Brand colors for Virelia - Gourmet Theme
+        brand: {
+          // Deep Olive Green (olive oil feeling)
+          primary: '#3a5a40',
+          // Roasted Coffee Brown
+          secondary: '#6f4e37',
+          // Pepper Red (Harissa/Ajvar)
+          accent: '#c1121f',
+        },
         // Primary: Deep Olive / Forest Green (trust, natural, B2B)
         primary: {
           DEFAULT: '#3a5a40',

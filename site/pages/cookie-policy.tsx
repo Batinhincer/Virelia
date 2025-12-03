@@ -9,7 +9,7 @@ export default function CookiePolicyPage() {
     <div className="min-h-screen bg-bg text-text">
       <SEO
         title="Cookie Policy"
-        description="Learn about how Frezya uses cookies and similar technologies on our B2B Mediterranean food products website, and how you can manage your cookie preferences."
+        description="Learn about how Virelia uses cookies and similar technologies on our B2B gourmet food products website, and how you can manage your cookie preferences."
         canonical={getCanonicalUrl('/cookie-policy')}
       />
 
@@ -57,7 +57,7 @@ export default function CookiePolicyPage() {
                   These cookies are necessary for the website to function and cannot be switched off.
                 </p>
                 <ul className="list-disc pl-6 space-y-1 text-text-muted text-sm">
-                  <li><code>frezya-cookie-consent</code> - Stores your cookie consent preference</li>
+                  <li><code>virelia-cookie-consent</code> - Stores your cookie consent preference</li>
                 </ul>
               </div>
 
@@ -141,13 +141,13 @@ export default function CookiePolicyPage() {
                 If you have any questions about our use of cookies, please contact us:
               </p>
               <div className="bg-bg-surface p-6 rounded-lg">
-                <p className="text-text mb-2"><strong>Frezya Dış Ticaret Ltd. Şti.</strong></p>
+                <p className="text-text mb-2"><strong>Virelia</strong></p>
                 <p className="text-text-muted mb-2">
                   Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36,<br />
                   16160 Osmangazi/Bursa, Türkiye
                 </p>
                 <p className="text-text-muted">
-                  Email: <a href="mailto:batinhincer@frezya.nl" className="text-primary hover:underline">batinhincer@frezya.nl</a>
+                  Email: <a href="mailto:info@virelias.com" className="text-primary hover:underline">info@virelias.com</a>
                 </p>
               </div>
             </section>

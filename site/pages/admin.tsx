@@ -9,12 +9,12 @@ export default function AdminPage() {
           Sanity Studio is deployed separately at:
         </p>
         <a
-          href="https://studio.frezya.nl"
+          href="https://studio.virelias.com"
           className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors mb-6"
           target="_blank"
           rel="noopener noreferrer"
         >
-          https://studio.frezya.nl
+          https://studio.virelias.com
         </a>
         <p className="text-sm text-gray-500 mt-4">
           The Studio is deployed as a standalone application for better performance and security.

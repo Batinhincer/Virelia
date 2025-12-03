@@ -271,7 +271,7 @@ test.describe('Contact Page', () => {
     test('contact page renders correctly', async ({ page }) => {
       await page.goto('/contact');
 
-      await expect(page).toHaveTitle(/Contact.*Frezya/);
+      await expect(page).toHaveTitle(/Contact.*Virelia/);
 
       const h1 = page.locator('h1');
       await expect(h1).toContainText('Contact Us');
@@ -286,7 +286,7 @@ test.describe('Contact Page', () => {
 
       // Email (in main content, not footer)
       const mainContent = page.locator('main, section').filter({ has: page.locator('h1') }).first();
-      await expect(page.getByRole('link', { name: 'batinhincer@frezya.nl' }).first()).toBeVisible();
+      await expect(page.getByRole('link', { name: 'info@virelias.com' }).first()).toBeVisible();
 
       // Phone
       await expect(page.getByRole('link', { name: '+90 507 707 54 07' }).first()).toBeVisible();

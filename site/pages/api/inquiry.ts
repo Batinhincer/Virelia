@@ -93,8 +93,8 @@ export default async function handler(
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
   const smtpFrom = process.env.SMTP_FROM || smtpUser;
-  const inquiryEmail = process.env.INQUIRY_EMAIL || "batinhincer@frezya.nl";
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://virelia.com";
+  const inquiryEmail = process.env.INQUIRY_EMAIL || "info@virelias.com";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.virelias.com";
 
   // Prepare Sanity inquiry document
   const source = determineSource(urlPath, productSlug, productName);

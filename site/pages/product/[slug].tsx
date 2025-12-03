@@ -141,22 +141,22 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
   return (
     <div className="min-h-screen bg-bg text-text">
       <Head>
-        <title>{product.title} | Frezya</title>
+        <title>{product.title} | Virelia</title>
         <meta name="description" content={product.shortDescription} />
         <link rel="canonical" href={pageUrl} />
         
         {/* Open Graph */}
         <meta property="og:type" content="product" />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:title" content={`${product.title} | Frezya`} />
+        <meta property="og:title" content={`${product.title} | Virelia`} />
         <meta property="og:description" content={product.shortDescription} />
         <meta property="og:image" content={ogImage} />
-        <meta property="og:site_name" content="Frezya" />
+        <meta property="og:site_name" content="Virelia" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={pageUrl} />
-        <meta name="twitter:title" content={`${product.title} | Frezya`} />
+        <meta name="twitter:title" content={`${product.title} | Virelia`} />
         <meta name="twitter:description" content={product.shortDescription} />
         <meta name="twitter:image" content={ogImage} />
       </Head>

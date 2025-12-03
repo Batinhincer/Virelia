@@ -47,7 +47,7 @@ test.describe('Cookie Consent Banner', () => {
     await expect(banner).not.toBeVisible();
     
     // Check localStorage
-    const consent = await page.evaluate(() => localStorage.getItem('frezya-cookie-consent'));
+    const consent = await page.evaluate(() => localStorage.getItem('virelia-cookie-consent'));
     expect(consent).toBe('accepted');
   });
 
@@ -64,7 +64,7 @@ test.describe('Cookie Consent Banner', () => {
     await expect(banner).not.toBeVisible();
     
     // Check localStorage
-    const consent = await page.evaluate(() => localStorage.getItem('frezya-cookie-consent'));
+    const consent = await page.evaluate(() => localStorage.getItem('virelia-cookie-consent'));
     expect(consent).toBe('declined');
   });
 
@@ -161,7 +161,7 @@ test.describe('Cookie Settings from Footer', () => {
     await page.getByTestId('cookie-accept-button').click();
     
     // Verify consent is accepted
-    let consent = await page.evaluate(() => localStorage.getItem('frezya-cookie-consent'));
+    let consent = await page.evaluate(() => localStorage.getItem('virelia-cookie-consent'));
     expect(consent).toBe('accepted');
     
     // Reopen banner via Cookie settings
@@ -171,7 +171,7 @@ test.describe('Cookie Settings from Footer', () => {
     await page.getByTestId('cookie-decline-button').click();
     
     // Verify consent changed to declined
-    consent = await page.evaluate(() => localStorage.getItem('frezya-cookie-consent'));
+    consent = await page.evaluate(() => localStorage.getItem('virelia-cookie-consent'));
     expect(consent).toBe('declined');
   });
 });
@@ -234,7 +234,7 @@ test.describe('Legal Pages', () => {
     await page.goto('/privacy-policy');
     
     // Check page title
-    await expect(page).toHaveTitle(/Privacy Policy.*Frezya/);
+    await expect(page).toHaveTitle(/Privacy Policy.*Virelia/);
     
     // Check h1 heading
     const h1 = page.locator('h1');
@@ -254,7 +254,7 @@ test.describe('Legal Pages', () => {
     await page.goto('/cookie-policy');
     
     // Check page title
-    await expect(page).toHaveTitle(/Cookie Policy.*Frezya/);
+    await expect(page).toHaveTitle(/Cookie Policy.*Virelia/);
     
     // Check h1 heading
     const h1 = page.locator('h1');
@@ -274,7 +274,7 @@ test.describe('Legal Pages', () => {
     await page.goto('/terms');
     
     // Check page title
-    await expect(page).toHaveTitle(/Terms.*Conditions.*Frezya/);
+    await expect(page).toHaveTitle(/Terms.*Conditions.*Virelia/);
     
     // Check h1 heading
     const h1 = page.locator('h1');

@@ -115,7 +115,7 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
   }
 
   // SEO metadata
-  const pageTitle = `${categoryData.name} | Frezya`;
+  const pageTitle = `${categoryData.name} | Virelia`;
   const pageDescription = categoryData.description;
   const pageUrl = `${SITE_URL}/products/${categoryData.slug}`;
   
@@ -162,7 +162,7 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={ogImage} />
-        <meta property="og:site_name" content="Frezya" />
+        <meta property="og:site_name" content="Virelia" />
         
         {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -359,7 +359,7 @@ export default function CategoryPage({ categoryData, products }: CategoryPagePro
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <a
-                  href="mailto:batinhincer@frezya.nl"
+                  href="mailto:info@virelias.com"
                   className="inline-flex items-center justify-center px-8 py-4 rounded-2xl font-semibold text-lg text-white bg-transparent border-2 border-white transition-all duration-200 hover:bg-white hover:text-primary hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary"
                 >
                   Contact Sales

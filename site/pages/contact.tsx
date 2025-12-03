@@ -29,31 +29,31 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-bg text-text">
       <Head>
-        <title>Contact Us | Frezya – Premium Mediterranean Food Exporter</title>
+        <title>Contact Us | Virelia – Premium Gourmet Food Exporter</title>
         <meta
           name="description"
-          content="Get in touch with Frezya for B2B inquiries about premium Mediterranean food products. Request quotes, ask about private labeling, or discuss distribution partnerships."
+          content="Get in touch with Virelia for B2B inquiries about premium gourmet food products. Request quotes, ask about private labeling, or discuss distribution partnerships."
         />
         <link rel="canonical" href={pageUrl} />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:title" content="Contact Us | Frezya – Premium Mediterranean Food Exporter" />
+        <meta property="og:title" content="Contact Us | Virelia – Premium Gourmet Food Exporter" />
         <meta
           property="og:description"
-          content="Get in touch with Frezya for B2B inquiries about premium Mediterranean food products."
+          content="Get in touch with Virelia for B2B inquiries about premium gourmet food products."
         />
         <meta property="og:image" content={`${SITE_URL}/hero1.jpg`} />
-        <meta property="og:site_name" content="Frezya" />
+        <meta property="og:site_name" content="Virelia" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={pageUrl} />
-        <meta name="twitter:title" content="Contact Us | Frezya" />
+        <meta name="twitter:title" content="Contact Us | Virelia" />
         <meta
           name="twitter:description"
-          content="Get in touch with Frezya for B2B inquiries about premium Mediterranean food products."
+          content="Get in touch with Virelia for B2B inquiries about premium gourmet food products."
         />
         <meta name="twitter:image" content={`${SITE_URL}/hero1.jpg`} />
       </Head>
@@ -99,10 +99,10 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-medium text-text-heading">Email</h3>
                   <a
-                    href="mailto:batinhincer@frezya.nl"
+                    href="mailto:info@virelias.com"
                     className="text-primary hover:text-primary-dark transition-colors"
                   >
-                    batinhincer@frezya.nl
+                    info@virelias.com
                   </a>
                 </div>
               </div>
@@ -149,7 +149,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-medium text-text-heading">Address</h3>
                   <p className="text-text-muted">
-                    Frezya Dış Ticaret Ltd. Şti.
+                    Virelia
                     <br />
                     Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36
                     <br />

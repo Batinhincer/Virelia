@@ -6,7 +6,7 @@ test.describe('Sanity CMS Content & Fallback', () => {
       await page.goto('/products/oils-condiments');
       
       // Check page loads correctly
-      await expect(page).toHaveTitle(/Oils.*Condiments.*Frezya/);
+      await expect(page).toHaveTitle(/Oils.*Condiments.*Virelia/);
       
       // Category heading should be visible
       const h1 = page.locator('h1');
@@ -47,7 +47,7 @@ test.describe('Sanity CMS Content & Fallback', () => {
       await page.goto('/products/coffee-products');
       
       // Check page title
-      await expect(page).toHaveTitle(/Coffee Products.*Frezya/);
+      await expect(page).toHaveTitle(/Coffee Products.*Virelia/);
       
       // Category heading should be visible
       const h1 = page.locator('h1');
@@ -60,7 +60,7 @@ test.describe('Sanity CMS Content & Fallback', () => {
       await page.goto('/products/asian-specialties');
       
       // Page should still render
-      await expect(page).toHaveTitle(/Asian Specialties.*Frezya/);
+      await expect(page).toHaveTitle(/Asian Specialties.*Virelia/);
       
       // Should have at least the sambal product from local data
       const sambalCard = page.getByTestId('product-card-sambal');
@@ -107,7 +107,7 @@ test.describe('Sanity CMS Content & Fallback', () => {
       await page.goto('/product/harissa');
       
       // Page should render correctly
-      await expect(page).toHaveTitle(/Harissa.*Frezya/);
+      await expect(page).toHaveTitle(/Harissa.*Virelia/);
       
       // Product name should be visible
       const h1 = page.locator('h1');
@@ -155,11 +155,11 @@ test.describe('Sanity CMS Content & Fallback', () => {
       await page.goto('/');
       
       // Page should load successfully
-      await expect(page).toHaveTitle(/Frezya/);
+      await expect(page).toHaveTitle(/Virelia/);
       
       // Hero section should have content
       const heroTitle = page.locator('h1');
-      await expect(heroTitle).toContainText(/Mediterranean|Premium/i);
+      await expect(heroTitle).toContainText(/Gourmet|Premium/i);
     });
 
     test('homepage has product categories section', async ({ page }) => {
@@ -219,7 +219,7 @@ test.describe('Sanity CMS Content & Fallback', () => {
       const canonical = page.locator('link[rel="canonical"]');
       const href = await canonical.getAttribute('href');
       
-      expect(href).toMatch(/https?:\/\/.*frezya/i);
+      expect(href).toMatch(/https?:\/\/.*virelia/i);
     });
   });
 

@@ -11,10 +11,10 @@ import { SITE_URL } from "@/lib/constants";
 
 // Default fallback content
 const defaultContent = {
-  heroTitle: "About Frezya",
-  heroSubtitle: "Your trusted partner for premium Mediterranean food products",
-  seoTitle: "About Us | Frezya – Premium Mediterranean Food Exporter",
-  seoDescription: "Learn about Frezya, your trusted B2B partner for authentic Mediterranean food products. Quality, certification, and reliable export to EU, UK, and USA markets.",
+  heroTitle: "About Virelia",
+  heroSubtitle: "Your trusted partner for premium gourmet food products",
+  seoTitle: "About Us | Virelia – Premium Gourmet Food Exporter",
+  seoDescription: "Learn about Virelia, your trusted B2B partner for authentic gourmet food products. Quality, certification, and reliable export to EU, UK, and USA markets.",
 };
 
 interface AboutPageProps {
@@ -53,7 +53,7 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content={`${SITE_URL}/hero1.jpg`} />
-        <meta property="og:site_name" content="Frezya" />
+        <meta property="og:site_name" content="Virelia" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -83,7 +83,7 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
               </h2>
               <div className="space-y-6 text-lg text-text leading-relaxed">
                 <p>
-                  Frezya is a leading B2B exporter of authentic Mediterranean
+                  Virelia is a leading B2B exporter of authentic gourmet
                   food products, bringing the finest flavors from Turkey and
                   the Mediterranean region to markets across Europe, the United
                   Kingdom, and the United States.
@@ -331,7 +331,7 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
               <h2 className="text-h2 font-semibold mb-6">Our Quality Promise</h2>
               <div className="space-y-6 text-lg leading-relaxed mb-12">
                 <p>
-                  At Frezya, quality is not negotiable. Every product we
+                  At Virelia, quality is not negotiable. Every product we
                   export undergoes rigorous quality control and meets
                   international food safety standards.
                 </p>
@@ -387,8 +387,8 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
               Ready to Partner with Us?
             </h3>
             <p className="text-xl text-text-muted mb-8 max-w-2xl mx-auto">
-              Let's discuss how Frezya can become your trusted supplier of
-              premium Mediterranean products.
+              Let's discuss how Virelia can become your trusted supplier of
+              premium gourmet products.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <CTAButton href="/#contact">Request a Quote</CTAButton>

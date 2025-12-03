@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export type ConsentState = 'accepted' | 'declined' | null;
 
-const CONSENT_STORAGE_KEY = 'frezya-cookie-consent';
+const CONSENT_STORAGE_KEY = 'virelia-cookie-consent';
 
 /**
  * Safely get consent from localStorage (SSR-safe)
