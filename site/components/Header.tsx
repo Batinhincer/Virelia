@@ -86,9 +86,9 @@ export default function Header() {
     <header className="bg-primary text-white shadow-soft-lg fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-opacity-95">
       <div className="container-custom flex justify-between items-center py-5">
         {/* Logo */}
-        <Link href="/" aria-label="Frezya - Home">
+        <Link href="/" aria-label="Virelia - Home">
           <span className="text-3xl font-bold tracking-tight cursor-pointer hover:text-secondary-light transition-colors duration-300 font-heading">
-            Frezya
+            Virelia
           </span>
         </Link>
 
@@ -195,7 +195,7 @@ export default function Header() {
         <div className="flex flex-col h-full">
           {/* Mobile Menu Header */}
           <div className="flex items-center justify-between p-5 border-b border-primary-dark">
-            <span className="text-2xl font-bold font-heading">Frezya</span>
+            <span className="text-2xl font-bold font-heading">Virelia</span>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="p-2 rounded-lg hover:bg-primary-dark transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-light"

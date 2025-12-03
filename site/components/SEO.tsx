@@ -1,7 +1,5 @@
 import Head from 'next/head';
-import { SITE_URL } from '@/lib/constants';
-
-const SITE_NAME = 'Frezya';
+import { SITE_URL, SITE_NAME } from '@/lib/constants';
 
 interface SEOProps {
   title: string;
@@ -56,11 +54,11 @@ export function OrganizationSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Frezya Dış Ticaret Ltd. Şti.',
-    alternateName: 'Frezya',
+    name: 'Virelia',
+    alternateName: 'Virelia',
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
-    description: 'Premium Mediterranean Food Exporter - B2B supplier of olive oil, pepper paste, coffee, and specialty food products.',
+    logo: `${SITE_URL}/images/logo-virelia.png`,
+    description: 'Premium Gourmet Foods & Coffee - B2B supplier of olive oil, pepper paste, coffee, and specialty food products.',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36',
@@ -73,7 +71,7 @@ export function OrganizationSchema() {
       '@type': 'ContactPoint',
       telephone: '+90-507-707-5407',
       contactType: 'sales',
-      email: 'batinhincer@frezya.nl',
+      email: 'info@virelias.com',
       availableLanguage: ['English', 'Turkish'],
     },
     sameAs: [],
@@ -107,11 +105,11 @@ export function ProductSchema({ name, description, image, category, sku }: Produ
     sku: sku || name.toLowerCase().replace(/\s+/g, '-'),
     brand: {
       '@type': 'Brand',
-      name: 'Frezya',
+      name: 'Virelia',
     },
     manufacturer: {
       '@type': 'Organization',
-      name: 'Frezya Dış Ticaret Ltd. Şti.',
+      name: 'Virelia',
     },
     offers: {
       '@type': 'Offer',
@@ -171,7 +169,7 @@ export function WebSiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_NAME,
-    alternateName: 'Frezya Food Export',
+    alternateName: 'Virelia Premium Gourmet Foods',
     url: SITE_URL,
     potentialAction: {
       '@type': 'SearchAction',

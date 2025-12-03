@@ -17,16 +17,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10 lg:mb-12">
           {/* Company Info */}
           <div className="lg:col-span-2">
-            <Link href="/" aria-label="Frezya - Home">
+            <Link href="/" aria-label="Virelia - Home">
               <span className="text-2xl font-bold font-heading text-white hover:text-secondary-light transition-colors duration-200">
-                Frezya
+                Virelia
               </span>
             </Link>
             <p className="mt-4 text-sm text-gray-400 leading-relaxed max-w-md">
-              Your trusted B2B partner for premium Mediterranean food products. Quality, certification, and reliable export to EU, UK, and USA markets.
+              Your trusted B2B partner for premium gourmet food products. Quality, certification, and reliable export to EU, UK, and USA markets.
             </p>
             <div className="mt-6 space-y-2 text-sm">
-              <p className="text-white font-medium">Frezya Dış Ticaret Ltd. Şti.</p>
+              <p className="text-white font-medium">Virelia</p>
               <p className="text-gray-400">
                 Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36,<br />
                 16160 Osmangazi/Bursa, Türkiye
@@ -93,13 +93,13 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="mailto:batinhincer@frezya.nl"
+                  href="mailto:info@virelias.com"
                   className="text-gray-400 hover:text-secondary-light transition-colors duration-200 text-sm inline-flex items-center"
                 >
                   <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  batinhincer@frezya.nl
+                  info@virelias.com
                 </a>
               </li>
               <li>
@@ -132,7 +132,7 @@ export default function Footer() {
         <div className="pt-8 border-t border-gray-700">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-400">
-              © {currentYear} Frezya. All rights reserved.
+              © {currentYear} Virelia. All rights reserved.
             </p>
             
             {/* Legal Links */}

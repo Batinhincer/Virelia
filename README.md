@@ -1,10 +1,10 @@
-# Frezya
+# Virelia
 
-Frezya - Premium Mediterranean Food Products B2B Website
+Virelia - Premium Gourmet Foods & Coffee B2B Website
 
 ## Overview
 
-This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing premium Mediterranean food products for B2B export.
+This is a Next.js-based website for Virelia, showcasing premium gourmet food products for B2B export.
 
 ## Features
 
@@ -21,12 +21,12 @@ This is a Next.js-based website for Frezya Dış Ticaret Ltd. Şti., showcasing 
 
 ### Phase 14 – Cookie Consent & Legal Pages
 
-This phase implements GDPR-compliant cookie consent and legal pages for the Frezya B2B site:
+This phase implements GDPR-compliant cookie consent and legal pages for the Virelia B2B site:
 
 - **Cookie Consent Banner** (`site/components/CookieConsentBanner.tsx`):
   - Displayed at the bottom of the screen on first visit
   - "Accept all" and "Decline" buttons for user choice
-  - Stores consent in localStorage (`frezya-cookie-consent` = "accepted" | "declined")
+  - Stores consent in localStorage (`virelia-cookie-consent` = "accepted" | "declined")
   - Links to Privacy Policy and Cookie Policy within the banner
   - Keyboard accessible with focus management and proper ARIA attributes (`role="dialog"`, `aria-modal="true"`)
   - Responsive design for mobile and desktop
@@ -66,7 +66,7 @@ This phase implements GDPR-compliant cookie consent and legal pages for the Frez
 - **Accepting cookies**: Click "Accept all" in the banner – enables analytics tracking
 - **Declining cookies**: Click "Decline" in the banner – keeps analytics disabled
 - **Changing preference**: Click "Cookie settings" in the footer to reopen the banner
-- **Resetting consent**: Clear localStorage (`frezya-cookie-consent` key) or use browser dev tools
+- **Resetting consent**: Clear localStorage (`virelia-cookie-consent` key) or use browser dev tools
 
 **For Developers:**
 
@@ -314,7 +314,7 @@ This phase implements comprehensive filtering and sorting capabilities for categ
 
 ### Phase 7A – Global Search System
 
-This phase implements a comprehensive global search system for the Frezya B2B site:
+This phase implements a comprehensive global search system for the Virelia B2B site:
 
 - **Search Modal Component** (`site/components/SearchModal.tsx`):
   - Command Palette style interface (similar to Spotlight/VS Code)
@@ -365,11 +365,11 @@ This phase focuses on navigation, footer consistency, and overall UI polish:
 - **Footer Improvements** (`site/components/Footer.tsx`):
   - New responsive multi-column layout (4 columns on desktop, stacked on mobile)
   - Company information section with:
-    - Company name: Frezya Dış Ticaret Ltd. Şti.
+    - Company name: Virelia
     - Full address: Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36, 16160 Osmangazi/Bursa, Türkiye
   - Quick links section: Home, Products, About Us, Logistics, Certifications
   - Contact section with:
-    - Email: batinhincer@frezya.nl
+    - Email: info@virelias.com
     - Phone: +90 507 707 54 07
     - "Request a Quote" link
   - Dynamic copyright year
@@ -386,7 +386,7 @@ This phase focuses on navigation, footer consistency, and overall UI polish:
     - 404 page
 
 - **Branding Update**:
-  - Updated all references from "Virelia" to "Frezya" across the site
+  - All branding updated to "Virelia" across the site
   - Updated company contact information throughout
   - Updated SEO metadata and structured data (Organization, Product, WebSite schemas)
 
@@ -405,7 +405,7 @@ This phase polishes the homepage and adds Sanity CMS integration to static pages
   - Hero section with dynamic content from Sanity (heroTitle, heroSubtitle)
   - "Product Categories" section with category descriptions and "View Category" links
   - "Featured Products" grid (6 products in 3-column layout)
-  - "Why Choose Frezya?" value proposition cards
+  - "Why Choose Virelia?" value proposition cards
   - "Export Ready for Global Markets" section with EU/UK/USA compliance badges
   - New "Quality & Certifications" teaser section with certification badges
   - Link to Logistics page from export section
@@ -575,7 +575,7 @@ site/
 
 ## License
 
-Copyright © 2025 Frezya Dış Ticaret Ltd. Şti. All rights reserved.
+Copyright © 2025 Virelia. All rights reserved.
 
 ## Studio Deployment Instructions
 

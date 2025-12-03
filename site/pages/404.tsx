@@ -9,7 +9,7 @@ export default function Custom404() {
   return (
     <div className="min-h-screen bg-bg text-text flex flex-col">
       <Head>
-        <title>404 - Page Not Found | Frezya</title>
+        <title>404 - Page Not Found | Virelia</title>
         <meta name="description" content="The page you're looking for doesn't exist." />
         <meta name="robots" content="noindex, nofollow" />
       </Head>

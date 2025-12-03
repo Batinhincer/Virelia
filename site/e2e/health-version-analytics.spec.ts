@@ -99,7 +99,7 @@ test.describe('Analytics', () => {
   test('home page renders without errors when analytics is disabled', async ({ page }) => {
     await page.goto('/');
     // Page should load successfully
-    await expect(page).toHaveTitle(/Frezya/);
+    await expect(page).toHaveTitle(/Virelia/);
 
     // In development mode without ANALYTICS_ID, no analytics scripts should be present
     const ga4Script = page.locator('script[src*="googletagmanager.com"]');

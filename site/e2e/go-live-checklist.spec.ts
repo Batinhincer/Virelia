@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('Canonical URL Correctness', () => {
-  const EXPECTED_SITE_URL = 'https://frezya.nl';
+  const EXPECTED_SITE_URL = 'https://www.virelias.com';
 
   test('homepage has correct canonical URL', async ({ page }) => {
     await page.goto('/');
@@ -93,7 +93,7 @@ test.describe('robots.txt Validity', () => {
     expect(body).toContain('Allow: /');
     
     // Check for Sitemap directive with correct URL
-    expect(body).toContain('Sitemap: https://frezya.nl/api/sitemap.xml');
+    expect(body).toContain('Sitemap: https://www.virelias.com/api/sitemap.xml');
     
     // Check that admin and API routes are disallowed
     expect(body).toContain('Disallow: /admin');
@@ -140,12 +140,12 @@ test.describe('sitemap.xml Validity', () => {
     const body = await response.text();
     
     // Check for homepage
-    expect(body).toContain('<loc>https://frezya.nl/</loc>');
+    expect(body).toContain('<loc>https://www.virelias.com/</loc>');
     
     // Check for static pages
-    expect(body).toContain('<loc>https://frezya.nl/about</loc>');
-    expect(body).toContain('<loc>https://frezya.nl/logistics</loc>');
-    expect(body).toContain('<loc>https://frezya.nl/certifications</loc>');
+    expect(body).toContain('<loc>https://www.virelias.com/about</loc>');
+    expect(body).toContain('<loc>https://www.virelias.com/logistics</loc>');
+    expect(body).toContain('<loc>https://www.virelias.com/certifications</loc>');
   });
 
   test('sitemap.xml contains product pages', async ({ request }) => {
@@ -153,8 +153,8 @@ test.describe('sitemap.xml Validity', () => {
     const body = await response.text();
     
     // Check for product pages
-    expect(body).toContain('<loc>https://frezya.nl/product/olive-oil</loc>');
-    expect(body).toContain('<loc>https://frezya.nl/product/pepper-paste</loc>');
+    expect(body).toContain('<loc>https://www.virelias.com/product/olive-oil</loc>');
+    expect(body).toContain('<loc>https://www.virelias.com/product/pepper-paste</loc>');
   });
 
   test('sitemap.xml contains category pages', async ({ request }) => {
@@ -162,8 +162,8 @@ test.describe('sitemap.xml Validity', () => {
     const body = await response.text();
     
     // Check for category pages
-    expect(body).toContain('<loc>https://frezya.nl/products/oils-condiments</loc>');
-    expect(body).toContain('<loc>https://frezya.nl/products/pepper-chili-products</loc>');
+    expect(body).toContain('<loc>https://www.virelias.com/products/oils-condiments</loc>');
+    expect(body).toContain('<loc>https://www.virelias.com/products/pepper-chili-products</loc>');
   });
 
   test('sitemap.xml URLs have lastmod, changefreq, and priority', async ({ request }) => {
@@ -274,18 +274,18 @@ test.describe('Open Graph and Twitter Meta Tags', () => {
     await page.goto('/');
     
     await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'website');
-    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', 'https://frezya.nl');
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', 'https://www.virelias.com');
     await expect(page.locator('meta[property="og:title"]')).toBeAttached();
     await expect(page.locator('meta[property="og:description"]')).toBeAttached();
     await expect(page.locator('meta[property="og:image"]')).toBeAttached();
-    await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute('content', 'Frezya');
+    await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute('content', 'Virelia');
   });
 
   test('homepage has complete Twitter meta tags', async ({ page }) => {
     await page.goto('/');
     
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
-    await expect(page.locator('meta[name="twitter:url"]')).toHaveAttribute('content', 'https://frezya.nl');
+    await expect(page.locator('meta[name="twitter:url"]')).toHaveAttribute('content', 'https://www.virelias.com');
     await expect(page.locator('meta[name="twitter:title"]')).toBeAttached();
     await expect(page.locator('meta[name="twitter:description"]')).toBeAttached();
     await expect(page.locator('meta[name="twitter:image"]')).toBeAttached();
@@ -302,6 +302,6 @@ test.describe('Open Graph and Twitter Meta Tags', () => {
     
     const ogImage = await page.locator('meta[property="og:image"]').getAttribute('content');
     expect(ogImage).toMatch(/^https?:\/\//);
-    expect(ogImage).toContain('https://frezya.nl');
+    expect(ogImage).toContain('https://www.virelias.com');
   });
 });

@@ -9,7 +9,7 @@ export default function TermsPage() {
     <div className="min-h-screen bg-bg text-text">
       <SEO
         title="Terms & Conditions"
-        description="Read the Terms & Conditions for using Frezya's B2B Mediterranean food products website. Understand your rights and obligations when using our services."
+        description="Read the Terms & Conditions for using Virelia's B2B gourmet food products website. Understand your rights and obligations when using our services."
         canonical={getCanonicalUrl('/terms')}
       />
 
@@ -32,7 +32,7 @@ export default function TermsPage() {
               <p className="text-text leading-relaxed mb-4">
                 [PLACEHOLDER: Explain that by accessing and using this website, users agree to be bound 
                 by these Terms & Conditions. Include information about the legal agreement between the 
-                user and Frezya Dış Ticaret Ltd. Şti.]
+                user and Virelia.]
               </p>
             </section>
 
@@ -67,8 +67,8 @@ export default function TermsPage() {
                 [PLACEHOLDER: Explain intellectual property rights:]
               </p>
               <ul className="list-disc pl-6 space-y-2 text-text">
-                <li>All content on this website is owned by or licensed to Frezya</li>
-                <li>The Frezya name, logo, and branding are trademarks</li>
+                <li>All content on this website is owned by or licensed to Virelia</li>
+                <li>The Virelia name, logo, and branding are trademarks</li>
                 <li>Product images and descriptions are protected by copyright</li>
                 <li>Users may not reproduce content without written permission</li>
               </ul>
@@ -164,13 +164,13 @@ export default function TermsPage() {
                 If you have any questions about these Terms & Conditions, please contact us:
               </p>
               <div className="bg-bg-surface p-6 rounded-lg">
-                <p className="text-text mb-2"><strong>Frezya Dış Ticaret Ltd. Şti.</strong></p>
+                <p className="text-text mb-2"><strong>Virelia</strong></p>
                 <p className="text-text-muted mb-2">
                   Akpınar, Şht. Mümin Mutlu Sk. No:7 Kat:2, Ofis:36,<br />
                   16160 Osmangazi/Bursa, Türkiye
                 </p>
                 <p className="text-text-muted">
-                  Email: <a href="mailto:batinhincer@frezya.nl" className="text-primary hover:underline">batinhincer@frezya.nl</a>
+                  Email: <a href="mailto:info@virelias.com" className="text-primary hover:underline">info@virelias.com</a>
                 </p>
               </div>
             </section>

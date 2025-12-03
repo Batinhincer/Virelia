@@ -6,7 +6,7 @@ test.describe('Product Detail Page', () => {
       await page.goto('/product/olive-oil');
       
       // Check page title
-      await expect(page).toHaveTitle(/Olive Oil.*Frezya/);
+      await expect(page).toHaveTitle(/Olive Oil.*Virelia/);
       
       // Check H1 heading with product name
       const h1 = page.locator('h1');
@@ -21,7 +21,7 @@ test.describe('Product Detail Page', () => {
       await page.goto('/product/pepper-paste');
       
       // Check page title
-      await expect(page).toHaveTitle(/Pepper Paste.*Frezya/);
+      await expect(page).toHaveTitle(/Pepper Paste.*Virelia/);
       
       // Check H1 heading with product name
       const h1 = page.locator('h1');
@@ -214,7 +214,7 @@ test.describe('Product Detail Page', () => {
       await page.goto('/product/olive-oil');
       
       // Check title
-      await expect(page).toHaveTitle(/Olive Oil.*Frezya/);
+      await expect(page).toHaveTitle(/Olive Oil.*Virelia/);
       
       // Check canonical URL
       const canonical = page.locator('link[rel="canonical"]');
@@ -222,7 +222,7 @@ test.describe('Product Detail Page', () => {
       
       // Check Open Graph tags
       const ogTitle = page.locator('meta[property="og:title"]');
-      await expect(ogTitle).toHaveAttribute('content', /Olive Oil.*Frezya/);
+      await expect(ogTitle).toHaveAttribute('content', /Olive Oil.*Virelia/);
       
       const ogType = page.locator('meta[property="og:type"]');
       await expect(ogType).toHaveAttribute('content', 'product');
@@ -273,7 +273,7 @@ test.describe('Product Detail Page', () => {
       expect(productData.description).toBeTruthy();
       expect(productData.image).toBeTruthy();
       expect(productData.category).toBe('Oils & Condiments');
-      expect(productData.brand?.name).toBe('Frezya');
+      expect(productData.brand?.name).toBe('Virelia');
     });
   });
 

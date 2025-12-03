@@ -6,7 +6,10 @@
 export const PLACEHOLDER_IMAGE = '/placeholder.jpg';
 
 /** Site URL for SEO and Open Graph - always uses NEXT_PUBLIC_SITE_URL with fallback */
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://frezya.nl';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.virelias.com';
+
+/** Official site name for SEO and branding */
+export const SITE_NAME = 'Virelia';
 
 /**
  * Constructs an absolute URL using the configured SITE_URL
