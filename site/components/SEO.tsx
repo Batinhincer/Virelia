@@ -57,7 +57,7 @@ export function OrganizationSchema() {
     name: 'Virelia',
     alternateName: 'Virelia',
     url: SITE_URL,
-    logo: `${SITE_URL}/images/logo-virelia.png`,
+    logo: `${SITE_URL}/logo-header.png`,
     description: 'Premium Gourmet Foods & Coffee - B2B supplier of olive oil, pepper paste, coffee, and specialty food products.',
     address: {
       '@type': 'PostalAddress',

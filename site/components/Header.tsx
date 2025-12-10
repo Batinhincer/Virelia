@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { categoryInfo } from "@/data/products";
@@ -86,10 +87,16 @@ export default function Header() {
     <header className="bg-primary text-white shadow-soft-lg fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-opacity-95">
       <div className="container-custom flex justify-between items-center py-5">
         {/* Logo */}
-        <Link href="/" aria-label="Virelia - Home">
-          <span className="text-3xl font-bold tracking-tight cursor-pointer hover:text-secondary-light transition-colors duration-300 font-heading">
-            Virelia
-          </span>
+        <Link href="/" aria-label="Virelia - Home" className="flex items-center">
+          <Image
+            src="/logo-header.png"
+            alt="Virelia"
+            width={160}
+            height={32}
+            className="h-8 w-auto cursor-pointer transition-opacity duration-300 hover:opacity-80 md:h-8"
+            style={{ height: '32px', width: 'auto' }}
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -195,7 +202,14 @@ export default function Header() {
         <div className="flex flex-col h-full">
           {/* Mobile Menu Header */}
           <div className="flex items-center justify-between p-5 border-b border-primary-dark">
-            <span className="text-2xl font-bold font-heading">Virelia</span>
+            <Image
+              src="/logo-header.png"
+              alt="Virelia"
+              width={130}
+              height={26}
+              className="h-[26px] w-auto"
+              style={{ height: '26px', width: 'auto' }}
+            />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="p-2 rounded-lg hover:bg-primary-dark transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-light"

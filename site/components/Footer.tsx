@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -17,10 +18,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10 lg:mb-12">
           {/* Company Info */}
           <div className="lg:col-span-2">
-            <Link href="/" aria-label="Virelia - Home">
-              <span className="text-2xl font-bold font-heading text-white hover:text-secondary-light transition-colors duration-200">
-                Virelia
-              </span>
+            <Link href="/" aria-label="Virelia - Home" className="inline-block">
+              <Image
+                src="/logo-header.png"
+                alt="Virelia"
+                width={200}
+                height={40}
+                className="h-10 w-auto hover:opacity-80 transition-opacity duration-200"
+                style={{ height: '40px', width: 'auto' }}
+              />
             </Link>
             <p className="mt-4 text-sm text-gray-400 leading-relaxed max-w-md">
               Your trusted B2B partner for premium gourmet food products. Quality, certification, and reliable export to EU, UK, and USA markets.
