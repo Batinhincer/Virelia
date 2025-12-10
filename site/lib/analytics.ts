@@ -43,7 +43,7 @@ export function hasAnalyticsConsent(): boolean {
   if (typeof window === 'undefined') {
     return false;
   }
-  return localStorage.getItem('frezya-cookie-consent') === 'accepted';
+  return localStorage.getItem('virelia-cookie-consent') === 'accepted';
 }
 
 /**
