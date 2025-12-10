@@ -59,7 +59,7 @@ const structure = (S: StructureBuilder) =>
 
 export default defineConfig({
   name: 'virelia-cms',
-  title: 'Frezya CMS',
+  title: 'Virelia CMS',
   projectId,
   dataset,
   basePath: '/',
