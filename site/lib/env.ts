@@ -50,6 +50,7 @@ export function hasEnvValue(varNames: readonly string[]): boolean {
 
 /**
  * Environment configuration status
+ 
  */
 export interface EnvStatus {
   sanityConfigured: boolean;
@@ -85,6 +86,7 @@ export function getEnvStatus(): EnvStatus {
  * Validates and logs missing environment variables during build/startup.
  * Returns an array of warning messages for missing optional configurations.
  * Does not throw errors - this is for graceful fallback reporting.
+
  */
 export function validateEnv(): string[] {
   const warnings: string[] = [];
@@ -116,7 +118,7 @@ export function validateEnv(): string[] {
   if (!status.siteUrlConfigured) {
     warnings.push(
       'NEXT_PUBLIC_SITE_URL not set. ' +
-      'Using default site URL (https://frezya.nl) for canonical URLs and SEO.'
+      'Using default site URL (https:// for canonical URLs and SEO.'
     );
   }
 
