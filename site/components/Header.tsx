@@ -94,7 +94,6 @@ export default function Header() {
             width={260}
             height={52}
             className="h-[42px] w-auto cursor-pointer transition-opacity duration-300 hover:opacity-80 md:h-[52px]"
-            style={{ height: '42px', width: 'auto' }}
             priority
           />
         </Link>
@@ -208,7 +207,6 @@ export default function Header() {
               width={210}
               height={42}
               className="h-[42px] w-auto"
-              style={{ height: '42px', width: 'auto' }}
             />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
