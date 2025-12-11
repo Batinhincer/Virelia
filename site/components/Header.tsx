@@ -85,16 +85,15 @@ export default function Header() {
 
   return (
     <header className="bg-primary text-white shadow-soft-lg fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-opacity-95">
-      <div className="container-custom flex justify-between items-center py-5">
+      <div className="container-custom flex justify-between items-center py-6 md:py-7">
         {/* Logo */}
         <Link href="/" aria-label="Virelia - Home" className="flex items-center">
           <Image
-            src="/logo-header.png"
+            src="/logo-full.png"
             alt="Virelia"
-            width={160}
-            height={32}
-            className="h-8 w-auto cursor-pointer transition-opacity duration-300 hover:opacity-80 md:h-8"
-            style={{ height: '32px', width: 'auto' }}
+            width={260}
+            height={52}
+            className="h-[42px] w-auto cursor-pointer transition-opacity duration-300 hover:opacity-80 md:h-[52px]"
             priority
           />
         </Link>
@@ -203,12 +202,11 @@ export default function Header() {
           {/* Mobile Menu Header */}
           <div className="flex items-center justify-between p-5 border-b border-primary-dark">
             <Image
-              src="/logo-header.png"
+              src="/logo-full.png"
               alt="Virelia"
-              width={130}
-              height={26}
-              className="h-[26px] w-auto"
-              style={{ height: '26px', width: 'auto' }}
+              width={210}
+              height={42}
+              className="h-[42px] w-auto"
             />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
