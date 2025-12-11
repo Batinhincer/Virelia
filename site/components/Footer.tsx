@@ -20,12 +20,12 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Link href="/" aria-label="Virelia - Home" className="inline-block">
               <Image
-                src="/logo-header.png"
+                src="/logo-full.png"
                 alt="Virelia"
-                width={200}
-                height={40}
-                className="h-10 w-auto hover:opacity-80 transition-opacity duration-200"
-                style={{ height: '40px', width: 'auto' }}
+                width={300}
+                height={60}
+                className="h-[60px] w-auto hover:opacity-80 transition-opacity duration-200"
+                style={{ height: '60px', width: 'auto' }}
               />
             </Link>
             <p className="mt-4 text-sm text-gray-400 leading-relaxed max-w-md">
