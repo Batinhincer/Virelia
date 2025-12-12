@@ -12,7 +12,7 @@ export default function PageHero({
   backgroundImage = '/hero1.jpg',
 }: PageHeroProps) {
   return (
-    <section className="relative h-[500px] mt-[80px] overflow-hidden">
+    <section className="relative h-[500px] mt-[100px] md:mt-[120px] overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
