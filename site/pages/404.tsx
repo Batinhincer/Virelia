@@ -16,7 +16,7 @@ export default function Custom404() {
 
       <Header />
 
-      <div className="flex-1 flex items-center justify-center mt-[80px] py-12">
+      <div className="flex-1 flex items-center justify-center mt-[100px] md:mt-[120px] py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

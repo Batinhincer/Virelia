@@ -101,7 +101,7 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
       <Header />
 
       {/* Modern EU-Style Premium B2B Hero Section */}
-      <section className="relative h-[700px] mt-[80px] overflow-hidden">
+      <section className="relative h-[700px] mt-[100px] md:mt-[120px] overflow-hidden">
         {/* Background Image with Gradient Overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
