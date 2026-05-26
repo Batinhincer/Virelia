@@ -153,7 +153,7 @@ export const queries = {
     longDescription,
     "category": category->title,
     "categorySlug": category->slug.current,
-    "image": mainImage.asset->url,
+    "image": coalesce(mainImage.asset->url, images[0].asset->url),
     images,
     packaging,
     shelfLife,
@@ -172,7 +172,7 @@ export const queries = {
     shortDescription,
     "category": category->title,
     "categorySlug": category->slug.current,
-    "image": mainImage.asset->url
+    "image": coalesce(mainImage.asset->url, images[0].asset->url)
   }`,
 
   // Get product by slug
@@ -184,7 +184,7 @@ export const queries = {
     longDescription,
     "category": category->title,
     "categorySlug": category->slug.current,
-    "image": mainImage.asset->url,
+    "image": coalesce(mainImage.asset->url, images[0].asset->url),
     images,
     packaging,
     shelfLife,
@@ -222,7 +222,7 @@ export const queries = {
     shortDescription,
     "category": category->title,
     "categorySlug": category->slug.current,
-    "image": mainImage.asset->url,
+    "image": coalesce(mainImage.asset->url, images[0].asset->url),
     packaging,
     moq,
     origin,
