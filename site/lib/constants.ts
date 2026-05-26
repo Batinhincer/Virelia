@@ -5,8 +5,15 @@
 /** Default placeholder image used when product images are missing */
 export const PLACEHOLDER_IMAGE = '/placeholder.jpg';
 
-/** Site URL for SEO and Open Graph - always uses NEXT_PUBLIC_SITE_URL with fallback */
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.virelias.com';
+/** Site URL for SEO and Open Graph.
+ * Force Virelia's production domain if an old Frezya/studio domain is accidentally supplied by Vercel env vars.
+ */
+const RAW_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.virelias.com';
+
+export const SITE_URL =
+  RAW_SITE_URL.includes('frezya.nl') || RAW_SITE_URL.includes('studio.frezya.nl')
+    ? 'https://www.virelias.com'
+    : RAW_SITE_URL;
 
 /** Official site name for SEO and branding */
 export const SITE_NAME = 'Virelia';
