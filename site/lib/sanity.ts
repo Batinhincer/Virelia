@@ -31,7 +31,8 @@ export const sanityClient = projectId
       projectId,
       dataset,
       apiVersion,
-      useCdn: process.env.NODE_ENV === 'production',
+      // Use the live API for CMS-driven pages so published Studio edits are reflected on rebuild/ISR.
+      useCdn: false,
       token: process.env.SANITY_READ_TOKEN,
     })
   : null;
