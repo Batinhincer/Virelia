@@ -462,6 +462,7 @@ export async function getStaticProps({ params }: { params: { category: string } 
         categoryData,
         products,
       },
+      revalidate: 60,
     };
   }
   
@@ -472,6 +473,7 @@ export async function getStaticProps({ params }: { params: { category: string } 
   if (!localCategory) {
     return {
       notFound: true,
+      revalidate: 60,
     };
   }
   
@@ -488,5 +490,6 @@ export async function getStaticProps({ params }: { params: { category: string } 
       },
       products,
     },
+    revalidate: 60,
   };
 }
