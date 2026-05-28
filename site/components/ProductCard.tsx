@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
@@ -15,12 +16,38 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const [imageSrc, setImageSrc] = useState(product.image || PLACEHOLDER_IMAGE);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadFreshImage() {
+      try {
+        const response = await fetch(`/api/product-image?slug=${encodeURIComponent(product.slug)}`);
+        if (!response.ok) return;
+
+        const data = await response.json();
+        if (isMounted && data?.image) {
+          setImageSrc(data.image);
+        }
+      } catch {
+        // Keep the original image if the CMS lookup fails.
+      }
+    }
+
+    loadFreshImage();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [product.slug]);
+
   return (
     <Link href={`/product/${product.slug}`}>
       <div className="card card-hover cursor-pointer h-full flex flex-col group overflow-hidden">
         <div className="h-64 overflow-hidden rounded-t-2xl relative bg-bg-surface">
           <img
-            src={product.image || PLACEHOLDER_IMAGE}
+            src={imageSrc || PLACEHOLDER_IMAGE}
             alt={product.title}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
