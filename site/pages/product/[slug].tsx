@@ -36,7 +36,6 @@ interface ProductData {
   categorySlug: string;
   image: string;
   packaging: string | null;
-  shelfLife: string | null;
   moq: string | null;
   origin: string | null;
   certifications: string[];
@@ -136,7 +135,7 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
   };
 
   // Check if we have any specs to show
-  const hasSpecs = product.packaging || product.shelfLife || product.moq || product.origin || product.hsCode || (product.certifications && product.certifications.length > 0);
+  const hasSpecs = !!(product.packaging);
 
   return (
     <div className="min-h-screen bg-bg text-text">
@@ -258,12 +257,6 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
                       <span className="text-sm font-semibold text-text-heading">{product.origin}</span>
                     </div>
                   )}
-                  {product.shelfLife && (
-                    <div className="bg-bg-surface px-4 py-3 rounded-xl">
-                      <span className="text-xs text-text-muted uppercase tracking-wide block mb-0.5">Shelf Life</span>
-                      <span className="text-sm font-semibold text-text-heading">{product.shelfLife}</span>
-                    </div>
-                  )}
                 </div>
               )}
 
@@ -300,6 +293,12 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
                     </svg>
                     COA & documentation
                   </li>
+                  <li className="flex items-center">
+                    <svg className="w-4 h-4 mr-2 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Accredited lab analysis on request
+                  </li>
                 </ul>
               </div>
             </div>
@@ -316,33 +315,9 @@ export default function ProductPage({ product, relatedProducts }: ProductPagePro
                 </svg>
                 Product Specifications
               </h2>
-              
-              <div className="grid lg:grid-cols-2 gap-8">
-                {/* Left column: Key specs */}
-                <div>
-                  <dl className="divide-y divide-white">
-                    {product.packaging && <SpecRow label="Packaging" value={product.packaging} />}
-                    {product.shelfLife && <SpecRow label="Shelf Life" value={product.shelfLife} />}
-                    {product.moq && <SpecRow label="MOQ" value={product.moq} />}
-                    {product.origin && <SpecRow label="Origin" value={product.origin} />}
-                    {product.hsCode && <SpecRow label="HS Code" value={product.hsCode} />}
-                  </dl>
-                </div>
-                
-                {/* Right column: Certifications */}
-                {product.certifications && product.certifications.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-primary uppercase tracking-wide mb-4">
-                      Certifications
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {product.certifications.map((cert) => (
-                        <CertificationBadge key={cert} name={cert} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <dl className="divide-y divide-white">
+                {product.packaging && <SpecRow label="Packaging" value={product.packaging} />}
+              </dl>
             </div>
           </section>
         )}
@@ -417,7 +392,6 @@ function transformSanityProduct(sanityProduct: {
   categorySlug?: string;
   image?: string;
   packaging?: string;
-  shelfLife?: string;
   moq?: string;
   origin?: string;
   certifications?: string[];
@@ -447,7 +421,6 @@ function transformSanityProduct(sanityProduct: {
     categorySlug: sanityProduct.categorySlug || '',
     image: sanityProduct.image || PLACEHOLDER_IMAGE,
     packaging: sanityProduct.packaging ?? null,
-    shelfLife: sanityProduct.shelfLife ?? null,
     moq: sanityProduct.moq ?? null,
     origin: sanityProduct.origin ?? null,
     certifications: sanityProduct.certifications || [],
@@ -467,7 +440,6 @@ function transformLocalProduct(localProduct: LocalProduct, categorySlug: string)
     categorySlug: categorySlug,
     image: localProduct.image,
     packaging: localProduct.packaging ?? null,
-    shelfLife: localProduct.shelfLife ?? null,
     moq: localProduct.moq ?? null,
     origin: localProduct.origin ?? null,
     certifications: localProduct.certifications || [],
