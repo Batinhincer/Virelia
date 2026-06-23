@@ -10,6 +10,8 @@ export interface Product {
   shelfLife?: string;
   moq?: string;
   origin?: string;
+  certifications?: string[];
+  hsCode?: string;
 }
 
 export const products: Product[] = [
