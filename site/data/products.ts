@@ -7,7 +7,6 @@ export interface Product {
   image: string;
   // B2B specifications
   packaging?: string;
-  shelfLife?: string;
   moq?: string;
   origin?: string;
   certifications?: string[];
@@ -26,7 +25,6 @@ export const products: Product[] = [
     image: "/products/olive-oil.jpg",
     origin: "Turkey",
     packaging: "Custom packaging available — formats and sizes on request",
-    shelfLife: "18 months from production date",
     moq: "From 1 pallet — flexible based on your requirements",
   },
   {
@@ -39,7 +37,6 @@ export const products: Product[] = [
     image: "/products/pomegranate-molasses.jpg",
     origin: "Turkey",
     packaging: "Custom packaging available — formats and sizes on request",
-    shelfLife: "24 months from production date",
     moq: "From 1 pallet — flexible based on your requirements",
   },
 
@@ -54,7 +51,6 @@ export const products: Product[] = [
     image: "/products/pepper-paste.jpg",
     origin: "Turkey",
     packaging: "Custom packaging available — formats and sizes on request",
-    shelfLife: "12 months from production date",
     moq: "From 1 pallet — flexible based on your requirements",
   },
   {
