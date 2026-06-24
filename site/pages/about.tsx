@@ -11,10 +11,10 @@ import { SITE_URL } from "@/lib/constants";
 
 // Default fallback content
 const defaultContent = {
-  heroTitle: "About Virelia",
-  heroSubtitle: "Your trusted partner for premium gourmet food products",
-  seoTitle: "About Us | Virelia – Premium Gourmet Food Exporter",
-  seoDescription: "Learn about Virelia, your trusted B2B partner for authentic gourmet food products. Quality, certification, and reliable export to EU, UK, and USA markets.",
+  heroTitle: "About Virelias",
+  heroSubtitle: "Turkey-based export company connecting Turkish producers to international buyers",
+  seoTitle: "About Us | Virelias – Turkish Food Products for Global Markets",
+  seoDescription: "Virelias is a Turkey-based B2B food export company. We connect international buyers across Europe, the GCC, and global markets to established Turkish food producers across 9 product categories.",
 };
 
 interface AboutPageProps {
@@ -83,23 +83,28 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
               </h2>
               <div className="space-y-6 text-lg text-text leading-relaxed">
                 <p>
-                  Virelia is a leading B2B exporter of authentic gourmet
-                  food products, bringing the finest flavors from Turkey and
-                  the Mediterranean region to markets across Europe, the United
-                  Kingdom, and the United States.
-                </p>
-                <p>
-                  Founded with a passion for quality and authenticity, we serve
-                  as a bridge between traditional Mediterranean producers and
-                  modern international markets. Our team combines deep
-                  knowledge of Mediterranean food culture with expertise in
-                  international trade and logistics.
+                  Virelias is a Turkey-based food export company connecting
+                  Turkish agricultural and manufacturing capacity to
+                  international buyers across Europe, the Gulf, and beyond.
+                  We are a trading intermediary — not a manufacturer — which
+                  means our value lies in the supplier relationships, sourcing
+                  knowledge, and logistics expertise we bring to every order.
                 </p>
                 <p>
                   We work exclusively in the B2B sector, partnering with
-                  distributors, importers, restaurant chains, specialty food
-                  retailers, and food service providers who value quality,
-                  consistency, and reliability.
+                  distributors, food manufacturers, importers, restaurant
+                  chains, and food service operators who need a reliable,
+                  knowledgeable partner on the ground in Turkey. Our role is
+                  to make Turkish food production accessible to international
+                  buyers efficiently and reliably.
+                </p>
+                <p>
+                  Turkey is one of the world's most important food producing
+                  nations — the world's largest table olive producer, the
+                  source of approximately 70% of global hazelnut supply, and
+                  a dominant exporter across dried fruits, spices, pulses,
+                  and processed foods. Virelias exists to connect that
+                  capacity to the buyers who need it.
                 </p>
               </div>
             </motion.div>
@@ -118,63 +123,113 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-h2 font-semibold text-text-heading mb-6">
-                What We Do
+                What We Source
               </h2>
               <div className="space-y-6 text-lg text-text leading-relaxed mb-12">
                 <p>
-                  We specialize in sourcing, exporting, and delivering premium
-                  Mediterranean and Turkish food products to international
-                  markets. Our comprehensive portfolio includes:
+                  Our catalogue spans nine product categories, all sourced
+                  from established Turkish producers with EU food safety
+                  compliance and consistent supply capacity.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8 mb-12">
-                <div className="card p-8">
-                  <h3 className="text-xl font-semibold text-text-heading mb-4">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div className="card p-6">
+                  <h3 className="text-lg font-semibold text-text-heading mb-2">
                     Oils & Condiments
                   </h3>
-                  <p className="text-text-muted leading-relaxed">
-                    Premium extra virgin olive oils, pomegranate molasses, and
-                    other authentic Mediterranean condiments.
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    Extra virgin olive oil, table olives, olive paste, and
+                    pomegranate molasses from Turkey's Aegean and Marmara
+                    growing regions.
                   </p>
                 </div>
-
-                <div className="card p-8">
-                  <h3 className="text-xl font-semibold text-text-heading mb-4">
+                <div className="card p-6">
+                  <h3 className="text-lg font-semibold text-text-heading mb-2">
                     Pepper & Chili Products
                   </h3>
-                  <p className="text-text-muted leading-relaxed">
-                    Traditional pepper pastes, harissa, and chili-based
-                    products crafted using time-honored recipes.
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    Red and hot pepper paste, harissa, ajvar, shatta,
+                    lutenitsa, and sambal — produced in Turkey for
+                    European and global markets.
                   </p>
                 </div>
-
-                <div className="card p-8">
-                  <h3 className="text-xl font-semibold text-text-heading mb-4">
-                    Coffee Products
+                <div className="card p-6">
+                  <h3 className="text-lg font-semibold text-text-heading mb-2">
+                    Preserved Vegetables
                   </h3>
-                  <p className="text-text-muted leading-relaxed">
-                    Authentic Turkish coffee and specialty coffee blends roasted
-                    to perfection.
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    Roasted peppers, roasted aubergine, mixed pickles,
+                    gherkins, brined vine leaves, and capers.
                   </p>
                 </div>
-
-                <div className="card p-8">
-                  <h3 className="text-xl font-semibold text-text-heading mb-4">
-                    Sauces & Specialties
+                <div className="card p-6">
+                  <h3 className="text-lg font-semibold text-text-heading mb-2">
+                    Dried Fruits & Nuts
                   </h3>
-                  <p className="text-text-muted leading-relaxed">
-                    Ready-to-use sauces, Asian specialties, and preserved
-                    vegetables for diverse culinary applications.
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    Dried apricots from Malatya, dried figs from Aydın,
+                    Aegean sultanas, Black Sea hazelnuts, and Gaziantep
+                    pistachio paste.
+                  </p>
+                </div>
+                <div className="card p-6">
+                  <h3 className="text-lg font-semibold text-text-heading mb-2">
+                    Tahini & Nut Spreads
+                  </h3>
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    Cold-pressed tahini, grape molasses, and tahini halva
+                    for food manufacturers, food service, and specialty
+                    retail.
+                  </p>
+                </div>
+                <div className="card p-6">
+                  <h3 className="text-lg font-semibold text-text-heading mb-2">
+                    Tomato Products
+                  </h3>
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    Tomato paste (double and triple concentrate) and
+                    sun-dried tomatoes from Turkey's processing tomato
+                    growing regions.
+                  </p>
+                </div>
+                <div className="card p-6">
+                  <h3 className="text-lg font-semibold text-text-heading mb-2">
+                    Grains & Pulses
+                  </h3>
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    Bulgur, chickpeas, and lentils — staple ingredients
+                    for food manufacturers and dry goods distributors
+                    serving global markets.
+                  </p>
+                </div>
+                <div className="card p-6">
+                  <h3 className="text-lg font-semibold text-text-heading mb-2">
+                    Herbs & Spices
+                  </h3>
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    Sumac, pul biber, oregano, and bay leaves — categories
+                    where Turkey holds dominant global market positions.
+                  </p>
+                </div>
+                <div className="card p-6">
+                  <h3 className="text-lg font-semibold text-text-heading mb-2">
+                    Ready-to-Use Sauces
+                  </h3>
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    Pizza sauces, pasta sauces, and doner sauces produced
+                    in Turkey from locally grown processing tomatoes.
                   </p>
                 </div>
               </div>
 
               <div className="space-y-6 text-lg text-text leading-relaxed">
                 <p>
-                  Each product in our portfolio is carefully selected and
-                  sourced from trusted producers who share our commitment to
-                  quality, authenticity, and food safety standards.
+                  Every product in our catalogue is sourced from Turkish
+                  producers operating under EU food safety standards.
+                  Compliance documentation, certificates of origin, and
+                  accredited laboratory analysis are available on request
+                  and confirmed per order.
                 </p>
               </div>
             </motion.div>
@@ -193,45 +248,33 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-h2 font-semibold text-text-heading mb-6">
-                Export Markets Focus
+                Markets We Serve
               </h2>
               <div className="space-y-6 text-lg text-text leading-relaxed mb-12">
                 <p>
-                  With extensive experience in international trade, we have
-                  established ourselves as a reliable partner for markets
-                  across three major regions:
+                  Turkish food products have established distribution across
+                  multiple international market blocs. We supply buyers in
+                  all of the following regions and coordinate the
+                  documentation and logistics required for each.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6 mb-12">
+              <div className="grid md:grid-cols-2 gap-6 mb-12">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className="card p-8 text-center"
+                  className="card p-8"
                 >
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
-                    <svg
-                      className="w-8 h-8 text-primary"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-text-heading mb-3">
+                  <div className="text-3xl mb-4">🇪🇺</div>
+                  <h3 className="text-xl font-bold text-text-heading mb-3">
                     European Union
                   </h3>
                   <p className="text-text-muted leading-relaxed">
-                    Full EU compliance with all necessary certifications for
-                    seamless import across member states.
+                    Germany, Netherlands, Belgium, France, and Scandinavia
+                    are Turkey's largest food export destinations. Full EU
+                    food safety compliance and import documentation provided.
                   </p>
                 </motion.div>
 
@@ -240,35 +283,16 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="card p-8 text-center"
+                  className="card p-8"
                 >
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
-                    <svg
-                      className="w-8 h-8 text-primary"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-text-heading mb-3">
+                  <div className="text-3xl mb-4">🇬🇧</div>
+                  <h3 className="text-xl font-bold text-text-heading mb-3">
                     United Kingdom
                   </h3>
                   <p className="text-text-muted leading-relaxed">
-                    Post-Brexit compliant with UK import standards and
-                    documentation requirements.
+                    Post-Brexit compliant with UK import standards. Turkish
+                    food products have strong existing distribution across
+                    UK specialty food retail and the catering trade.
                   </p>
                 </motion.div>
 
@@ -277,47 +301,52 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="card p-8 text-center"
+                  className="card p-8"
                 >
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
-                    <svg
-                      className="w-8 h-8 text-primary"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-text-heading mb-3">
-                    United States
+                  <div className="text-3xl mb-4">🇦🇪</div>
+                  <h3 className="text-xl font-bold text-text-heading mb-3">
+                    Gulf & Middle East
                   </h3>
                   <p className="text-text-muted leading-relaxed">
-                    FDA compliant products meeting all US import regulations
-                    and food safety standards.
+                    The GCC is one of Turkey's most important food export
+                    markets. Halal-certified supply available. We serve
+                    buyers in Saudi Arabia, UAE, Kuwait, and Qatar.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="card p-8"
+                >
+                  <div className="text-3xl mb-4">🌍</div>
+                  <h3 className="text-xl font-bold text-text-heading mb-3">
+                    Africa & Global
+                  </h3>
+                  <p className="text-text-muted leading-relaxed">
+                    Turkey is a significant food supplier to North Africa
+                    and Sub-Saharan Africa. We also supply buyers in the
+                    Americas, Central Asia, and the Far East.
                   </p>
                 </motion.div>
               </div>
 
               <div className="space-y-6 text-lg text-text leading-relaxed">
                 <p>
-                  Our expertise in customs procedures, documentation, and
-                  logistics ensures smooth delivery to your location, whether
-                  you're ordering a single container or establishing a
-                  long-term supply partnership.
+                  Our expertise in Turkish export procedures, customs
+                  documentation, phytosanitary certificates, and freight
+                  logistics ensures smooth delivery to your location —
+                  whether you're placing a single container order or
+                  establishing a long-term supply partnership.
                 </p>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
-
-      {/* Quality Promise */}
+      {/* How We Work */}
       <section className="section-padding bg-primary text-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
@@ -328,44 +357,45 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
               transition={{ duration: 0.6 }}
               className="text-center"
             >
-              <h2 className="text-h2 font-semibold mb-6">Our Quality Promise</h2>
+              <h2 className="text-h2 font-semibold mb-6">How We Work</h2>
               <div className="space-y-6 text-lg leading-relaxed mb-12">
                 <p>
-                  At Virelia, quality is not negotiable. Every product we
-                  export undergoes rigorous quality control and meets
-                  international food safety standards.
+                  As a trading intermediary, our role is coordination and
+                  reliability. We source from established Turkish producers,
+                  manage quality checks and documentation, and handle
+                  logistics to your port or warehouse.
                 </p>
                 <p>
-                  We maintain full traceability from source to delivery,
-                  ensuring complete transparency and accountability at every
-                  step of the supply chain. Our commitment to quality extends
-                  beyond the product itself to encompass packaging, labeling,
-                  storage, and transportation.
+                  Custom packaging, private label, specific certifications,
+                  and accredited laboratory analysis are all available —
+                  we coordinate with our supplier network to meet your
+                  requirements. Certification documentation is confirmed
+                  per order based on which producer is fulfilling your
+                  specific goods.
                 </p>
                 <p>
-                  We hold all necessary certifications for international export
-                  and work exclusively with certified producers and facilities.
-                  This commitment to excellence has earned us the trust of
-                  partners across three continents.
+                  We respond to all inquiries within 24 hours and provide
+                  proforma invoices, compliance documentation, and shipping
+                  coordination as standard.
                 </p>
               </div>
 
               <div className="grid md:grid-cols-4 gap-6 mt-12">
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-                  <div className="text-3xl font-bold mb-2">100%</div>
-                  <p className="text-white/90">Quality Guaranteed</p>
+                  <div className="text-3xl font-bold mb-2">24h</div>
+                  <p className="text-white/90">Response time</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
+                  <div className="text-3xl font-bold mb-2">9</div>
+                  <p className="text-white/90">Product categories</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
+                  <div className="text-3xl font-bold mb-2">37+</div>
+                  <p className="text-white/90">Products catalogued</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
                   <div className="text-3xl font-bold mb-2">Full</div>
                   <p className="text-white/90">Traceability</p>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-                  <div className="text-3xl font-bold mb-2">ISO</div>
-                  <p className="text-white/90">Certified Partners</p>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-                  <div className="text-3xl font-bold mb-2">24h</div>
-                  <p className="text-white/90">Response Time</p>
                 </div>
               </div>
             </motion.div>
@@ -384,16 +414,17 @@ export default function AboutPage({ page }: InferGetStaticPropsType<typeof getSt
             className="text-center"
           >
             <h3 className="text-3xl lg:text-4xl font-bold text-text-heading mb-6">
-              Ready to Partner with Us?
+              Ready to source from Turkey?
             </h3>
             <p className="text-xl text-text-muted mb-8 max-w-2xl mx-auto">
-              Let's discuss how Virelia can become your trusted supplier of
-              premium gourmet products.
+              Contact Virelias to discuss your requirements. We connect
+              buyers across Europe, the GCC, and global markets to
+              established Turkish food producers.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <CTAButton href="/#contact">Request a Quote</CTAButton>
-              <CTAButton href="/logistics" variant="secondary">
-                Export & Logistics
+              <CTAButton href="/why-turkey" variant="secondary">
+                Why Source From Turkey?
               </CTAButton>
             </div>
           </motion.div>
