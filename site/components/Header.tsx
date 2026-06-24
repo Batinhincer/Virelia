@@ -112,26 +112,28 @@ export default function Header() {
               Products
             </button>
             <div 
-              className="absolute left-0 mt-4 w-72 bg-white text-text rounded-2xl shadow-soft-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden"
+              className="absolute left-0 mt-4 w-[580px] bg-white text-text rounded-2xl shadow-soft-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden"
               role="menu"
               aria-label="Product categories"
             >
-              {categoryInfo.map((category) => (
-                <Link
-                  key={category.slug}
-                  href={`/products/${category.slug}`}
-                  className="block px-5 py-3 hover:bg-bg-surface transition-colors duration-200 border-b border-bg-surface last:border-b-0"
-                  role="menuitem"
-                >
-                  <div className="font-medium text-text-heading">{category.name}</div>
-                  <div className="text-xs text-text-muted mt-0.5 line-clamp-1">
-                    {category.description.split('.')[0]}
-                  </div>
-                </Link>
-              ))}
+              <div className="grid grid-cols-2">
+                {categoryInfo.map((category) => (
+                  <Link
+                    key={category.slug}
+                    href={`/products/${category.slug}`}
+                    className="block px-5 py-3 hover:bg-bg-surface transition-colors duration-200 border-b border-bg-surface [&:nth-child(odd)]:border-r"
+                    role="menuitem"
+                  >
+                    <div className="font-medium text-text-heading">{category.name}</div>
+                    <div className="text-xs text-text-muted mt-0.5 line-clamp-1">
+                      {category.description.split('.')[0]}
+                    </div>
+                  </Link>
+                ))}
+              </div>
               <Link
                 href="/#products"
-                className="block px-5 py-3 hover:bg-primary hover:text-white transition-colors duration-200 font-semibold text-center text-primary"
+                className="block px-5 py-3 hover:bg-primary hover:text-white transition-colors duration-200 font-semibold text-center text-primary border-t border-bg-surface"
                 role="menuitem"
               >
                 View All Products →
@@ -251,7 +253,7 @@ export default function Header() {
               <div
                 id="mobile-products-menu"
                 className={`pl-4 overflow-hidden transition-all duration-300 ${
-                  isProductsExpanded ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+                  isProductsExpanded ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"
                 }`}
                 role="menu"
               >
