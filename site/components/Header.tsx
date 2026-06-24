@@ -112,7 +112,7 @@ export default function Header() {
               Products
             </button>
             <div 
-              className="absolute left-0 mt-4 w-[580px] bg-white text-text rounded-2xl shadow-soft-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden"
+              className="absolute left-0 mt-4 w-[580px] bg-white text-text rounded-2xl shadow-soft-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z[...]"
               role="menu"
               aria-label="Product categories"
             >
@@ -146,6 +146,7 @@ export default function Header() {
           <Link href="/why-turkey" className={navLinkClasses("/why-turkey")}>
             Why Turkey
           </Link>
+          <Link href="/logistics" className={navLinkClasses("/logistics")}>
             Logistics
           </Link>
           <Link href="/certifications" className={navLinkClasses("/certifications")}>
@@ -165,7 +166,7 @@ export default function Header() {
           
           {/* Mobile Menu Button */}
           <button
-            className="p-2 rounded-lg hover:bg-primary-dark transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-light focus:ring-offset-2 focus:ring-offset-primary"
+            className="p-2 rounded-lg hover:bg-primary-dark transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-light focus:ring-offset-2 focus:ring-offset-primary[...]"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
@@ -285,6 +286,7 @@ export default function Header() {
             <Link href="/why-turkey" className={mobileNavLinkClasses("/why-turkey")}>
               Why Turkey
             </Link>
+            <Link href="/logistics" className={mobileNavLinkClasses("/logistics")}>
               Logistics
             </Link>
             <Link href="/certifications" className={mobileNavLinkClasses("/certifications")}>
