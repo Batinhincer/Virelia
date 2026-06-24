@@ -143,7 +143,9 @@ export default function Header() {
           <Link href="/about" className={navLinkClasses("/about")}>
             About
           </Link>
-          <Link href="/logistics" className={navLinkClasses("/logistics")}>
+          <Link href="/why-turkey" className={navLinkClasses("/why-turkey")}>
+            Why Turkey
+          </Link>
             Logistics
           </Link>
           <Link href="/certifications" className={navLinkClasses("/certifications")}>
@@ -280,7 +282,9 @@ export default function Header() {
             <Link href="/about" className={mobileNavLinkClasses("/about")}>
               About
             </Link>
-            <Link href="/logistics" className={mobileNavLinkClasses("/logistics")}>
+            <Link href="/why-turkey" className={mobileNavLinkClasses("/why-turkey")}>
+              Why Turkey
+            </Link>
               Logistics
             </Link>
             <Link href="/certifications" className={mobileNavLinkClasses("/certifications")}>
