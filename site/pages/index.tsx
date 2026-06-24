@@ -15,10 +15,10 @@ import { SITE_URL } from "@/lib/constants";
 
 // Default fallback content for homepage
 const defaultContent = {
-  heroTitle: "Premium Gourmet Foods for Global Markets",
-  heroSubtitle: "Your trusted B2B partner for authentic gourmet products. Quality, certification, and reliable export to EU, UK, and USA markets.",
-  seoTitle: "Virelia | Premium Gourmet Foods & Coffee",
-  seoDescription: "Virelia is your trusted B2B partner for premium gourmet food products. Olive oil, pepper paste, coffee, and specialty foods. Export to EU, UK, and USA.",
+  heroTitle: "Turkish Food Products for Global Markets",
+  heroSubtitle: "B2B sourcing partner connecting Turkish production capacity to international buyers. Olive oil, pepper pastes, specialty sauces, and preserved vegetables — from Turkey to your market.",
+  seoTitle: "Virelias | Turkish Food Products for Global Markets",
+  seoDescription: "Virelias is your trusted B2B partner for premium Turkish food products. Olive oil, pepper paste, specialty sauces, and preserved vegetables — exported from Turkey to EU, UK, and global markets.",
 };
 
 interface HomePageProps {
@@ -160,8 +160,8 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
       <section className="section-padding bg-white">
         <div className="container-custom">
           <SectionHeader
-            title="Why Choose Virelia?"
-            subtitle="Your trusted partner for premium gourmet food products"
+            title="Why Source Through Virelias?"
+            subtitle="Turkey-based export partner connecting quality producers to international buyers"
             centered
           />
           
@@ -179,9 +179,9 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-text-heading mb-3">Premium Quality</h3>
+              <h3 className="text-xl font-semibold text-text-heading mb-3">Turkish Origin</h3>
               <p className="text-text-muted leading-relaxed">
-                Handpicked Mediterranean products meeting the highest international standards for taste and quality.
+                Sourced from established Turkish producers with EU food safety compliance, full product traceability, and consistent supply capacity.
               </p>
             </motion.div>
 
@@ -198,9 +198,9 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-text-heading mb-3">Full Certifications</h3>
+              <h3 className="text-xl font-semibold text-text-heading mb-3">Flexible Certifications</h3>
               <p className="text-text-muted leading-relaxed">
-                EU-compliant with all necessary certifications for safe and legal import to European markets.
+                We work with producers holding BRC, IFS, ISO 22000, HACCP, and Halal certifications. Compliance documentation confirmed per order.
               </p>
             </motion.div>
 
@@ -219,7 +219,7 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
               </div>
               <h3 className="text-xl font-semibold text-text-heading mb-3">Export Experience</h3>
               <p className="text-text-muted leading-relaxed">
-                Proven track record delivering to EU, UK, and USA with reliable logistics and customs expertise.
+                Proven export track record to EU, UK, and global markets. We handle customs documentation, certificates of origin, and logistics coordination.
               </p>
             </motion.div>
 
@@ -250,7 +250,7 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
         <div className="container-custom">
           <SectionHeader
             title="Product Categories"
-            subtitle="Explore our comprehensive range of Mediterranean specialties"
+            subtitle="Turkish and Mediterranean food products sourced and exported worldwide"
             centered
           />
           
@@ -310,7 +310,7 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
         <div className="container-custom">
           <SectionHeader
             title="Featured Products"
-            subtitle="Our most popular Mediterranean specialties"
+            subtitle="Quality Turkish food products ready for international buyers"
             centered
           />
           
@@ -498,29 +498,30 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
       <section id="about" className="section-padding bg-white">
         <div className="container-custom">
           <SectionHeader
-            title="About Virelia"
-            subtitle="Your trusted partner for premium gourmet food products"
+            title="About Virelias"
+            subtitle="Turkey-based export company connecting Turkish producers to global buyers"
             centered
           />
           <div className="max-w-4xl mx-auto text-text leading-relaxed space-y-6 text-lg">
             <p>
-              Virelia is a leading exporter of authentic gourmet food
-              products, bringing the finest flavors from Turkey and the
-              Mediterranean region to markets across Europe and beyond.
+              Virelias is a Turkey-based food export company connecting Turkish
+              agricultural and manufacturing capacity to international buyers
+              across Europe and beyond. We are a trading intermediary — not a
+              manufacturer — which means our value is in the relationships,
+              sourcing knowledge, and logistics expertise we bring to every order.
             </p>
             <p>
-              With a commitment to quality, sustainability, and authentic taste,
-              we partner with carefully selected producers to deliver products
-              that meet the highest international standards. Our portfolio spans
-              traditional condiments, premium oils, specialty sauces, and
-              preserved vegetables.
+              We work with a network of established Turkish producers across the
+              food sector: Aegean olive oil, Mediterranean pepper pastes, specialty
+              sauces, preserved vegetables, and more. Turkey is one of the world's
+              leading food producing nations, and we exist to make that capacity
+              accessible to international buyers efficiently and reliably.
             </p>
             <p>
-              We understand the needs of B2B partners – from consistent quality
-              and reliable supply chains to competitive pricing and flexible
-              packaging options. Whether you&apos;re a distributor, restaurant chain,
-              or specialty food retailer, Virelia is your gateway to authentic
-              gourmet flavor.
+              Our approach is built around your requirements. Custom packaging,
+              private label, specific certifications, accredited laboratory
+              analysis — we coordinate it. From first inquiry to delivery,
+              Virelias is your single point of contact for Turkish food sourcing.
             </p>
           </div>
           <div className="text-center mt-12 flex flex-wrap justify-center gap-4">
@@ -537,7 +538,7 @@ export default function HomePage({ page, sanityCategories, sanityFeaturedProduct
         <div className="container-custom">
           <SectionHeader
             title="Complete Product Range"
-            subtitle="Browse our full catalog of Mediterranean specialties organized by category"
+            subtitle="All our Turkish food products organised by category"
             centered
           />
 
