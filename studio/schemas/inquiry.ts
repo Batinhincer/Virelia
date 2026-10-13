@@ -42,6 +42,16 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'referralSource',
+      title: 'How did they hear about us?',
+      type: 'string',
+    }),
+    defineField({
+      name: 'referralDetail',
+      title: 'Referral Details',
+      type: 'string',
+    }),
+    defineField({
       name: 'productName',
       title: 'Product Name',
       type: 'string',

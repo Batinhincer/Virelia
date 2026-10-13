@@ -39,6 +39,8 @@ export interface SanityInquiryDocument {
   country: string;
   phone?: string;
   message: string;
+  referralSource?: string;
+  referralDetail?: string;
   productName?: string;
   productSlug?: string;
   productCategory?: string;

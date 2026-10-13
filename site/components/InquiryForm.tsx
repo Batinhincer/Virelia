@@ -18,6 +18,17 @@ interface InquiryFormProps {
 
 const MIN_MESSAGE_LENGTH = 10;
 
+const REFERRAL_OPTIONS = [
+  "Google / search engine",
+  "LinkedIn",
+  "AI assistant (ChatGPT, Claude, etc.)",
+  "B2B platform or directory",
+  "Trade fair / event",
+  "Email from Virelias",
+  "Referral from a colleague or partner",
+  "Other",
+];
+
 export default function InquiryForm({
   productName,
   productSlug,
@@ -35,6 +46,8 @@ export default function InquiryForm({
     country: "",
     phone: "",
     message: "",
+    referralSource: "",
+    referralDetail: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -102,6 +115,8 @@ export default function InquiryForm({
         country: formData.country,
         phone: formData.phone || undefined,
         message: formData.message,
+        referralSource: formData.referralSource || undefined,
+        referralDetail: formData.referralDetail.trim() || undefined,
         productName: productName || undefined,
         productSlug: productSlug || undefined,
         productCategory: productCategory || undefined,
@@ -132,6 +147,8 @@ export default function InquiryForm({
           country: "",
           phone: "",
           message: "",
+          referralSource: "",
+          referralDetail: "",
         });
       } else {
         setSubmitStatus("error");
@@ -145,7 +162,7 @@ export default function InquiryForm({
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error when user starts typing
@@ -387,6 +404,48 @@ export default function InquiryForm({
               <p id="message-error" className="mt-1 text-sm text-accent" role="alert" data-testid="message-error">
                 {errors.message}
               </p>
+            )}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="referralSource" className="block text-sm font-semibold text-text-heading mb-2">
+                How did you hear about us? <span className="text-text-muted text-xs">(Optional)</span>
+              </label>
+              <select
+                id="referralSource"
+                name="referralSource"
+                value={formData.referralSource}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-xl border-2 border-bg-surface focus:border-primary bg-white text-text focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"
+                data-testid="referralSource-select"
+              >
+                <option value="">Select an option</option>
+                {REFERRAL_OPTIONS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {formData.referralSource && (
+              <div>
+                <label htmlFor="referralDetail" className="block text-sm font-semibold text-text-heading mb-2">
+                  Details <span className="text-text-muted text-xs">(Optional)</span>
+                </label>
+                <input
+                  type="text"
+                  id="referralDetail"
+                  name="referralDetail"
+                  value={formData.referralDetail}
+                  onChange={handleChange}
+                  maxLength={200}
+                  className="w-full px-4 py-3 rounded-xl border-2 border-bg-surface focus:border-primary bg-white text-text focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"
+                  placeholder="e.g. search term, platform or event name"
+                  data-testid="referralDetail-input"
+                />
+              </div>
             )}
           </div>
 

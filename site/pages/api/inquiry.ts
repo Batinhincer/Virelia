@@ -9,6 +9,8 @@ interface InquiryData {
   country: string;
   phone?: string;
   message: string;
+  referralSource?: string;
+  referralDetail?: string;
   productName?: string;
   productSlug?: string;
   productCategory?: string;
@@ -53,6 +55,8 @@ export default async function handler(
     country,
     phone,
     message,
+    referralSource: rawReferralSource,
+    referralDetail: rawReferralDetail,
     productName,
     productSlug,
     productCategory,
@@ -81,6 +85,10 @@ export default async function handler(
     return res.status(400).json({ success: false, message: "Missing required fields" });
   }
 
+  // Optional "How did you hear about us?" answers — trimmed and length-capped
+  const referralSource = typeof rawReferralSource === "string" ? rawReferralSource.trim().slice(0, 100) || undefined : undefined;
+  const referralDetail = typeof rawReferralDetail === "string" ? rawReferralDetail.trim().slice(0, 200) || undefined : undefined;
+
   // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
@@ -106,6 +114,8 @@ export default async function handler(
     country,
     phone: phone || undefined,
     message,
+    referralSource,
+    referralDetail,
     productName: productName || undefined,
     productSlug: productSlug || undefined,
     productCategory: productCategory || undefined,
@@ -303,6 +313,13 @@ export default async function handler(
             </div>
             ` : ''}
             
+            ${referralSource ? `
+            <div class="field">
+              <div class="label">Heard About Us Via</div>
+              <div class="value">${referralSource}${referralDetail ? ` — ${referralDetail}` : ''}</div>
+            </div>
+            ` : ''}
+            
             <div class="field">
               <div class="label">Message / Requirements</div>
               <div class="message-box">${message}</div>
@@ -327,6 +344,7 @@ Company: ${companyName}
 Email: ${email}
 Country: ${country}
 ${phone ? `Phone: ${phone}` : ''}
+${referralSource ? `Heard About Us Via: ${referralSource}${referralDetail ? ` — ${referralDetail}` : ''}` : ''}
 
 Message / Requirements:
 ${message}
